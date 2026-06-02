@@ -1,0 +1,139 @@
+---
+import { getCollection } from 'astro:content';
+import '/src/styles/global.css';
+
+const projects = (await getCollection('projects'))
+  .map(project => ({
+    project,
+    slug: project.id.replace(/\.md$/, ''),
+  }));
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>项目 | Zachary Xue</title>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="logo">Zachary Xue</a>
+    <div class="nav-links">
+      <a href="/">首页</a>
+      <a href="/blog">博客</a>
+      <a href="/docs">文档</a>
+      <a href="/projects">项目</a>
+    </div>
+  </nav>
+
+  <main class="project-list">
+    <h1>项目</h1>
+    {projects.length === 0 ? (
+      <p class="empty">还没有项目。</p>
+    ) : (
+      <div class="project-grid">
+        {projects.map(({ project, slug }) => (
+          <div class="project-card">
+            <a href={`/projects/${slug}`}>
+              <h2>{project.data.title}</h2>
+            </a>
+            <div class="card-tags">
+              {project.data.tags?.map(tag => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+            {project.data.status && (
+              <span class={`card-status card-status-${project.data.status}`}>
+                {project.data.status === 'active' ? '● 活跃' : '● 归档'}
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
+    )}
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Zachary Xue</p>
+  </footer>
+</body>
+</html>
+
+<style>
+  .navbar {
+    background: var(--primary-color);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .logo {
+    color: var(--white);
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { color: var(--white); text-decoration: none; font-size: 0.95rem; }
+  .nav-links a:hover { color: var(--secondary-color); }
+  .project-list {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+  }
+  .project-list h1 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+  }
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .project-card a { text-decoration: none; }
+  .project-card h2 {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+  }
+  .card-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+  }
+  .tag {
+    background: var(--secondary-color);
+    color: white;
+    padding: 0.15em 0.6em;
+    border-radius: 10px;
+    font-size: 0.75rem;
+  }
+  .card-status {
+    font-size: 0.8rem;
+  }
+  .card-status-active { color: #27ae60; }
+  .card-status-archived { color: #95a5a6; }
+  .empty { color: #888; }
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: #888;
+    font-size: 0.85rem;
+  }
+  @media (max-width: 768px) {
+    .navbar { padding: 1rem; }
+    .nav-links { gap: 1rem; }
+  }
+</style>

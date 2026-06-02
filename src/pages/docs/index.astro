@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+import '/src/styles/global.css';
+
+const docs = (await getCollection('docs'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map(doc => ({
+    doc,
+    slug: doc.id.replace(/\.md$/, ''),
+  }));
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>文档 | Zachary Xue</title>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="logo">Zachary Xue</a>
+    <div class="nav-links">
+      <a href="/">首页</a>
+      <a href="/blog">博客</a>
+      <a href="/docs">文档</a>
+      <a href="/projects">项目</a>
+    </div>
+  </nav>
+
+  <main class="doc-list">
+    <h1>文档</h1>
+    {docs.length === 0 ? (
+      <p class="empty">还没有文档。</p>
+    ) : (
+      <ul class="docs">
+        {docs.map(({ doc, slug }) => (
+          <li class="doc-item">
+            <a href={`/docs/${slug}`}>
+              <h2>{doc.data.title}</h2>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Zachary Xue</p>
+  </footer>
+</body>
+</html>
+
+<style>
+  .navbar {
+    background: var(--primary-color);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .logo {
+    color: var(--white);
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { color: var(--white); text-decoration: none; font-size: 0.95rem; }
+  .nav-links a:hover { color: var(--secondary-color); }
+  .doc-list {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+  }
+  .doc-list h1 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+  }
+  .docs { list-style: none; padding: 0; }
+  .doc-item {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+  .doc-item a { text-decoration: none; }
+  .doc-item h2 { font-size: 1.2rem; color: var(--primary-color); }
+  .empty { color: #888; }
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: #888;
+    font-size: 0.85rem;
+  }
+  @media (max-width: 768px) {
+    .navbar { padding: 1rem; }
+    .nav-links { gap: 1rem; }
+  }
+</style>

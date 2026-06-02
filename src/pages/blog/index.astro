@@ -1,0 +1,121 @@
+---
+import { getCollection } from 'astro:content';
+import '/src/styles/global.css';
+
+const posts = (await getCollection('blog'))
+  .filter(p => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .map(post => ({
+    post,
+    slug: post.id.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, ''),
+  }));
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>博客 | Zachary Xue</title>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="logo">Zachary Xue</a>
+    <div class="nav-links">
+      <a href="/">首页</a>
+      <a href="/blog">博客</a>
+      <a href="/docs">文档</a>
+      <a href="/projects">项目</a>
+    </div>
+  </nav>
+
+  <main class="post-list">
+    <h1>博客</h1>
+    {posts.length === 0 ? (
+      <p class="empty">还没有文章。</p>
+    ) : (
+      <ul class="posts">
+        {posts.map(({ post, slug }) => (
+          <li class="post-item">
+            <a href={`/blog/${slug}`}>
+              <h2>{post.data.title}</h2>
+            </a>
+            <time>{post.data.date.toLocaleDateString('zh-CN')}</time>
+            {post.data.description && (
+              <p>{post.data.description}</p>
+            )}
+          </li>
+        ))}
+      </ul>
+    )}
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Zachary Xue</p>
+  </footer>
+</body>
+</html>
+
+<style>
+  .navbar {
+    background: var(--primary-color);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .logo {
+    color: var(--white);
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { color: var(--white); text-decoration: none; font-size: 0.95rem; }
+  .nav-links a:hover { color: var(--secondary-color); }
+  .post-list {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+  }
+  .post-list h1 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+  }
+  .posts { list-style: none; padding: 0; }
+  .post-item {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+  }
+  .post-item a { text-decoration: none; }
+  .post-item h2 {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin-bottom: 0.3rem;
+  }
+  .post-item time {
+    color: #888;
+    font-size: 0.85rem;
+  }
+  .post-item p {
+    color: #666;
+    margin-top: 0.4rem;
+    font-size: 0.95rem;
+  }
+  .empty { color: #888; }
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: #888;
+    font-size: 0.85rem;
+  }
+  @media (max-width: 768px) {
+    .navbar { padding: 1rem; }
+    .nav-links { gap: 1rem; }
+  }
+</style>
