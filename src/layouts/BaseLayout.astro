@@ -21,7 +21,7 @@ const pathname = Astro.url.pathname;
     <div class="nav-links">
       <a href="/" class:list={["nav-link", { active: pathname === "/" }]}>首页</a>
       <a href="/blog" class:list={["nav-link", { active: pathname === "/blog" || pathname.startsWith("/blog/") }]}>全部文章</a>
-      <a href="/docs" class:list={["nav-link", { active: pathname === "/docs" || pathname.startsWith("/docs/") }]}>文档</a>
+
       <a href="/projects" class:list={["nav-link", { active: pathname === "/projects" || pathname.startsWith("/projects/") }]}>项目</a>
       <a href="/about" class:list={["nav-link", { active: pathname === "/about" }]}>关于我</a>
     </div>
