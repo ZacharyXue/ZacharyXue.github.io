@@ -1,0 +1,62 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const pathname = Astro.url.pathname;
+---
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} | Zachary Xue</title>
+  {description && <meta name="description" content={description} />}
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="logo">Zachary Xue</a>
+    <div class="nav-links">
+      <a href="/" class:list={["nav-link", { active: pathname === "/" }]}>首页</a>
+      <a href="/blog" class:list={["nav-link", { active: pathname === "/blog" || pathname.startsWith("/blog/") }]}>全部文章</a>
+      <a href="/docs" class:list={["nav-link", { active: pathname === "/docs" || pathname.startsWith("/docs/") }]}>文档</a>
+      <a href="/projects" class:list={["nav-link", { active: pathname === "/projects" || pathname.startsWith("/projects/") }]}>项目</a>
+      <a href="/about" class:list={["nav-link", { active: pathname === "/about" }]}>关于我</a>
+    </div>
+  </nav>
+
+  <slot />
+
+  <footer>
+    <p>&copy; 2026 Zachary Xue</p>
+  </footer>
+</body>
+</html>
+
+<style>
+  .navbar {
+    background: var(--bg-color);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .logo { color: var(--text-color); font-weight: bold; font-size: 1.2rem; text-decoration: none; }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-link { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; }
+  .nav-link:hover, .nav-link.active { color: var(--accent-color); }
+  footer {
+    text-align: center; padding: 2rem; color: var(--text-muted);
+    font-size: 0.85rem; border-top: 1px solid var(--border-color);
+  }
+  @media (max-width: 768px) {
+    .navbar { padding: 1rem; }
+    .nav-links { gap: 1rem; }
+  }
+</style>

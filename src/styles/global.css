@@ -1,10 +1,11 @@
 :root {
-  --primary-color: #2c3e50;
-  --secondary-color: #3498db;
   --text-color: #333;
-  --bg-color: #ecf0f1;
+  --accent-color: #3498db;
+  --text-muted: #999;
+  --bg-color: #ffffff;
   --white: #ffffff;
-  --max-width: 800px;
+  --border-color: #eee;
+  --max-width: 720px;
   --font-mono: 'SF Mono', 'Fira Code', monospace;
 }
 
@@ -28,11 +29,11 @@ article {
   padding: 2rem 1rem;
 }
 
-article h1 { font-size: 2rem; color: var(--primary-color); margin-bottom: 1rem; }
-article h2 { font-size: 1.5rem; color: var(--primary-color); margin: 2rem 0 0.8rem; }
+article h1 { font-size: 2rem; color: var(--text-color); margin-bottom: 1rem; }
+article h2 { font-size: 1.5rem; color: var(--text-color); margin: 2rem 0 0.8rem; }
 article h3 { font-size: 1.2rem; margin: 1.5rem 0 0.6rem; }
 article p { margin-bottom: 1rem; }
-article a { color: var(--secondary-color); text-decoration: none; }
+article a { color: var(--accent-color); text-decoration: none; }
 article a:hover { text-decoration: underline; }
 article ul, article ol { margin: 0 0 1rem 1.5rem; }
 article li { margin-bottom: 0.3rem; }
@@ -57,7 +58,7 @@ article pre code {
   color: inherit;
 }
 article blockquote {
-  border-left: 4px solid var(--secondary-color);
+  border-left: 4px solid var(--accent-color);
   padding: 0.5rem 1rem;
   margin-bottom: 1rem;
   background: #f8f9fa;

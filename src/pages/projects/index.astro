@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import '/src/styles/global.css';
 
 const projects = (await getCollection('projects'))
@@ -9,24 +10,7 @@ const projects = (await getCollection('projects'))
   }));
 ---
 
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>项目 | Zachary Xue</title>
-</head>
-<body>
-  <nav class="navbar">
-    <a href="/" class="logo">Zachary Xue</a>
-    <div class="nav-links">
-      <a href="/">首页</a>
-      <a href="/blog">博客</a>
-      <a href="/docs">文档</a>
-      <a href="/projects">项目</a>
-    </div>
-  </nav>
-
+<BaseLayout title="项目">
   <main class="project-list">
     <h1>项目</h1>
     {projects.length === 0 ? (
@@ -53,33 +37,9 @@ const projects = (await getCollection('projects'))
       </div>
     )}
   </main>
-
-  <footer>
-    <p>&copy; 2026 Zachary Xue</p>
-  </footer>
-</body>
-</html>
+</BaseLayout>
 
 <style>
-  .navbar {
-    background: var(--primary-color);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  .logo {
-    color: var(--white);
-    font-weight: bold;
-    font-size: 1.2rem;
-    text-decoration: none;
-  }
-  .nav-links { display: flex; gap: 1.5rem; }
-  .nav-links a { color: var(--white); text-decoration: none; font-size: 0.95rem; }
-  .nav-links a:hover { color: var(--secondary-color); }
   .project-list {
     max-width: 1000px;
     margin: 0 auto;
@@ -87,7 +47,7 @@ const projects = (await getCollection('projects'))
   }
   .project-list h1 {
     font-size: 2rem;
-    color: var(--primary-color);
+    color: var(--text-color);
     margin-bottom: 2rem;
   }
   .project-grid {
@@ -96,7 +56,7 @@ const projects = (await getCollection('projects'))
     gap: 1.5rem;
   }
   .project-card {
-    background: white;
+    background: var(--white);
     border-radius: 8px;
     padding: 1.5rem;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
@@ -104,9 +64,10 @@ const projects = (await getCollection('projects'))
   .project-card a { text-decoration: none; }
   .project-card h2 {
     font-size: 1.2rem;
-    color: var(--primary-color);
+    color: var(--text-color);
     margin-bottom: 0.5rem;
   }
+  .project-card a:hover h2 { color: var(--accent-color); }
   .card-tags {
     display: flex;
     gap: 0.5rem;
@@ -114,8 +75,8 @@ const projects = (await getCollection('projects'))
     margin-bottom: 0.5rem;
   }
   .tag {
-    background: var(--secondary-color);
-    color: white;
+    background: var(--accent-color);
+    color: var(--white);
     padding: 0.15em 0.6em;
     border-radius: 10px;
     font-size: 0.75rem;
@@ -125,15 +86,8 @@ const projects = (await getCollection('projects'))
   }
   .card-status-active { color: #27ae60; }
   .card-status-archived { color: #95a5a6; }
-  .empty { color: #888; }
-  footer {
-    text-align: center;
-    padding: 2rem;
-    color: #888;
-    font-size: 0.85rem;
-  }
+  .empty { color: var(--text-muted); }
   @media (max-width: 768px) {
-    .navbar { padding: 1rem; }
-    .nav-links { gap: 1rem; }
+    .project-list { padding: 2rem 1rem; }
   }
 </style>

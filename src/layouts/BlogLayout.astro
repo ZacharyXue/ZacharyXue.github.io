@@ -1,4 +1,5 @@
 ---
+import BaseLayout from './BaseLayout.astro';
 import '/src/styles/global.css';
 
 export interface Props {
@@ -13,25 +14,7 @@ export interface Props {
 const { frontmatter } = Astro.props;
 ---
 
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{frontmatter.title} | Zachary Xue</title>
-  {frontmatter.description && <meta name="description" content={frontmatter.description} />}
-</head>
-<body>
-  <nav class="navbar">
-    <a href="/" class="logo">Zachary Xue</a>
-    <div class="nav-links">
-      <a href="/">首页</a>
-      <a href="/blog">博客</a>
-      <a href="/docs">文档</a>
-      <a href="/projects">项目</a>
-    </div>
-  </nav>
-
+<BaseLayout title={frontmatter.title} description={frontmatter.description}>
   <article>
     <header class="article-header">
       <h1>{frontmatter.title}</h1>
@@ -50,64 +33,28 @@ const { frontmatter } = Astro.props;
       <slot />
     </div>
   </article>
-
-  <footer>
-    <p>&copy; 2026 Zachary Xue</p>
-  </footer>
-</body>
-</html>
+</BaseLayout>
 
 <style>
-  .navbar {
-    background: var(--primary-color);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  .logo {
-    color: var(--white);
-    font-weight: bold;
-    font-size: 1.2rem;
-    text-decoration: none;
-  }
-  .nav-links { display: flex; gap: 1.5rem; }
-  .nav-links a {
-    color: var(--white);
-    text-decoration: none;
-    font-size: 0.95rem;
-  }
-  .nav-links a:hover { color: var(--secondary-color); }
   .article-header {
     text-align: center;
     margin-bottom: 2rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--border-color);
   }
   .article-header time {
-    color: #888;
+    color: var(--text-muted);
     font-size: 0.9rem;
   }
   .tags { margin-top: 0.8rem; display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
   .tag {
-    background: var(--secondary-color);
+    background: var(--accent-color);
     color: var(--white);
     padding: 0.2em 0.7em;
     border-radius: 12px;
     font-size: 0.8rem;
   }
-  footer {
-    text-align: center;
-    padding: 2rem;
-    color: #888;
-    font-size: 0.85rem;
-  }
   @media (max-width: 768px) {
-    .navbar { padding: 1rem; }
-    .nav-links { gap: 1rem; }
     article { padding: 1rem; }
   }
 </style>

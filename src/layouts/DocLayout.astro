@@ -1,4 +1,5 @@
 ---
+import BaseLayout from './BaseLayout.astro';
 import '/src/styles/global.css';
 
 export interface Props {
@@ -10,24 +11,7 @@ export interface Props {
 const { frontmatter } = Astro.props;
 ---
 
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{frontmatter.title} | 文档 | Zachary Xue</title>
-</head>
-<body>
-  <nav class="navbar">
-    <a href="/" class="logo">Zachary Xue</a>
-    <div class="nav-links">
-      <a href="/">首页</a>
-      <a href="/blog">博客</a>
-      <a href="/docs">文档</a>
-      <a href="/projects">项目</a>
-    </div>
-  </nav>
-
+<BaseLayout title={`${frontmatter.title} | 文档`}>
   <div class="doc-container">
     <aside class="doc-sidebar">
       <a href="/docs" class="back-link">&larr; 文档首页</a>
@@ -39,37 +23,9 @@ const { frontmatter } = Astro.props;
       </div>
     </article>
   </div>
-
-  <footer>
-    <p>&copy; 2026 Zachary Xue</p>
-  </footer>
-</body>
-</html>
+</BaseLayout>
 
 <style>
-  .navbar {
-    background: var(--primary-color);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  .logo {
-    color: var(--white);
-    font-weight: bold;
-    font-size: 1.2rem;
-    text-decoration: none;
-  }
-  .nav-links { display: flex; gap: 1.5rem; }
-  .nav-links a {
-    color: var(--white);
-    text-decoration: none;
-    font-size: 0.95rem;
-  }
-  .nav-links a:hover { color: var(--secondary-color); }
   .doc-container {
     display: flex;
     max-width: 1100px;
@@ -83,18 +39,12 @@ const { frontmatter } = Astro.props;
   }
   .back-link {
     display: inline-block;
-    color: var(--secondary-color);
+    color: var(--accent-color);
     text-decoration: none;
     padding: 0.5rem 0;
   }
   .back-link:hover { text-decoration: underline; }
   article { flex: 1; min-width: 0; padding: 0; }
-  footer {
-    text-align: center;
-    padding: 2rem;
-    color: #888;
-    font-size: 0.85rem;
-  }
   @media (max-width: 768px) {
     .doc-container { flex-direction: column; }
     .doc-sidebar { width: 100%; }

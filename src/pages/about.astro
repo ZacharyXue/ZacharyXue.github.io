@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '/src/styles/global.css';
+---
+
+<BaseLayout title="关于我">
+  <div class="about">
+    <h1>关于我</h1>
+
+    <div class="about-intro">
+      <p>&#128640; 一个从土木跳到机械、又从机械跳到代码的跨界选手。</p>
+      <p>
+        &#128187; 写过 <span class="highlight">C/C++</span>，用过 <span class="highlight">Python</span>，玩过 <span class="highlight">Go</span>，
+        每样都会一点，每样都不精通——但这并不妨碍我享受写出东西那一刻的快乐。
+      </p>
+      <p>
+        &#127758; 学过英语，学过日语，证书是有的，开口是没有的。
+        看得了英文文档，啃得动日语原版书，却始终跨不过「能读不能说」那条线。
+        不过没关系，阅读本来就是我与世界对话的方式。
+      </p>
+      <p>
+        &#9749; 爱看书，喜欢骑行，炒股属于典型的人菜瘾大——
+        赚的时候觉得自己是巴菲特，亏的时候安慰自己是在交学费。
+        没什么惊天动地的理想，只想认真对待每一天，过好这平庸却踏实的人生。
+      </p>
+    </div>
+
+    <div class="about-links">
+      <h2>找到我</h2>
+      <ul>
+        <li>
+          <span class="link-label">GitHub</span>
+          <a href="https://github.com/ZacharyXue" target="_blank" rel="noopener">@ZacharyXue</a>
+        </li>
+        <li>
+          <span class="link-label">邮箱</span>
+          <code>xuezihao2016@outlook.com</code>
+        </li>
+      </ul>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .about { max-width: var(--max-width); margin: 0 auto; padding: 3rem 1rem; }
+
+  .about h1 {
+    font-size: 2rem;
+    color: var(--text-color);
+    margin-bottom: 2.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent-color);
+    display: inline-block;
+  }
+
+  .about-intro p {
+    margin-bottom: 1.2rem;
+    line-height: 2;
+    font-size: 1.05rem;
+    color: #444;
+  }
+
+  .highlight {
+    color: var(--accent-color);
+    font-weight: 500;
+  }
+
+  .about-links {
+    margin-top: 2.5rem;
+  }
+
+  .about-links h2 {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+  }
+
+  .about-links ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .about-links li {
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .link-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    min-width: 3.5rem;
+  }
+
+  .about-links a {
+    color: var(--accent-color);
+    text-decoration: none;
+  }
+
+  .about-links a:hover {
+    text-decoration: underline;
+  }
+
+  .about-links code {
+    background: #f0f0f0;
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+
+  @media (max-width: 768px) {
+    .about { padding: 2rem 1rem; }
+    .about-cards { grid-template-columns: 1fr; }
+    .about h1 { font-size: 1.6rem; }
+  }
+</style>
