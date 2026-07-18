@@ -35,6 +35,30 @@ const { frontmatter } = Astro.props;
   </article>
 </BaseLayout>
 
+<script is:inline>
+  (function() {
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
+    s.onload = function() {
+      mermaid.initialize({ startOnLoad: false, theme: 'default' });
+
+      var blocks = document.querySelectorAll('.article-body pre[data-language="mermaid"]');
+      if (blocks.length === 0) return;
+
+      for (var i = 0; i < blocks.length; i++) {
+        var pre = blocks[i];
+        var div = document.createElement('div');
+        div.className = 'mermaid-wrapper';
+        div.textContent = pre.textContent || '';
+        pre.replaceWith(div);
+      }
+
+      mermaid.run({ querySelector: '.mermaid-wrapper' });
+    };
+    document.head.appendChild(s);
+  })();
+</script>
+
 <style>
   .article-header {
     text-align: center;
@@ -53,6 +77,15 @@ const { frontmatter } = Astro.props;
     padding: 0.2em 0.7em;
     border-radius: 12px;
     font-size: 0.8rem;
+  }
+  .mermaid-wrapper {
+    margin: 2rem 0;
+    overflow-x: auto;
+    text-align: center;
+  }
+  .mermaid-wrapper svg {
+    max-width: 100%;
+    height: auto;
   }
   @media (max-width: 768px) {
     article { padding: 1rem; }
