@@ -7,6 +7,23 @@
   --border-color: #eee;
   --max-width: 720px;
   --font-mono: 'SF Mono', 'Fira Code', monospace;
+  --code-bg: #f0f0f0;
+  --blockquote-bg: #f8f9fa;
+  --pre-bg: #2c3e50;
+  --pre-color: #ecf0f1;
+}
+
+[data-theme="dark"] {
+  --text-color: #e0e0e0;
+  --accent-color: #5dade2;
+  --text-muted: #888;
+  --bg-color: #1a1a2e;
+  --white: #e0e0e0;
+  --border-color: #2a2a3e;
+  --code-bg: #2a2a3e;
+  --blockquote-bg: #223;
+  --pre-bg: #16213e;
+  --pre-color: #e0e0e0;
 }
 
 * {
@@ -20,6 +37,7 @@ body {
   line-height: 1.8;
   color: var(--text-color);
   background-color: var(--bg-color);
+  transition: color 0.3s, background-color 0.3s;
 }
 
 /* Markdown content styles */
@@ -38,15 +56,15 @@ article a:hover { text-decoration: underline; }
 article ul, article ol { margin: 0 0 1rem 1.5rem; }
 article li { margin-bottom: 0.3rem; }
 article code {
-  background: #f0f0f0;
+  background: var(--code-bg);
   padding: 0.15em 0.4em;
   border-radius: 3px;
   font-family: var(--font-mono);
   font-size: 0.9em;
 }
 article pre {
-  background: #2c3e50;
-  color: #ecf0f1;
+  background: var(--pre-bg);
+  color: var(--pre-color);
   padding: 1rem;
   border-radius: 6px;
   overflow-x: auto;
@@ -61,7 +79,7 @@ article blockquote {
   border-left: 4px solid var(--accent-color);
   padding: 0.5rem 1rem;
   margin-bottom: 1rem;
-  background: #f8f9fa;
+  background: var(--blockquote-bg);
   border-radius: 0 4px 4px 0;
 }
 article img {
