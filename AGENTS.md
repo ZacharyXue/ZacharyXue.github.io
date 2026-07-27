@@ -157,3 +157,15 @@ npm install <package-name>
 - `docs/` 仅放项目相关文档，不是网站内容
 - 提交前务必运行 `npm run build` 验证不报错
 - Content Collections 的 frontmatter 字段必须与 `src/content/config.ts` 中的 schema 一致
+
+## 天天基金 ttskill CLI
+
+当用户问题涉及天天基金、基金账户、持仓、收益、交易查询、选基、行情观点、资产配置等能力时，使用本机 `ttskill` 命令。
+
+- **CLI 路径**: `~/.local/bin/ttskill`（已在 PATH 中）
+- **路由查看**: `ttskill agent-entry show`
+- **路由刷新**: `ttskill agent-entry refresh --env prod`
+- **业务调用**: `ttskill invoke <skill_id>`（需先 login 授权）
+- **登录**: `ttskill login`
+
+分类只用于理解和路由，不是可调用 Skill。最终必须选择具体原子 `skill_id`。

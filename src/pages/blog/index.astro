@@ -40,7 +40,9 @@ const allTags = [...new Set(posts.flatMap(p => p.post.data.tags || []))].sort();
             <time>{post.data.date.toLocaleDateString('zh-CN')}</time>
             {post.data.description && <p class="desc">{post.data.description}</p>}
             {post.data.tags && post.data.tags.length > 0 && (
-              <div class="tags"><span class="tag">{post.data.tags.join('</span><span class="tag">')}</span></div>
+              <div class="tags">
+                {post.data.tags.map(tag => <span class="tag">{tag}</span>)}
+              </div>
             )}
           </li>
         ))}
