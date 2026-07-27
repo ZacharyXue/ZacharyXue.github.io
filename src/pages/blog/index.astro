@@ -10,23 +10,37 @@ const posts = (await getCollection('blog'))
     post,
     slug: post.id.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, ''),
   }));
+
+const allTags = [...new Set(posts.flatMap(p => p.post.data.tags || []))].sort();
 ---
 
 <BaseLayout title="全部文章">
   <main class="post-list">
     <h1>全部文章</h1>
+
+    <div class="filter-bar">
+      <input type="text" id="search" class="search-input" placeholder="搜索文章..." autocomplete="off" />
+    </div>
+
+    <div class="tag-cloud" id="tag-cloud">
+      {allTags.map(tag => <button class="tag-btn" data-tag={tag}>{tag}</button>)}
+    </div>
+
+    <p class="empty" id="no-results" style="display:none">没有匹配的文章。</p>
+
     {posts.length === 0 ? (
       <p class="empty">还没有文章。</p>
     ) : (
-      <ul class="posts">
+      <ul class="posts" id="post-list">
         {posts.map(({ post, slug }) => (
-          <li class="post-item">
+          <li class="post-item" data-tags={JSON.stringify(post.data.tags || [])}>
             <a href={`/blog/${slug}`}>
               <h2>{post.data.title}</h2>
             </a>
             <time>{post.data.date.toLocaleDateString('zh-CN')}</time>
-            {post.data.description && (
-              <p>{post.data.description}</p>
+            {post.data.description && <p class="desc">{post.data.description}</p>}
+            {post.data.tags && post.data.tags.length > 0 && (
+              <div class="tags"><span class="tag">{post.data.tags.join('</span><span class="tag">')}</span></div>
             )}
           </li>
         ))}
@@ -35,41 +49,61 @@ const posts = (await getCollection('blog'))
   </main>
 </BaseLayout>
 
+<script>
+  const search = document.getElementById('search') as HTMLInputElement;
+  const items = document.querySelectorAll<HTMLElement>('.post-item');
+  const noRes = document.getElementById('no-results')!;
+  const btns = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
+  let sel = new Set<string>();
+
+  function filter() {
+    const kw = search.value.toLowerCase().trim();
+    let n = 0;
+    items.forEach(el => {
+      const t = (el.querySelector('h2')?.textContent || '').toLowerCase();
+      const d = (el.querySelector('.desc')?.textContent || '').toLowerCase();
+      const tags: string[] = JSON.parse(el.dataset.tags || '[]');
+      const ok = (!kw || t.includes(kw) || d.includes(kw)) && (sel.size === 0 || [...sel].every(x => tags.includes(x)));
+      el.style.display = ok ? '' : 'none';
+      if (ok) n++;
+    });
+    (noRes as HTMLElement).style.display = n ? 'none' : '';
+  }
+
+  search.addEventListener('input', filter);
+  btns.forEach(b => b.addEventListener('click', () => {
+    const tg = b.dataset.tag!;
+    sel.has(tg) ? (sel.delete(tg), b.classList.remove('active')) : (sel.add(tg), b.classList.add('active'));
+    filter();
+  }));
+</script>
+
 <style>
-  .post-list {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 3rem 1rem;
+  .filter-bar { margin-bottom: 1rem; }
+  .search-input {
+    width: 100%; max-width: 400px; padding: 0.5rem 1rem; font-size: 0.95rem;
+    border: 1px solid var(--border-color); border-radius: 8px; outline: none;
+    background: var(--bg-color); color: var(--text-color);
   }
-  .post-list h1 {
-    font-size: 2rem;
-    color: var(--text-color);
-    margin-bottom: 2rem;
+  .search-input:focus { border-color: var(--accent-color); box-shadow: 0 0 0 2px rgba(52,152,219,0.15); }
+  .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .tag-btn {
+    font-size: 0.8rem; padding: 0.25rem 0.75rem; border: 1px solid var(--border-color);
+    border-radius: 14px; background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.15s;
   }
+  .tag-btn:hover { border-color: var(--accent-color); color: var(--accent-color); }
+  .tag-btn.active { background: var(--accent-color); border-color: var(--accent-color); color: #fff; }
+  .post-item .tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.5rem; }
+  .post-item .tag { font-size: 0.75rem; padding: 0.1em 0.5em; border-radius: 10px; background: var(--accent-color); color: #fff; }
+  .post-list { max-width: var(--max-width); margin: 0 auto; padding: 3rem 1rem; }
+  .post-list h1 { font-size: 2rem; color: var(--text-color); margin-bottom: 2rem; }
   .posts { list-style: none; padding: 0; }
-  .post-item {
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
-  }
+  .post-item { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); }
   .post-item a { text-decoration: none; }
-  .post-item h2 {
-    font-size: 1.3rem;
-    color: var(--text-color);
-    margin-bottom: 0.3rem;
-  }
+  .post-item h2 { font-size: 1.3rem; color: var(--text-color); margin-bottom: 0.3rem; }
   .post-item a:hover h2 { color: var(--accent-color); }
-  .post-item time {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-  }
-  .post-item p {
-    color: var(--text-muted);
-    margin-top: 0.4rem;
-    font-size: 0.95rem;
-  }
+  .post-item time { color: var(--text-muted); font-size: 0.85rem; }
+  .post-item p { color: var(--text-muted); margin-top: 0.4rem; font-size: 0.95rem; }
   .empty { color: var(--text-muted); }
-  @media (max-width: 768px) {
-    .post-list { padding: 2rem 1rem; }
-  }
+  @media (max-width: 768px) { .post-list { padding: 2rem 1rem; } }
 </style>
