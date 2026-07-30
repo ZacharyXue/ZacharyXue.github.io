@@ -11,8 +11,6 @@ description: 系统整理 Linux 运维中最常用的命令，涵盖网络、磁
 |------|------|----------|
 | `ls -lah` | 列出文件（含隐藏、人类可读大小） | `ls -lah /var/log/` |
 | `find` | 按条件搜索文件 | `find / -name "*.log" -mtime -7` |
-| `du -sh` | 目录/文件占用空间 | `du -sh /home/* \| sort -h` |
-| `df -h` | 磁盘分区使用情况 | `df -h` |
 | `stat` | 文件详细属性（inode、时间戳） | `stat /etc/passwd` |
 | `ln -s` | 创建软链接 | `ln -s /opt/app/bin/app /usr/local/bin/app` |
 | `tree` | 树形显示目录结构 | `tree -L 2 /etc/nginx/` |
@@ -209,8 +207,8 @@ sed '2a\新行内容' file.txt            # 第2行之后追加
 
 | 命令 | 用途 | 常用示例 |
 |------|------|----------|
-| `df -h` | 查看分区使用情况 | `df -h /` |
-| `du -sh *` | 目录大小 | `du -sh /var/* \| sort -h` |
+| `df` | 查看分区使用情况 | `df -h` / `df -i`（inode） / `df -T`（文件系统类型） |
+| `du` | 目录/文件占用空间 | `du -sh *` / `du -h --max-depth=1` / `du -csh dir1 dir2` |
 | `lsblk` | 列出块设备 | `lsblk -f`（含文件系统类型） |
 | `fdisk -l` | 查看磁盘分区表 | `fdisk -l /dev/sda` |
 | `mount` / `umount` | 挂载/卸载 | `mount /dev/sdb1 /mnt/data` |
@@ -219,6 +217,47 @@ sed '2a\新行内容' file.txt            # 第2行之后追加
 | `dd` | 磁盘读写（备份/克隆） | `dd if=/dev/sda of=/backup/disk.img bs=4M` |
 | `fsck` | 文件系统检查修复 | `fsck /dev/sda1`（需卸载） |
 | `badblocks` | 坏道检测 | `badblocks -sv /dev/sda` |
+
+### du —— 目录空间排查
+
+```bash
+# 当前目录下各文件/子目录大小（人读 + 汇总）
+du -sh *
+
+# 只看一层子目录，不递归
+du -h --max-depth=1 /var/
+
+# 按大小排序
+du -sh /var/* | sort -h
+
+# 汇总多个目录的总大小
+du -csh /home /opt /var
+
+# 排除特定文件类型
+du -sh --exclude='*.log' /var/log/
+
+# 找出当前目录下最大的 10 个文件/目录
+du -ah . | sort -rh | head -10
+```
+
+### df —— 磁盘与 inode
+
+```bash
+# 人类可读格式
+df -h
+
+# 查看 inode 使用率（「磁盘没满但报 No space」八成是 inode 爆了）
+df -i
+
+# 显示文件系统类型
+df -T
+
+# 只看指定分区
+df -h / /home
+
+# 排除临时文件系统，只看真实磁盘
+df -h -x tmpfs -x devtmpfs
+```
 
 **逻辑卷管理 (LVM)：**
 
@@ -233,18 +272,60 @@ sed '2a\新行内容' file.txt            # 第2行之后追加
 
 ## 系统监控与性能
 
-| 命令 | 用途 |
-|------|------|
-| `uptime` | 系统运行时间 + 平均负载 |
-| `free -h` | 内存使用情况 |
-| `vmstat 1` | 虚拟内存统计（每秒） |
-| `sar` | 系统活动报告（CPU、内存、I/O） |
-| `dmesg` | 内核日志（驱动、硬件错误） |
-| `journalctl` | systemd 日志 |
-| `uname -a` | 系统信息（内核版本、架构） |
-| `lscpu` | CPU 详情 |
-| `lsmem` | 内存详情 |
-| `dmidecode` | 硬件信息（BIOS、主板） |
+| 命令 | 用途 | 常用示例 |
+|------|------|----------|
+| `uptime` | 系统运行时间 + 平均负载 | `uptime`（看 load average: 1min 5min 15min） |
+| `lscpu` | CPU 架构详情 | `lscpu \| grep -E "Model name\|CPU\(s\)\|MHz"` |
+| `free -h` | 内存使用概览 | `free -h`（看 available 不是 free） |
+| `vmstat 1` | 虚拟内存统计（每秒刷新） | `vmstat 1 5`（采样 5 次） |
+| `top` / `htop` | 实时进程资源监控 | `htop`（按 F6 选排序列） |
+| `mpstat` | 多核 CPU 使用率 | `mpstat -P ALL 1` |
+| `pidstat` | 按进程统计资源 | `pidstat 1`（每秒 CPU） / `pidstat -r 1`（内存） |
+| `sar` | 系统活动历史报告 | `sar -u 1 3`（CPU） / `sar -r`（内存） |
+| `dmesg` | 内核日志（驱动、硬件错误） | `dmesg \| tail -20` |
+| `journalctl` | systemd 日志 | 见下方「日志查看」 |
+
+### CPU
+
+```bash
+# 几核、什么型号
+lscpu | grep -E "Model name|^CPU\(s\)|Thread|MHz"
+
+# 负载（1/5/15 分钟平均值，数值 ≈ 核数算正常）
+uptime
+
+# 实时进程排行
+top -o %CPU                  # 按 CPU 排序
+htop                         # 更友好，支持鼠标点击
+
+# 按 CPU 使用率排 TOP 5
+ps aux --sort=-%cpu | head -6
+
+# 每核占用
+mpstat -P ALL 1 3            # 每秒输出，共 3 次
+
+# 哪个进程在吃 CPU
+pidstat 1                    # 每秒刷新，Ctrl+C 退出
+```
+
+### 内存
+
+```bash
+# 快速概览（关键字段：available > free；buffer/cache 可回收）
+free -h
+
+# 解读 /proc/meminfo 重点字段
+grep -E "^(MemTotal|MemFree|MemAvailable|Buffers|Cached|SwapTotal|SwapFree)" /proc/meminfo
+
+# 按内存使用率排 TOP 5
+ps aux --sort=-%rss | head -6
+
+# 虚拟内存统计（si/so 非零说明在 swap，性能告警）
+vmstat 1 5
+
+# 哪个进程在吃内存
+pidstat -r 1
+```
 
 **日志查看：**
 
