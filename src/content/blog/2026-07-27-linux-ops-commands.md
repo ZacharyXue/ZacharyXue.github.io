@@ -320,6 +320,119 @@ crontab -l
 
 ---
 
+## Shell 重定向
+
+Linux 中每个进程默认有三个标准流：
+
+| 文件描述符 | 名称 | 默认指向 |
+|-----------|------|----------|
+| 0 | stdin（标准输入） | 键盘 |
+| 1 | stdout（标准输出） | 终端屏幕 |
+| 2 | stderr（标准错误） | 终端屏幕 |
+
+### 基础语法
+
+```bash
+# 输出重定向（覆盖）
+echo "hello" > file.txt         # stdout 到文件
+echo "hello" 1> file.txt        # 等价，显式写 fd 1
+
+# 追加
+echo "hello" >> file.txt        # 追加到末尾
+
+# 输入重定向
+wc -l < file.txt                # 从文件读入（不输出文件名）
+cat < file.txt                  # 同 cat file.txt
+
+# 错误重定向
+ls /nope 2> error.log           # stderr 到文件
+ls /nope 2>> error.log          # stderr 追加
+```
+
+### 合并 stdout + stderr
+
+```bash
+command > file.txt 2>&1         # 经典写法（顺序不能错）
+command &> file.txt              # bash 4+ 等价简写
+command &>> file.txt             # 追加模式
+command 2>&1 | grep error        # stderr 合并后进管道
+```
+
+### `2>&1` 顺序陷阱
+
+Shell 从左到右解析重定向，每遇到一个就立即生效。`2>&1` 做的是**值拷贝**，不是引用绑定。
+
+```bash
+# ❌ 错误 —— stderr 不会进文件
+command 2>&1 > file.txt
+# 执行过程：
+#   1. 遇到 2>&1 → fd 1 还指向终端 → fd 2 指向终端
+#   2. 遇到 > file.txt → fd 1 改为文件
+#   3. fd 2 已经指向终端，不会再跟着变
+# 结果：stdout → 文件，stderr → 终端
+
+# ✅ 正确 —— 先重定向 stdout，再让 stderr 指向它
+command > file.txt 2>&1
+# 执行过程：
+#   1. 遇到 > file.txt → fd 1 改为文件
+#   2. 遇到 2>&1 → fd 1 已指向文件 → fd 2 也指向文件
+# 结果：stdout + stderr → 文件
+
+# 验证
+$ ls /exists /nope 2>&1 > out.txt
+ls: cannot access '/nope': ...    # ← 打到了终端，没进文件
+$ cat out.txt
+/exists                            # ← 只有 stdout
+```
+
+### 分离输出
+
+```bash
+command > out.log 2> err.log     # stdout 和 stderr 分开存
+command > out.log                # stdout 进文件，stderr 终端（默认）
+command 2> err.log               # stdout 终端，stderr 进文件
+```
+
+### Here Document & Here String
+
+```bash
+# 多行文本作为 stdin
+cat << EOF
+line 1
+line 2
+EOF
+
+# 禁止变量替换（加单引号）
+cat << 'EOF'
+当前用户: $USER    # 不会展开
+EOF
+
+# 单行字符串
+grep "error" <<< "this is an error log"
+```
+
+### /dev/null —— 黑洞
+
+```bash
+command > /dev/null              # 丢弃 stdout
+command &> /dev/null             # 丢弃 stdout + stderr
+
+# 常见用法：只关心退出码
+if grep -q "ready" app.log; then
+    echo "OK"
+fi
+```
+
+### 管道与重定向组合
+
+```bash
+command 2>&1 | grep error        # stderr 也进管道
+command |& grep error             # bash 4+ 等价
+command | tee output.txt | grep error   # 存一份 + 继续管道
+```
+
+---
+
 ## Shell 快捷键
 
 | 快捷键 | 作用 |
