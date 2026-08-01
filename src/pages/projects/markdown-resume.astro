@@ -1,0 +1,144 @@
+---
+import { getCollection } from 'astro:content';
+import { readFileSync } from 'node:fs';
+import ProjectLayout from '/src/layouts/ProjectLayout.astro';
+
+// Get the project from content collection
+const projects = await getCollection('projects');
+const project = projects.find(p => p.id === 'markdown-resume.md');
+const { Content } = await project.render();
+
+// Read and parse Resume.html
+const resumeHtml = readFileSync('public/resume/Resume.html', 'utf-8');
+
+// Extract body content
+const bodyMatch = resumeHtml.match(/<body[^>]*>([\s\S]*?)<\/body>/);
+let bodyContent = bodyMatch ? bodyMatch[1] : '';
+
+// Fix asset paths: "assets/..." → "/resume/assets/..."
+bodyContent = bodyContent.replace(/src="assets\//g, 'src="/resume/assets/');
+---
+
+<ProjectLayout frontmatter={project.data}>
+  <Content />
+  <div class="resume-wrapper" id="resume-root">
+    <Fragment set:html={bodyContent} />
+  </div>
+</ProjectLayout>
+
+<style>
+  .resume-wrapper {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+  }
+
+  @scope (#resume-root) {
+    :scope {
+      font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: #333333;
+      line-height: 1.6;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 30px 30px 20px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      position: relative;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      font-weight: bold;
+      line-height: 1.4;
+    }
+
+    h1 {
+      padding-bottom: .3em;
+      font-size: 2em;
+      line-height: 1.2;
+      border-bottom: 1px solid #eee;
+    }
+
+    h2 {
+      font-size: 1.3em;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 3px;
+      padding-bottom: 3px;
+    }
+
+    p {
+      margin: 2px 0;
+    }
+
+    ul, ol {
+      padding-left: 30px;
+      margin: 2px 0;
+    }
+
+    li {
+      line-height: 1.6;
+    }
+
+    li p {
+      margin-bottom: 0;
+    }
+
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+
+    h1 img, h2 img, h3 img {
+      width: 22px !important;
+      height: auto !important;
+      vertical-align: middle;
+    }
+
+    p img, div img {
+      width: 18px !important;
+      height: auto !important;
+      vertical-align: middle;
+    }
+
+    strong, b {
+      font-weight: 700;
+      text-shadow: 0.3px 0 0 currentColor;
+    }
+
+    a {
+      color: #555;
+    }
+
+    pre, code {
+      border: 1px solid #e7eaed;
+      background-color: #f8f8f8;
+      border-radius: 3px;
+      padding: 2px 4px 0;
+      font-size: 0.9em;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    table tr {
+      border-top: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n) {
+      background-color: #f8f8f8;
+    }
+
+    table tr th, table tr td {
+      border: 1px solid #dfe2e5;
+      padding: 6px 13px;
+      text-align: left;
+    }
+
+    hr {
+      height: 2px;
+      margin: 16px 0;
+      background-color: #e7e7e7;
+      border: 0;
+    }
+  }
+</style>
