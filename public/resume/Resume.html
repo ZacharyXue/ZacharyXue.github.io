@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resume</title>
+
+<style>
+html {
+    overflow-x: initial !important;
+}
+html {
+    font-size: 16px;
+}
+body {
+    font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+#write {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 30px 30px 100px;
+}
+p {
+    margin: 0.8em 0;
+}
+ul, ol {
+    padding-left: 30px;
+}
+@media print {
+    html {
+        font-size: 13px;
+    }
+    table, pre {
+        page-break-inside: avoid;
+    }
+    pre {
+        word-wrap: break-word;
+    }
+    @page {
+        margin: 20mm 0;
+    }
+}
+</style>
+<style>
+/* for resume  <-- */
+#write {
+    padding-top: 0px !important;
+    padding-bottom: 20px !important;
+}
+
+content {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+}
+
+a {
+    color: #000;
+}
+
+h1,
+h2 {
+    border-bottom: 1px solid #eee !important;
+    margin-bottom: 3px !important;
+    padding-bottom: 3px !important;
+}
+
+img {
+    height: auto;
+    max-width: 100%;
+}
+
+h1 img, h2 img, h3 img {
+    width: 16px !important;
+    height: auto !important;
+    vertical-align: middle;
+}
+
+h1 img {
+    width: 30px !important;
+}
+
+#write p img, #write div img {
+    width: 18px !important;
+    height: auto !important;
+    vertical-align: middle;
+}
+
+h2 {
+    font-size: 17px !important;
+}
+
+p {
+    margin-bottom: 2px !important;
+    margin-top: 2px !important;
+}
+
+ul {
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+}
+
+li p {
+    margin-bottom: 0px !important;
+}
+
+li.md-list-item {
+    line-height: 20px !important;
+}
+
+a {
+    color: #555 !important;
+}
+
+/* for resume --> */
+
+strong, b, h1, h2, h3, h4 {
+    font-weight: 700 !important;
+    /* Simulate bold when bold font variant is unavailable */
+    text-shadow: 0.3px 0 0 currentColor;
+}
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 30px;
+    padding-bottom: 100px;
+}
+
+#write>ul:first-child,
+#write>ol:first-child {
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+
+h1 {
+    padding-bottom: .3em;
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+
+h2 {
+    padding-bottom: .3em;
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+
+h4 {
+    font-size: 1.25em;
+}
+
+h5 {
+    font-size: 1em;
+}
+
+h6 {
+    font-size: 1em;
+    color: #777;
+}
+
+p,
+blockquote,
+ul,
+ol,
+dl,
+table {
+    margin: 0.8em 0;
+}
+
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+
+ul,
+ol {
+    padding-left: 30px;
+}
+
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+
+blockquote blockquote {
+    padding-right: 0;
+}
+
+table {
+    padding: 0;
+    word-break: initial;
+}
+
+table tr {
+    border-top: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+
+table tr th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    text-align: left;
+    margin: 0;
+    padding: 6px 13px;
+}
+
+table tr td {
+    border: 1px solid #dfe2e5;
+    text-align: left;
+    margin: 0;
+    padding: 6px 13px;
+}
+
+table tr th:first-child,
+table tr td:first-child {
+    margin-top: 0;
+}
+
+table tr th:last-child,
+table tr td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0, 28, 36, .3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item>input {
+    margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+
+    table,
+    pre {
+        page-break-inside: avoid;
+    }
+
+    pre {
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+    background-color: #f8f8f8;
+}
+
+#write pre.md-meta-block {
+    padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+    bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before {
+    left: -1.5625rem;
+    top: .375rem;
+}
+
+#write>h4.md-focus:before {
+    left: -1.5625rem;
+    top: .285714286rem;
+}
+
+#write>h5.md-focus:before {
+    left: -1.5625rem;
+    top: .285714286rem;
+}
+
+#write>h6.md-focus:before {
+    left: -1.5625rem;
+    top: .285714286rem;
+}
+
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc {
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header,
+.context-menu,
+.megamenu-content,
+footer {
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state {
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+.html-for-mac .context-menu {
+    --item-hover-bg-color: #E6F0FE;
+}
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+}
+</style>
+</head>
+<body class="typora-export os-windows">
+<div id="write" class="is-node">
+<div style="text-align:center">
+    <h1>薛子皓</h1>
+    <div>
+        <span>
+            <img src="assets/phone-solid.svg" width="18px">
+            18335830614
+        </span>
+        ·
+        <span>
+            <img src="assets/envelope-solid.svg" width="18px">
+            xuezihao2016@outlook.com
+        </span>
+    </div>
+</div>
+
+<h2><img src="assets/info-circle-solid.svg" width="30px"> 个人信息</h2>
+<ul>
+<li>求职意向：测试开发工程师</li>
+<li>工作经验：3 年</li>
+</ul>
+<h2><img src="assets/info-circle-solid.svg" width="30px"> 个人总结</h2>
+<p>3 年测开，专注 CI/CD 基础设施与 K8s 集群运维。主导过 100+ 节点、15000 核 GitLab CI 集群建设，具备从 AI 模型部署到自动化测试的全链路能力。擅长用 Python/Go 开发自动化工具提效，带过 4 人测试团队。</p>
+<h2><img src="assets/graduation-cap-solid.svg" width="30px"> 教育经历</h2>
+<ul>
+<li>硕士，早稻田大学，Information, Production and System，2021.4~2023.4</li>
+<li>学士，哈尔滨工业大学，机械电子工程，2015.9~2019.7</li>
+</ul>
+<h2><img src="assets/briefcase-solid.svg" width="30px"> 工作经历</h2>
+<ul>
+<li>
+<p><strong>字节跳动 · AI 工具链 · 测试开发工程师</strong>（2024.11~至今）</p>
+<ul>
+<li>负责 GitLab CI 集群运维、自研芯片审核业务测试、CI/CD 工具链开发</li>
+</ul>
+</li>
+<li>
+<p><strong>华为技术有限公司 · 计算产品线 · 测试工程师</strong>（2023.5~2024.10）</p>
+<ul>
+<li>负责存储服务器特性测试交付，带领 4 人团队，参与 openEuler 补丁回合</li>
+</ul>
+</li>
+</ul>
+<h2><img src="assets/project-diagram-solid.svg" width="30px"> 项目经历</h2>
+<ul>
+<li>
+<p><strong>GitLab CI/CD 平台建设</strong>（2025.9~至今）</p>
+<p><em>GitLab CI, Kubernetes, Go, Python</em></p>
+<p>从 0 搭建并运维 100+ 节点、15000 CPU 的 GitLab CI 集群，服务 200+ 开发者。主要工作：</p>
+<ul>
+<li>主导 5 条测试流水线从 BD 系统迁移至 GitLab CI，用 Redis 替代跨 Job 环境变量、火山云 TOS 替换 BD TOS，解决历史环境耦合问题</li>
+<li>开发 GitLab 仓库权限管理、强合、飞书消息通知、全量日志等二次开发工具</li>
+<li>为 GitLab Runner 开发 K8s WebShell，通过 Proxy + CLB 将浏览器命令反向代理到 Runner Pod，替代此前本地复现的定位方式，支撑 200+ 用户在线调试</li>
+<li>开发 CI Job 失败自动定位 Agent，采集 Pod 状态/日志/进程上下文，调用 LLM 分析根因，环境类问题准确率 90%+，显著缩短故障排查时间</li>
+</ul>
+</li>
+<li>
+<p><strong>自研芯片审核业务测试</strong>（2024.11~2025.6）</p>
+<p><em>Python, C++, Linux, 多 AI 框架</em></p>
+<p>从 0 到 1 搭建自研芯片审核业务测试体系。主要工作：</p>
+<ul>
+<li>维护并增强模型精度测试工具，搭建端到端性能测试框架，支撑 30+ 审核模型</li>
+<li>引入 Diff 测试弥补多框架（PyTorch/TensorFlow/自研框架）下的测试缺口</li>
+<li>开发自动部署工具，将单次部署流程从 30 分钟缩短至 5 分钟</li>
+<li>负责模型在 Merlin 平台的部署与问题定位，适配自研芯片至内部传统机器学习框架 Quicksilver</li>
+<li>推动审核业务 2k+ 卡、ViT 5k+ 卡在自研芯片上大规模部署</li>
+</ul>
+</li>
+<li>
+<p><strong>存储服务器特性测试</strong>（2023.9~2024.2）</p>
+<p><em>Python, Linux, RDMA</em></p>
+<ul>
+<li>设计测试策略与用例，规划测试组网与节奏，组织大规模仿真、性能、兼容性、长稳测试</li>
+<li>带领 4 人团队基于内部自研框架编写自动化脚本，自动化覆盖率达 80%，累计交付新需求 70+</li>
+</ul>
+</li>
+</ul>
+<h2><img src="assets/tools-solid.svg" width="30px"> 技能清单</h2>
+<ul>
+<li><strong>主力语言</strong>：Python（3 年）、Go（1.5 年）</li>
+<li><strong>辅助语言</strong>：C++</li>
+<li><strong>平台工具</strong>：GitLab CI/CD、Kubernetes、Docker、Linux</li>
+<li><strong>其他</strong>：MySQL、Redis、Prometheus、Grafana、gRPC、HTTP 接口测试</li>
+</ul>
+</div>
+</body>
+</html>
