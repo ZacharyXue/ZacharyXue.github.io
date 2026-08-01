@@ -9,6 +9,7 @@ const blogCollection = defineCollection({
     description: z.string().optional(),
     draft: z.boolean().default(false),
     hide_from_home: z.boolean().default(false),
+    pinned: z.boolean().default(false),
   }),
 });
 
