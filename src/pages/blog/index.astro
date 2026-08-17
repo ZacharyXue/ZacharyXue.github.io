@@ -12,6 +12,15 @@ const posts = (await getCollection('blog'))
   }));
 
 const allTags = [...new Set(posts.flatMap(p => p.post.data.tags || []))].sort();
+
+// 核心标签: 出现 >= 2 次的标签, 按频次降序 (标签云只展示这些, 避免 60 个太杂)
+const tagCounts = new Map<string, number>();
+posts.forEach(p => (p.post.data.tags || []).forEach(t => tagCounts.set(t, (tagCounts.get(t) || 0) + 1)));
+const coreTags = [...tagCounts.entries()]
+  .filter(([, n]) => n >= 2)
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+  .map(([t]) => t);
+const MAX_POST_TAGS = 3; // 文章条目下最多展示 3 个标签
 ---
 
 <BaseLayout title="全部文章">
@@ -23,7 +32,7 @@ const allTags = [...new Set(posts.flatMap(p => p.post.data.tags || []))].sort();
     </div>
 
     <div class="tag-cloud" id="tag-cloud">
-      {allTags.map(tag => <button class="tag-btn" data-tag={tag}>{tag}</button>)}
+      {coreTags.map(tag => <button class="tag-btn" data-tag={tag}>{tag}</button>)}
     </div>
 
     <p class="empty" id="no-results" style="display:none">没有匹配的文章。</p>
@@ -41,7 +50,7 @@ const allTags = [...new Set(posts.flatMap(p => p.post.data.tags || []))].sort();
             {post.data.description && <p class="desc">{post.data.description}</p>}
             {post.data.tags && post.data.tags.length > 0 && (
               <div class="tags">
-                {post.data.tags.map(tag => <span class="tag">{tag}</span>)}
+                {post.data.tags.slice(0, MAX_POST_TAGS).map(tag => <span class="tag">{tag}</span>)}
               </div>
             )}
           </li>

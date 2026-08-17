@@ -3,8 +3,7 @@ title: OpenCodeReview 源码拆解：LLM 只负责一半 —— 确定性工程 
 date: 2026-08-16
 tags: [代码评审, Agent, 架构, 确定性工程, 源码阅读]
 description: 阿里 OpenCodeReview (ocr) 源码深读：把 LLM 容易失控的部分全部搬回确定性工程，LLM 只保留「判断问题是否真实」一个职责。
-draft: true
-hide_from_home: true
+draft: false
 ---
 
 # OpenCodeReview 源码拆解：LLM 只负责一半
