@@ -9,9 +9,14 @@ export interface Props {
     tags?: string[];
     description?: string;
   };
+  headings?: { depth: number; slug: string; text: string }[];
 }
 
-const { frontmatter } = Astro.props;
+const { frontmatter, headings = [] } = Astro.props;
+
+// 目录只收集 h2/h3（h1 是文章标题，不算）
+const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
+const showToc = toc.length > 1;
 ---
 
 <BaseLayout title={frontmatter.title} description={frontmatter.description}>
@@ -29,6 +34,18 @@ const { frontmatter } = Astro.props;
         </div>
       )}
     </header>
+    {showToc && (
+      <nav class="toc" aria-label="目录">
+        <div class="toc-title">📑 目录</div>
+        <ul class="toc-list">
+          {toc.map(item => (
+            <li class={`toc-item toc-lv-${item.depth}`}>
+              <a href={`#${item.slug}`}>{item.text}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
     <div class="article-body">
       <slot />
     </div>
@@ -59,6 +76,29 @@ const { frontmatter } = Astro.props;
   })();
 </script>
 
+<script>
+  // 滚动监听：高亮当前阅读的章节
+  window.addEventListener('scroll', function () {
+    var links = document.querySelectorAll('.toc-list a');
+    if (links.length === 0) return;
+    var ids = Array.from(links).map(function (a) {
+      return a.getAttribute('href').slice(1);
+    });
+    // 找到当前视口最靠上且已滚过的标题
+    var current = null;
+    for (var i = 0; i < ids.length; i++) {
+      var el = document.getElementById(ids[i]);
+      if (el && el.getBoundingClientRect().top <= 80) {
+        current = ids[i];
+      }
+    }
+    Array.prototype.forEach.call(links, function (a) {
+      var active = a.getAttribute('href').slice(1) === current;
+      a.classList.toggle('active', active);
+    });
+  });
+</script>
+
 <style>
   .article-header {
     text-align: center;
@@ -87,6 +127,47 @@ const { frontmatter } = Astro.props;
     max-width: 100%;
     height: auto;
   }
+
+  /* ===== 目录样式 ===== */
+  .toc {
+    max-width: 720px;
+    margin: 0 auto 2rem auto;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-color);
+    font-size: 0.92rem;
+  }
+  .toc-title {
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    color: var(--primary-color);
+  }
+  .toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .toc-item a {
+    color: var(--text-color);
+    text-decoration: none;
+    border-bottom: 1px dashed transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .toc-item a:hover {
+    color: var(--accent-color);
+    border-bottom-color: var(--accent-color);
+  }
+  .toc-item a.active {
+    color: var(--accent-color);
+    font-weight: 600;
+  }
+  .toc-lv-2 { padding-left: 0; }
+  .toc-lv-3 { padding-left: 1.2rem; font-size: 0.86rem; }
+
   @media (max-width: 768px) {
     article { padding: 1rem; }
   }
