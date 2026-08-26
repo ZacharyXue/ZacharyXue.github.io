@@ -1,0 +1,27 @@
+{
+  "title": "ETF 红利 · 技术温度看板",
+  "refresh_note": "手动触发更新：cd etf-dashboard && python3 generate.py",
+  "watchlist": [
+    {
+      "name": "中证红利",
+      "csindex": "000922",
+      "ttfund_index": "000922",
+      "etf_symbol": "sh515180",
+      "etf_code": "515180"
+    },
+    {
+      "name": "红利低波",
+      "csindex": "H30269",
+      "ttfund_index": "H30269",
+      "etf_symbol": "sh512890",
+      "etf_code": "512890"
+    },
+    {
+      "name": "港股央企红利",
+      "csindex": "931722",
+      "ttfund_index": "931722",
+      "etf_symbol": "sh520900",
+      "etf_code": "520900"
+    }
+  ]
+}

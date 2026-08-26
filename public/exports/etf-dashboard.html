@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ETF 红利 · 技术温度看板</title><style>
+:root{--bg:#edf2f7;--card:#fff;--line:#d7e0eb;--ink:#2a3445;--sub:#7a879c;
+--up:#18a05e;--down:#e2544a;--hot:#f59e0b;--ok:#10b981;--warn:#f59e0b;--watch:#94a3b8;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;padding:24px;max-width:1200px;margin:0 auto}
+.header{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 28px;margin-bottom:16px}
+.header h1{font-size:26px;font-weight:700}
+.header .meta{margin-top:8px;font-size:13px;color:var(--sub)}
+.header .note{margin-top:10px;font-size:13px;color:#5a6b82;background:#f0f5fb;border-radius:8px;padding:8px 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.card .top{display:flex;justify-content:space-between;align-items:flex-start}
+.card .name{font-size:17px;font-weight:600}
+.card .code{font-size:12px;color:var(--sub);margin-top:2px}
+.price{font-size:30px;font-weight:700;margin-top:4px}
+.chg{font-size:15px;margin-top:2px}
+.up{color:var(--up)} .down{color:var(--down)}
+.badge{font-size:13px;font-weight:700;padding:5px 12px;border-radius:20px;color:#fff}
+.badge.add{background:var(--ok)} .badge.dca{background:var(--warn)}
+.badge.hot{background:var(--hot)} .badge.dip{background:var(--down)} .badge.watch{background:var(--watch)}
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.met{background:#f6f8fb;border-radius:10px;padding:8px 12px}
+.met .lab{font-size:11px;color:var(--sub)}
+.met .val{font-size:15px;font-weight:600;margin-top:2px}
+.pe5{background:#fff7ed;border:1px solid #fde68a}
+.action{margin-top:2px;background:#eef7f0;border-radius:10px;padding:10px 14px;font-size:13px;color:#33503a;border-left:4px solid var(--ok)}
+.footer{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 28px;font-size:13px;color:var(--sub);line-height:1.8}
+.footer h3{color:var(--ink);font-size:15px;margin-bottom:8px}
+.err{background:#fdf0ef;color:#b0322b;border-radius:8px;padding:8px 12px;margin-top:12px;font-size:13px}
+@media(max-width:600px){.metrics{grid-template-columns:repeat(2,1fr)}}
+</style></head>
+<body>
+  <div class="header">
+    <h1>ETF 红利 · 技术温度看板</h1>
+    <div class="meta">更新: 2026-08-26 18:03 &nbsp;·&nbsp; K线截止: 2026-08-26 &nbsp;·&nbsp; 数据源: 中证官网(5年PE) + 天天基金(分位) + 腾讯行情/K线</div>
+    <div class="note"><b>信号 = 技术面(回撤/MA/BIAS) × 估值面(PE 5年分位)</b> 双视角交叉。<br>「现在该怎么做」给的是可执行动作，判断前请结合估值分位(高位>90%别追高，<50%相对便宜)。本页不构成投资建议。</div>
+  </div>
+  <div class="grid">
+<div class="card">
+  <div class="top">
+    <div>
+      <div class="name">红利ETF易方达</div>
+      <div class="code">515180</div>
+      <div class="price">1.455</div>
+      <div class="chg up">+0.69%</div>
+    </div>
+    <div class="badge hot">过热/减</div>
+  </div>
+  <div class="metrics"><div class="met"><div class="lab">近5日</div><div class="val">+2.0%</div></div><div class="met"><div class="lab">近20日</div><div class="val">+2.9%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">+2.16%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-3.1%</div></div><div class="met"><div class="lab">MA20</div><div class="val">1.424</div></div><div class="met"><div class="lab">5日均额</div><div class="val">3.46亿</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">1.57/1.64</div></div><div class="met"><div class="lab">PE10y/PB10y</div><div class="val">97%/95%</div></div><div class="met"><div class="lab">ROE</div><div class="val">8.9%</div></div><div class="met pe5"><div class="lab">PE5y 分位</div><div class="val">94% <span style="font-size:12px;color:var(--sub)">(PE8.58, 5.27~9.03)</span></div></div></div>
+  <div class="action"><b>现在该怎么做：</b>高位区：不追高。持有可先减 1/3 锁盈，回落 PE5y<80% 或 BIAS<5% 再考虑回补。</div>
+</div>
+
+<div class="card">
+  <div class="top">
+    <div>
+      <div class="name">红利低波ETF华泰柏瑞</div>
+      <div class="code">512890</div>
+      <div class="price">1.191</div>
+      <div class="chg up">+0.51%</div>
+    </div>
+    <div class="badge hot">过热/减</div>
+  </div>
+  <div class="metrics"><div class="met"><div class="lab">近5日</div><div class="val">+1.4%</div></div><div class="met"><div class="lab">近20日</div><div class="val">+0.3%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">+1.40%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-4.6%</div></div><div class="met"><div class="lab">MA20</div><div class="val">1.174</div></div><div class="met"><div class="lab">5日均额</div><div class="val">8.41亿</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">1.29/1.35</div></div><div class="met"><div class="lab">PE10y/PB10y</div><div class="val">97%/95%</div></div><div class="met"><div class="lab">ROE</div><div class="val">9.2%</div></div><div class="met pe5"><div class="lab">PE5y 分位</div><div class="val">94% <span style="font-size:12px;color:var(--sub)">(PE7.96, 4.63~8.51)</span></div></div></div>
+  <div class="action"><b>现在该怎么做：</b>高位区：不追高。持有可先减 1/3 锁盈，回落 PE5y<80% 或 BIAS<5% 再考虑回补。</div>
+</div>
+
+<div class="card">
+  <div class="top">
+    <div>
+      <div class="name">港股通红利ETF广发</div>
+      <div class="code">520900</div>
+      <div class="price">1.012</div>
+      <div class="chg down">-0.10%</div>
+    </div>
+    <div class="badge dca">分批</div>
+  </div>
+  <div class="metrics"><div class="met"><div class="lab">近5日</div><div class="val">+2.5%</div></div><div class="met"><div class="lab">近20日</div><div class="val">+2.2%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">+2.79%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-10.6%</div></div><div class="met"><div class="lab">MA20</div><div class="val">0.985</div></div><div class="met"><div class="lab">5日均额</div><div class="val">0.56亿</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">1.08/1.13</div></div><div class="met"><div class="lab">PE10y/PB10y</div><div class="val">92%/75%</div></div><div class="met"><div class="lab">ROE</div><div class="val">9.6%</div></div><div class="met pe5"><div class="lab">PE5y 分位</div><div class="val">65% <span style="font-size:12px;color:var(--sub)">(PE9.91, 7.32~11.08)</span></div></div></div>
+  <div class="action"><b>现在该怎么做：</b>进入买点区：可分 3 批布局，每批 1/3，跌破 MA20 或回撤加深再加，跌破 -20% 停手。</div>
+</div></div>
+  
+  <div class="footer">
+    <h3>指标速查</h3>
+    <b>MA20</b> = 20日均线，现价在其上=趋势偏多，之下=转弱。<br>
+    <b>BIAS(乖离率)</b> = (现价−MA20)/MA20，衡量涨跌是否过度：>10%过热，负值=超跌。<br>
+    <b>PE5y 分位</b> = 当前PE在近5年所处百分位（用中证官网历史PE自算），判断贵贱的主锚。<br>
+    <b>目标价</b> = MA20 抬到 BIAS 达 10%/15% 的挂单价。<br>
+    标的池可编辑 <code>etf-dashboard/watchlist.json</code> 增删品种后重跑 <code>python3 generate.py</code> 更新。
+  </div>
+</body></html>

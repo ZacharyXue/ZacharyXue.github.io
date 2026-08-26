@@ -4,3 +4,8 @@ dist/
 .superpowers/
 .DS_Store
 tmp/
+
+# Python
+__pycache__/
+*.pyc
+
