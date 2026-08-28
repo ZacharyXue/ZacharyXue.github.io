@@ -67,8 +67,10 @@ def render_row(r):
     if r.get("pb10y") is not None:
         pbv = r["pb10y"]
         pbcol = "var(--down)" if pbv >= 90 else ("var(--warn)" if pbv >= 70 else "var(--ok)")
+        pbval = f"{r['pb']:.2f}" if r.get("pb") is not None else "—"
         pb_html = (f'<div class="met pe5"><div class="lab">PB10y 分位</div>'
-                   f'<div class="val" style="color:{pbcol};font-size:15px">{pbv:.0f}%</div></div>')
+                   f'<div class="val" style="color:{pbcol};font-size:15px">{pbv:.0f}% '
+                   f'<span style="font-size:12px;color:var(--sub)">(PB{pbval})</span></div></div>')
     else:
         pb_html = '<div class="met"><div class="lab">PB10y 分位</div><div class="val">—</div></div>'
     roe_html = m("ROE", f"{r['roe']:.1f}%" if r.get('roe') is not None else "—")
