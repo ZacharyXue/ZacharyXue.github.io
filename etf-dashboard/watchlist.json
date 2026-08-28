@@ -29,6 +29,13 @@
       "ttfund_index": "931719",
       "etf_symbol": "sz159796",
       "etf_code": "159796"
+    },
+    {
+      "name": "港股通红利低波",
+      "csindex": "987016",
+      "ttfund_index": "987016",
+      "etf_symbol": "sz159545",
+      "etf_code": "159545"
     }
   ]
 }
