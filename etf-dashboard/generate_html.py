@@ -48,15 +48,24 @@ def render_row(r):
     sig = r["sig_key"]
     chg_cls = "up" if r["chg_pct"] >= 0 else "down"
     chg_s = f"{r['chg_pct']:+.2f}%"
-    def m(lab, val, extra=""):
-        pe5 = " pe5" if lab.startswith("PE5y") else ""
-        return f'<div class="met{pe5}"><div class="lab">{lab}</div><div class="val">{val}</div></div>'
+    def m(lab, val, cls="", vcol=""):
+        style = f' style="color:{vcol}"' if vcol else ""
+        return f'<div class="met{cls}"><div class="lab">{lab}</div><div class="val"{style}>{val}</div></div>'
+    # PE5y 分位 → 主锚, 放第一位, 高中低着色
     pe5_block = "—"
+    pe5_cls = ""
     if r["pe5_pct"] is not None:
-        bar = r["pe5_pct"]
-        pe5_block = (f'<div class="val">{r["pe5_pct"]:.0f}% '
-                     f'<span style="font-size:12px;color:var(--sub)">(PE{r["pe5_cur"]}, {r["pe5_lo"]}~{r["pe5_hi"]})</span></div>')
+        p = r["pe5_pct"]
+        pe5_cls = " pe5"
+        vcol = "var(--down)" if p >= 90 else ("var(--warn)" if p >= 70 else "var(--ok)")
+        pe5_block = (f'{p:.0f}% <span style="font-size:12px;color:var(--sub)">'
+                     f'(PE{r["pe5_cur"]}, {r["pe5_lo"]}~{r["pe5_hi"]})</span>')
+        pe5_html = f'<div class="met{pe5_cls}"><div class="lab">PE5y 分位 <b>主锚</b></div><div class="val" style="color:{vcol};font-size:18px">{pe5_block}</div></div>'
+    else:
+        pe5_html = '<div class="met"><div class="lab">PE5y 分位</div><div class="val">—</div></div>'
     metrics = (
+        pe5_html +
+        m("现价", f"{r['price']:.3f}") +
         m("近5日", fmt_pct(r["chg5"])) +
         m("近20日", fmt_pct(r["chg20"])) +
         m("20日BIAS", f"{r['bias20']:+.2f}%" if r["bias20"] is not None else "—") +
@@ -64,9 +73,7 @@ def render_row(r):
         m("MA20", f"{r['ma20']:.3f}") +
         m("5日均额", f"{r['daily_yi']:.2f}亿") +
         m("目标10%/15%", f"{r['target10']:.2f}/{r['target15']:.2f}") +
-        m("PE10y/PB10y", f"{r['pe10y']:.0f}%/{r['pb10y']:.0f}%" if r.get('pe10y') is not None else "—") +
-        m("ROE", f"{r['roe']:.1f}%" if r.get('roe') is not None else "—") +
-        f'<div class="met pe5"><div class="lab">PE5y 分位</div>{pe5_block}</div>'
+        m("PE10y/PB10y(辅)", f"{r['pe10y']:.0f}%/{r['pb10y']:.0f}%" if r.get('pe10y') is not None else "—")
     )
     return f"""
 <div class="card">

@@ -129,7 +129,7 @@ def signal(r):
         if r["dd_hi"] <= -10 and r["pe5_pct"] < 70: return "分批", "dca"
         if r["dd_hi"] >= -5 and r["pe5_pct"] >= 90: return "过热/减", "hot"
         if r["pe5_pct"] > 95: return "过热/减", "hot"
-        if r["dd_hi"] <= -15: return "加仓", "add"
+        if r["dd_hi"] <= -15 and r["pe5_pct"] < 70: return "加仓", "add"
         return "观望", "watch"
     if r["bias20"] is not None:
         if r["bias20"] > 10: return "过热/减", "hot"
@@ -146,17 +146,25 @@ ACTIONS = {
 SIG_LABEL = {"add":"加仓","dca":"分批","hot":"过热/减","dip":"超跌","watch":"观望"}
 
 def main():
+    from concurrent.futures import ThreadPoolExecutor, as_completed
     with open(os.path.join(HERE, "watchlist.json"), encoding="utf-8") as fh:
         cfg = json.load(fh)
-    rows = []
-    errs = []
-    for w in cfg["watchlist"]:
+    def work(w):
         try:
             r = build_row(w); r["signal"], r["sig_key"] = signal(r)
-            rows.append(r)
+            return r, None
         except Exception as e:
-            errs.append(f"{w['name']}: {repr(e)[:80]}")
-        time.sleep(0.3)
+            return None, f"{w['name']}: {repr(e)[:80]}"
+    rows, errs = [], []
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        futs = [ex.submit(work, w) for w in cfg["watchlist"]]
+        for f in as_completed(futs):
+            r, e = f.result()
+            if e: errs.append(e)
+            else: rows.append(r)
+    # 保持 watchlist 原始顺序 (as_completed 无序)
+    order = {w["etf_code"]: i for i, w in enumerate(cfg["watchlist"])}
+    rows.sort(key=lambda r: order.get(r["etf_code"], 99))
     return cfg, rows, errs
 
 if __name__ == "__main__":
