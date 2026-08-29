@@ -110,6 +110,10 @@ article table tr:nth-child(even) {
 [data-theme="dark"] article table th,
 [data-theme="dark"] article table td {
   border-color: #3a3a4e;
+  color: #e0e0e0;
+}
+[data-theme="dark"] article table a {
+  color: #5dade2;
 }
 [data-theme="dark"] article table th {
   background: #252540;
