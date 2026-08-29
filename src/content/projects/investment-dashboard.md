@@ -1,6 +1,6 @@
 ---
 title: 投资看板
-url: /exports/
+url: https://github.com/ZacharyXue/Daily-Skills/tree/master/industry-monitor-dashboard/references/instances
 tags: [理财, 看板, 工具, 投资]
 status: active
 ---
