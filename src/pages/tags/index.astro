@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '/src/styles/global.css';
+
+const posts = (await getCollection('blog')).filter(p => !p.data.draft);
+const tagCounts = new Map<string, number>();
+posts.forEach(p => (p.data.tags || []).forEach(t => tagCounts.set(t, (tagCounts.get(t) || 0) + 1)));
+const tags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+---
+
+<BaseLayout title="标签">
+  <main class="tags-page">
+    <h1>标签</h1>
+    <p class="tags-intro">共 {tags.length} 个标签，{posts.length} 篇文章。点击标签浏览同主题文章。</p>
+    {tags.length === 0 ? (
+      <p class="empty">还没有标签。</p>
+    ) : (
+      <ul class="tag-list">
+        {tags.map(([tag, count]) => (
+          <li class="tag-item">
+            <a href={`/tags/${encodeURIComponent(tag)}`} class="tag-link">
+              <span class="tag-name">#{tag}</span>
+              <span class="tag-count">{count}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </main>
+</BaseLayout>
+
+<style>
+  .tags-page { max-width: var(--max-width); margin: 0 auto; padding: 3rem 1rem; }
+  .tags-page h1 { font-size: 2rem; color: var(--text-color); margin-bottom: 0.5rem; }
+  .tags-intro { color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem; }
+  .tag-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.7rem; }
+  .tag-item { margin: 0; }
+  .tag-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    text-decoration: none;
+    background: var(--card-bg);
+    transition: all 0.15s ease;
+  }
+  .tag-link:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    transform: translateY(-1px);
+    box-shadow: var(--card-shadow-hover);
+  }
+  .tag-name { font-size: 0.9rem; color: var(--text-color); }
+  .tag-link:hover .tag-name { color: var(--accent-color); }
+  .tag-count {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: var(--code-bg);
+    padding: 0.05em 0.5em;
+    border-radius: 10px;
+  }
+  .empty { color: var(--text-muted); text-align: center; padding: 3rem 0; }
+  @media (max-width: 768px) { .tags-page { padding: 2rem 1rem; } }
+</style>

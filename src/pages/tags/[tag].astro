@@ -1,0 +1,94 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '/src/styles/global.css';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog')).filter(p => !p.data.draft);
+  const tags = new Set<string>();
+  posts.forEach(p => (p.data.tags || []).forEach(t => tags.add(t)));
+  return [...tags].map(tag => ({
+    params: { tag },
+    props: { tag },
+  }));
+}
+
+const { tag } = Astro.props;
+const posts = (await getCollection('blog'))
+  .filter(p => !p.data.draft && (p.data.tags || []).includes(tag))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .map(post => ({
+    post,
+    slug: post.id.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, ''),
+  }));
+---
+
+<BaseLayout title={`标签 ${tag}`}>
+  <main class="tag-page">
+    <nav class="crumb">
+      <a href="/tags">标签</a> <span class="sep">/</span> <span class="current">{tag}</span>
+    </nav>
+    <h1>#{tag}</h1>
+    <p class="count">共 {posts.length} 篇</p>
+
+    {posts.length === 0 ? (
+      <p class="empty">该标签下暂无文章。</p>
+    ) : (
+      <ul class="posts">
+        {posts.map(({ post, slug }) => (
+          <li class="post-item">
+            <a href={`/blog/${slug}`}>
+              <h2>{post.data.title}</h2>
+            </a>
+            <time>{post.data.date.toLocaleDateString('zh-CN')}</time>
+            {post.data.description && <p class="desc">{post.data.description}</p>}
+            {post.data.tags && post.data.tags.length > 0 && (
+              <div class="tags">
+                {post.data.tags.map(t => (
+                  <a class="tag" href={`/tags/${encodeURIComponent(t)}`}>{t}</a>
+                ))}
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+    )}
+  </main>
+</BaseLayout>
+
+<style>
+  .tag-page { max-width: var(--max-width); margin: 0 auto; padding: 3rem 1rem; }
+  .crumb { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
+  .crumb a { color: var(--accent-color); text-decoration: none; }
+  .crumb .sep { margin: 0 0.3rem; opacity: 0.5; }
+  .crumb .current { color: var(--text-muted); }
+  .tag-page h1 { font-size: 2rem; color: var(--text-color); margin-bottom: 0.3rem; }
+  .count { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
+  .posts { list-style: none; padding: 0; }
+  .post-item {
+    margin-bottom: 1.2rem; padding: 1.2rem 1.4rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--card-bg);
+    box-shadow: var(--card-shadow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .post-item:hover { transform: translateY(-2px); box-shadow: var(--card-shadow-hover); border-color: var(--accent-color); }
+  .post-item a { text-decoration: none; }
+  .post-item h2 { font-size: 1.2rem; color: var(--text-color); margin-bottom: 0.3rem; transition: color 0.15s ease; }
+  .post-item > a:hover h2 { color: var(--accent-color); }
+  .post-item time { color: var(--text-muted); font-size: 0.85rem; }
+  .post-item .desc { color: var(--text-muted); margin-top: 0.5rem; font-size: 0.92rem; }
+  .post-item .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.6rem; }
+  .post-item .tag {
+    font-size: 0.72rem;
+    color: var(--accent-color);
+    background: color-mix(in srgb, var(--accent-color) 10%, transparent);
+    padding: 0.1em 0.6em;
+    border-radius: 10px;
+    text-decoration: none;
+  }
+  .post-item .tag:hover { background: var(--accent-color); color: #fff; }
+  .empty { color: var(--text-muted); text-align: center; padding: 3rem 0; }
+  @media (max-width: 768px) { .tag-page { padding: 2rem 1rem; } .post-item { padding: 1rem 1.1rem; } }
+</style>

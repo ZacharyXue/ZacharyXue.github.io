@@ -12,30 +12,33 @@ const posts = (await getCollection('blog'))
   }));
 
 const allTags = [...new Set(posts.flatMap(p => p.post.data.tags || []))].sort();
-
-// 核心标签: 出现 >= 2 次的标签, 按频次降序 (标签云只展示这些, 避免 60 个太杂)
+// 核心标签: 出现 >= 2 次的标签, 按频次降序
 const tagCounts = new Map<string, number>();
 posts.forEach(p => (p.post.data.tags || []).forEach(t => tagCounts.set(t, (tagCounts.get(t) || 0) + 1)));
 const coreTags = [...tagCounts.entries()]
   .filter(([, n]) => n >= 2)
   .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
   .map(([t]) => t);
-const MAX_POST_TAGS = 3; // 文章条目下最多展示 3 个标签
+const MAX_POST_TAGS = 3;
 ---
 
 <BaseLayout title="全部文章">
   <main class="post-list">
-    <h1>全部文章</h1>
+    <h1>全部文章 <span class="post-count">({posts.length})</span></h1>
 
     <div class="filter-bar">
-      <input type="text" id="search" class="search-input" placeholder="搜索文章..." autocomplete="off" />
+      <input type="text" id="search" class="search-input" placeholder="全文搜索，支持标题 / 正文 / 代码…" autocomplete="off" />
+      <button id="clear-search" class="clear-search" aria-label="清空搜索" hidden>×</button>
     </div>
 
     <div class="tag-cloud" id="tag-cloud">
-      {coreTags.map(tag => <button class="tag-btn" data-tag={tag}>{tag}</button>)}
+      {coreTags.map(tag => <a class="tag-btn" href={`/tags/${encodeURIComponent(tag)}`}>{tag}</a>)}
+      <a class="tag-btn tag-all" href="/tags">全部标签 →</a>
     </div>
 
-    <p class="empty" id="no-results" style="display:none">没有匹配的文章。</p>
+    <p class="empty" id="no-results" style="display:none">没有匹配的文章。换个关键词试试？</p>
+
+    <div id="search-results" class="search-results" hidden></div>
 
     {posts.length === 0 ? (
       <p class="empty">还没有文章。</p>
@@ -50,7 +53,9 @@ const MAX_POST_TAGS = 3; // 文章条目下最多展示 3 个标签
             {post.data.description && <p class="desc">{post.data.description}</p>}
             {post.data.tags && post.data.tags.length > 0 && (
               <div class="tags">
-                {post.data.tags.slice(0, MAX_POST_TAGS).map(tag => <span class="tag">{tag}</span>)}
+                {post.data.tags.slice(0, MAX_POST_TAGS).map(tag => (
+                  <a class="tag" href={`/tags/${encodeURIComponent(tag)}`}>{tag}</a>
+                ))}
               </div>
             )}
           </li>
@@ -62,59 +67,131 @@ const MAX_POST_TAGS = 3; // 文章条目下最多展示 3 个标签
 
 <script>
   const search = document.getElementById('search') as HTMLInputElement;
-  const items = document.querySelectorAll<HTMLElement>('.post-item');
-  const noRes = document.getElementById('no-results')!;
-  const btns = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
-  let sel = new Set<string>();
+  const clearBtn = document.getElementById('clear-search') as HTMLButtonElement;
+  const postList = document.getElementById('post-list') as HTMLElement;
+  const resultsBox = document.getElementById('search-results') as HTMLElement;
+  const noRes = document.getElementById('no-results') as HTMLElement;
 
-  function filter() {
-    const kw = search.value.toLowerCase().trim();
-    let n = 0;
-    items.forEach(el => {
-      const t = (el.querySelector('h2')?.textContent || '').toLowerCase();
-      const d = (el.querySelector('.desc')?.textContent || '').toLowerCase();
-      const tags: string[] = JSON.parse(el.dataset.tags || '[]');
-      const ok = (!kw || t.includes(kw) || d.includes(kw)) && (sel.size === 0 || [...sel].every(x => tags.includes(x)));
-      el.style.display = ok ? '' : 'none';
-      if (ok) n++;
+  // 延迟加载 Pagefind 脚本（pagefind.js 是纯 ESM, 通过 export 导出 API）
+  // 用 new Function 包装动态 import, 避免 Vite 构建期静态解析 public 路径
+  const dynImport = new Function('url', 'return import(url)');
+  function loadPagefind(): Promise<any> {
+    return new Promise(resolve => {
+      const w = window as any;
+      if (w.pagefind) return resolve(w.pagefind);
+      dynImport('/pagefind/pagefind.js')
+        .then((mod: any) => {
+          w.pagefind = mod; // 缓存模块导出对象
+          resolve(mod);
+        })
+        .catch(() => resolve(null));
     });
-    (noRes as HTMLElement).style.display = n ? 'none' : '';
   }
 
-  search.addEventListener('input', filter);
-  btns.forEach(b => b.addEventListener('click', () => {
-    const tg = b.dataset.tag!;
-    sel.has(tg) ? (sel.delete(tg), b.classList.remove('active')) : (sel.add(tg), b.classList.add('active'));
-    filter();
-  }));
+  const pfPromise = loadPagefind();
+
+  async function renderResults(items: any[]) {
+    resultsBox.hidden = !(items.length > 0);
+    if (!items.length) {
+      noRes.style.display = '';
+      postList.style.display = 'none';
+      return;
+    }
+    noRes.style.display = 'none';
+    postList.style.display = 'none';
+    // Pagefind 1.x: result 需 await result.data() 获取详情
+    const htmls: string[] = [];
+    for (const r of items) {
+      let data: any = null;
+      try { data = await r.data(); } catch { /* ignore */ }
+      const title = data?.meta?.title || 'untitled';
+      const url = data?.url || '#';
+      const excerpt = data?.content || '';
+      htmls.push(`
+        <li class="post-item search-item">
+          <a href="${url}"><h2>${title}</h2></a>
+          <p class="desc">${excerpt}</p>
+        </li>`);
+    }
+    resultsBox.innerHTML = htmls.join('');
+  }
+
+  async function runSearch() {
+    const kw = search.value.trim();
+    if (!kw) {
+      clearBtn.hidden = true;
+      resultsBox.hidden = true;
+      noRes.style.display = 'none';
+      postList.style.display = '';
+      return;
+    }
+    clearBtn.hidden = false;
+    const pf = await pfPromise;
+    if (!pf) {
+      noRes.textContent = '搜索组件未加载（构建时未生成索引），请稍后再试。';
+      noRes.style.display = '';
+      postList.style.display = 'none';
+      return;
+    }
+    const res = await pf.search(kw, { limit: 30 });
+    renderResults(res?.results || []);
+  }
+
+  search.addEventListener('input', runSearch);
+  clearBtn.addEventListener('click', () => {
+    search.value = '';
+    runSearch();
+    search.focus();
+  });
 </script>
 
 <style>
-  .filter-bar { margin-bottom: 1rem; }
+  .filter-bar { position: relative; margin-bottom: 1rem; max-width: 400px; }
   .search-input {
-    width: 100%; max-width: 400px; padding: 0.5rem 1rem; font-size: 0.95rem;
-    border: 1px solid var(--border-color); border-radius: 8px; outline: none;
+    width: 100%; padding: 0.55rem 2rem 0.55rem 1rem; font-size: 0.95rem;
+    border: 1px solid var(--border-color); border-radius: 10px; outline: none;
     background: var(--bg-color); color: var(--text-color);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
-  .search-input:focus { border-color: var(--accent-color); box-shadow: 0 0 0 2px rgba(52,152,219,0.15); }
+  .search-input:focus { border-color: var(--accent-color); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 15%, transparent); }
+  .clear-search {
+    position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%);
+    background: none; border: none; color: var(--text-muted); font-size: 1.1rem; cursor: pointer; line-height: 1;
+  }
+  .clear-search:hover { color: var(--accent-color); }
   .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
   .tag-btn {
-    font-size: 0.8rem; padding: 0.25rem 0.75rem; border: 1px solid var(--border-color);
-    border-radius: 14px; background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.15s;
+    font-size: 0.8rem; padding: 0.28rem 0.8rem; border: 1px solid var(--border-color);
+    border-radius: 14px; background: transparent; color: var(--text-muted); text-decoration: none;
+    cursor: pointer; transition: all 0.15s;
   }
-  .tag-btn:hover { border-color: var(--accent-color); color: var(--accent-color); }
-  .tag-btn.active { background: var(--accent-color); border-color: var(--accent-color); color: #fff; }
+  .tag-btn:hover { border-color: var(--accent-color); color: var(--accent-color); transform: translateY(-1px); }
+  .tag-all { color: var(--accent-color); border-color: color-mix(in srgb, var(--accent-color) 40%, transparent); }
   .post-item .tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.5rem; }
-  .post-item .tag { font-size: 0.75rem; padding: 0.1em 0.5em; border-radius: 10px; background: var(--accent-color); color: #fff; }
+  .post-item .tag {
+    font-size: 0.75rem; padding: 0.1em 0.55em; border-radius: 10px;
+    background: color-mix(in srgb, var(--accent-color) 10%, transparent);
+    color: var(--accent-color); text-decoration: none;
+  }
+  .post-item .tag:hover { background: var(--accent-color); color: #fff; }
   .post-list { max-width: var(--max-width); margin: 0 auto; padding: 3rem 1rem; }
   .post-list h1 { font-size: 2rem; color: var(--text-color); margin-bottom: 2rem; }
+  .post-count { font-size: 1rem; color: var(--text-muted); font-weight: normal; }
   .posts { list-style: none; padding: 0; }
-  .post-item { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); }
+  .post-item {
+    margin-bottom: 1.2rem; padding: 1.2rem 1.4rem;
+    border: 1px solid var(--border-color); border-radius: 12px;
+    background: var(--card-bg); box-shadow: var(--card-shadow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .post-item:hover { transform: translateY(-2px); box-shadow: var(--card-shadow-hover); border-color: var(--accent-color); }
   .post-item a { text-decoration: none; }
-  .post-item h2 { font-size: 1.3rem; color: var(--text-color); margin-bottom: 0.3rem; }
-  .post-item a:hover h2 { color: var(--accent-color); }
+  .post-item h2 { font-size: 1.2rem; color: var(--text-color); margin-bottom: 0.3rem; transition: color 0.15s ease; }
+  .post-item > a:hover h2 { color: var(--accent-color); }
+  .search-item > a:hover h2 { color: var(--accent-color); }
   .post-item time { color: var(--text-muted); font-size: 0.85rem; }
-  .post-item p { color: var(--text-muted); margin-top: 0.4rem; font-size: 0.95rem; }
-  .empty { color: var(--text-muted); }
-  @media (max-width: 768px) { .post-list { padding: 2rem 1rem; } }
+  .post-item .desc { color: var(--text-muted); margin-top: 0.5rem; font-size: 0.92rem; }
+  .search-item .desc mark { background: color-mix(in srgb, var(--accent-color) 25%, transparent); color: var(--text-color); border-radius: 2px; padding: 0 0.1em; }
+  .empty { color: var(--text-muted); text-align: center; padding: 2rem 0; }
+  @media (max-width: 768px) { .post-list { padding: 2rem 1rem; } .post-item { padding: 1rem 1.1rem; } }
 </style>
