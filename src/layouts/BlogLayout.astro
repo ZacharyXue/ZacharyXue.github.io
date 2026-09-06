@@ -10,26 +10,39 @@ export interface Props {
     description?: string;
   };
   headings?: { depth: number; slug: string; text: string }[];
+  readingMinutes?: number;
+  prevNav?: { slug: string; title: string };
+  nextNav?: { slug: string; title: string };
 }
 
-const { frontmatter, headings = [] } = Astro.props;
+const { frontmatter, headings = [], readingMinutes = 0, prevNav, nextNav } = Astro.props;
 
 // 目录只收集 h2/h3（h1 是文章标题，不算）
 const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
 const showToc = toc.length > 1;
 ---
 
-<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+<BaseLayout title={frontmatter.title} description={frontmatter.description} ogType="article">
+  <div class="read-progress" id="read-progress" aria-hidden="true"></div>
+
   <article>
     <header class="article-header">
       <h1>{frontmatter.title}</h1>
-      <time datetime={frontmatter.date.toISOString().slice(0, 10)}>
-        {frontmatter.date.toLocaleDateString('zh-CN')}
-      </time>
+      <div class="article-meta">
+        <time datetime={frontmatter.date.toISOString().slice(0, 10)}>
+          {frontmatter.date.toLocaleDateString('zh-CN')}
+        </time>
+        {readingMinutes > 0 && (
+          <>
+            <span class="dot">·</span>
+            <span>约 {readingMinutes} 分钟</span>
+          </>
+        )}
+      </div>
       {frontmatter.tags?.length > 0 && (
         <div class="tags">
           {frontmatter.tags.map(tag => (
-            <span class="tag">{tag}</span>
+            <a class="tag" href={`/tags/${encodeURIComponent(tag)}`}>{tag}</a>
           ))}
         </div>
       )}
@@ -38,6 +51,21 @@ const showToc = toc.length > 1;
       <slot />
     </div>
   </article>
+
+  <nav class="post-nav" aria-label="文章导航">
+    {prevNav && (
+      <a href={`/blog/${prevNav.slug}`} class="nav-prev">
+        <span class="nav-label">← 上一篇</span>
+        <span class="nav-title">{prevNav.title}</span>
+      </a>
+    )}
+    {nextNav && (
+      <a href={`/blog/${nextNav.slug}`} class="nav-next">
+        <span class="nav-label">下一篇 →</span>
+        <span class="nav-title">{nextNav.title}</span>
+      </a>
+    )}
+  </nav>
 
   {showToc && (
     <>
@@ -120,6 +148,78 @@ const showToc = toc.length > 1;
       });
     }
   }
+
+  // ===== 阅读进度条 =====
+  const progress = document.getElementById('read-progress');
+  if (progress) {
+    const calc = () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = total > 0 ? (window.scrollY / total) * 100 : 0;
+      progress.style.width = pct + '%';
+    };
+    window.addEventListener('scroll', calc, { passive: true });
+    window.addEventListener('resize', calc);
+    calc();
+  }
+
+  // ===== 代码块复制按钮 =====
+  const blocks = document.querySelectorAll<HTMLElement>('article pre.astro-code');
+  blocks.forEach(pre => {
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = '复制';
+    btn.setAttribute('aria-label', '复制代码');
+    btn.addEventListener('click', async () => {
+      const code = pre.querySelector('code');
+      const text = (code ? code.innerText : pre.innerText) || '';
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        // fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+      btn.textContent = '已复制 ✓';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = '复制';
+        btn.classList.remove('copied');
+      }, 1800);
+    });
+    pre.appendChild(btn);
+  });
+</script>
+
+<script>
+  // ===== 图片懒加载 + 点击放大（lightbox） =====
+  const imgs = document.querySelectorAll<HTMLImageElement>('article .article-body img');
+  imgs.forEach(img => {
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', () => {
+      const mask = document.createElement('div');
+      mask.className = 'lightbox-mask';
+      const big = document.createElement('img');
+      big.src = img.src;
+      big.alt = img.alt || '';
+      mask.appendChild(big);
+      document.body.appendChild(mask);
+      document.body.style.overflow = 'hidden';
+      const close = () => {
+        mask.remove();
+        document.body.style.overflow = '';
+        document.removeEventListener('keydown', onKey);
+      };
+      const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
+      mask.addEventListener('click', close);
+      document.addEventListener('keydown', onKey);
+    });
+  });
 </script>
 
 <style>
@@ -129,18 +229,21 @@ const showToc = toc.length > 1;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--border-color);
   }
-  .article-header time {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-  }
-  .tags { margin-top: 0.8rem; display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
+  .article-header h1 { font-size: 1.9rem; line-height: 1.4; margin-bottom: 0.7rem; }
+  .article-meta { display: flex; justify-content: center; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+  .article-meta time, .article-meta span { color: var(--text-muted); font-size: 0.9rem; }
+  .article-meta .dot { opacity: 0.5; }
+  .tags { margin-top: 0.9rem; display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
   .tag {
-    background: var(--accent-color);
-    color: var(--white);
-    padding: 0.2em 0.7em;
+    background: color-mix(in srgb, var(--accent-color) 10%, transparent);
+    color: var(--accent-color);
+    padding: 0.2em 0.9em;
     border-radius: 12px;
     font-size: 0.8rem;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
   }
+  .tag:hover { background: var(--accent-color); color: #fff; }
   .mermaid-wrapper {
     margin: 2rem 0;
     overflow-x: auto;
@@ -178,7 +281,7 @@ const showToc = toc.length > 1;
   }
   .toc-header-title {
     font-weight: 600;
-    color: var(--primary-color);
+    color: var(--text-color);
     font-size: 1rem;
   }
   .toc-close {
@@ -250,5 +353,6 @@ const showToc = toc.length > 1;
 
   @media (max-width: 768px) {
     article { padding: 1rem; }
+    .article-header h1 { font-size: 1.6rem; }
   }
 </style>
