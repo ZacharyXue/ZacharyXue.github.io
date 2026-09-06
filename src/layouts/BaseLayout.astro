@@ -2,10 +2,15 @@
 export interface Props {
   title: string;
   description?: string;
+  ogType?: 'website' | 'article';
+  ogImage?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, ogType = 'website', ogImage = '/og-image.png' } = Astro.props;
 const pathname = Astro.url.pathname;
+const site = 'https://zacharyxue.github.io';
+const canonical = site + pathname;
+const ogDesc = description || title;
 ---
 
 <html lang="zh-CN">
@@ -14,6 +19,22 @@ const pathname = Astro.url.pathname;
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title} | Zachary Xue</title>
   {description && <meta name="description" content={description} />}
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Open Graph / Twitter Card -->
+  <meta property="og:site_name" content="Zachary Xue" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={ogDesc} />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={site + ogImage} />
+  <meta property="og:locale" content="zh_CN" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={ogDesc} />
+  <meta name="twitter:image" content={site + ogImage} />
+  <link rel="canonical" href={canonical} />
+
   <script is:inline>
     (function() {
       var t = localStorage.getItem('theme');
@@ -28,10 +49,13 @@ const pathname = Astro.url.pathname;
 <body>
   <nav class="navbar">
     <a href="/" class="logo">Zachary Xue</a>
-    <div class="nav-links">
+    <button id="menu-toggle" class="menu-toggle" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="nav-links">
       <a href="/" class:list={["nav-link", { active: pathname === "/" }]}>首页</a>
       <a href="/blog" class:list={["nav-link", { active: pathname === "/blog" || pathname.startsWith("/blog/") }]}>全部文章</a>
-
+      <a href="/tags" class:list={["nav-link", { active: pathname === "/tags" || pathname.startsWith("/tags/") }]}>标签</a>
       <a href="/projects" class:list={["nav-link", { active: pathname === "/projects" || pathname.startsWith("/projects/") }]}>项目</a>
       <a href="/about" class:list={["nav-link", { active: pathname === "/about" }]}>关于我</a>
       <button id="theme-toggle" class="theme-toggle" aria-label="切换暗色模式">
@@ -41,10 +65,12 @@ const pathname = Astro.url.pathname;
     </div>
   </nav>
 
-  <slot />
+  <div data-pagefind-body>
+    <slot />
+  </div>
 
   <footer>
-    <p>&copy; 2026 Zachary Xue</p>
+    <p>&copy; 2026 Zachary Xue · Powered by Astro</p>
   </footer>
 </body>
 </html>
@@ -58,6 +84,19 @@ const pathname = Astro.url.pathname;
     html.setAttribute('data-theme', next);
     localStorage.setItem('theme', next);
   });
+
+  // 移动端汉堡菜单
+  const menuToggle = document.getElementById('menu-toggle');
+  const navLinks = document.getElementById('nav-links');
+  menuToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', String(open));
+  });
+  // 点击菜单项后自动收起
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }));
 </script>
 
 <style>
@@ -72,9 +111,9 @@ const pathname = Astro.url.pathname;
     z-index: 10;
     border-bottom: 1px solid var(--border-color);
   }
-  .logo { color: var(--text-color); font-weight: bold; font-size: 1.2rem; text-decoration: none; }
+  .logo { color: var(--text-color); font-weight: bold; font-size: 1.2rem; text-decoration: none; letter-spacing: 0.02em; }
   .nav-links { display: flex; gap: 1.5rem; align-items: center; }
-  .nav-link { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; }
+  .nav-link { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; transition: color 0.15s ease; }
   .nav-link:hover, .nav-link.active { color: var(--accent-color); }
   .theme-toggle {
     background: none;
@@ -91,12 +130,58 @@ const pathname = Astro.url.pathname;
   .theme-icon-dark { display: none; }
   [data-theme="dark"] .theme-icon-dark { display: inline; }
   .theme-icon-light { display: inline; }
+
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.3rem;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .menu-toggle span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--text-muted);
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
   footer {
     text-align: center; padding: 2rem; color: var(--text-muted);
     font-size: 0.85rem; border-top: 1px solid var(--border-color);
   }
+
   @media (max-width: 768px) {
-    .navbar { padding: 1rem; }
-    .nav-links { gap: 1rem; }
+    .navbar { padding: 0.9rem 1rem; }
+    .menu-toggle { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      background: var(--bg-color);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.5rem 1rem 1rem;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    }
+    .nav-links.open { display: flex; }
+    .nav-link {
+      display: block;
+      width: 100%;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .nav-link:last-of-type { border-bottom: none; }
+    .theme-toggle { margin-top: 0.7rem; align-self: flex-start; }
   }
 </style>

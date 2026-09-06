@@ -9,3 +9,7 @@ tmp/
 __pycache__/
 *.pyc
 
+# 敏感密钥（zsxq keychain 绝不入仓）
+.zsxq-cli/
+*.key
+
