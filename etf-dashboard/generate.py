@@ -62,16 +62,16 @@ def ttskill_index_info(index_id):
         return {}
 
 def tencent_quote(symbol):
-    """腾讯实时行情: 现价/涨跌幅 (走 router)"""
+    """腾讯实时行情: 现价/涨跌幅 (走 router; force 强制回源, 手动更新要当天价)"""
     try:
-        d = DSR.get('cn_stock_quote', symbol=symbol)[0]
+        d = DSR.get('cn_stock_quote', symbol=symbol, force=True)[0]
         return {"name": d.get("name"), "price": d.get("price"), "chg_pct": d.get("change_pct")}
     except Exception as e:
         raise ValueError(f"腾讯行情失败 {symbol}: {e}")
 
 def tencent_kline(symbol, days=300):
-    """腾讯前复权K线 -> [(date, close, high, vol)] (走 router)"""
-    kl = DSR.get('cn_stock_kline', symbol=symbol, count=days)[0]
+    """腾讯前复权K线 -> [(date, close, high, vol)] (走 router; force 跳过SWR旧值, 要最新一根)"""
+    kl = DSR.get('cn_stock_kline', symbol=symbol, count=days, force=True)[0]
     return [(r["date"], r["close"], r["high"], r["volume"]) for r in kl]
 
 # ---------- 指标计算 ----------
