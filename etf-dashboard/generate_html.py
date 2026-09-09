@@ -73,7 +73,6 @@ def render_row(r):
                    f'<span style="font-size:12px;color:var(--sub)">(PB{pbval})</span></div></div>')
     else:
         pb_html = '<div class="met"><div class="lab">PB10y 分位</div><div class="val">—</div></div>'
-    roe_html = m("ROE", f"{r['roe']:.1f}%" if r.get('roe') is not None else "—")
     metrics = (
         pe5_html +
         pb_html +
@@ -82,9 +81,7 @@ def render_row(r):
         m("20日BIAS", f"{r['bias20']:+.2f}%" if r["bias20"] is not None else "—") +
         m("距1年高", fmt_pct(r["dd_hi"])) +
         m("MA20", f"{r['ma20']:.3f}") +
-        m("5日均额", f"{r['daily_yi']:.2f}亿") +
-        m("目标10%/15%", f"{r['target10']:.2f}/{r['target15']:.2f}") +
-        roe_html
+        m("目标10%/15%", f"{r['target10']:.2f}/{r['target15']:.2f}")
     )
     return f"""
 <div class="card">
@@ -123,7 +120,7 @@ def build_html(cfg, rows, errs, kline_date):
     <b>BIAS(乖离率)</b> = (现价−MA20)/MA20，衡量涨跌是否过度：>10%过热，负值=超跌。<br>
     <b>PE5y 分位</b> = 当前PE在近5年所处百分位（用中证官网历史PE自算），判断贵贱的主锚。<br>
     <b>PB10y 分位</b> = 当前PB在近10年百分位（天天基金口径；中证官网无PB历史、暂无5y PB数据源）。<br>
-    <b>PE5y 显示"—"</b> = 该指数非中证官网编制（如国证/恒生系，如港股通红利低波 159545），无5y PE分位，此时信号回退到 BIAS/回撤判断。<br>
+    <b>PE5y 显示"—"</b> = 该指数非中证官网编制（如国证系 国证成长100/980080、恒生系），无5y PE分位，此时信号回退到 BIAS/回撤判断。<br>
     <b>目标价</b> = MA20 抬到 BIAS 达 10%/15% 的挂单价。<br>
     标的池可编辑 <code>etf-dashboard/watchlist.json</code> 增删品种后重跑 <code>python3 generate.py</code> 更新。
   </div>
