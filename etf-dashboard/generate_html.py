@@ -73,7 +73,6 @@ def render_row(r):
                    f'<span style="font-size:12px;color:var(--sub)">(PB{pbval})</span></div></div>')
     else:
         pb_html = '<div class="met"><div class="lab">PB10y 分位</div><div class="val">—</div></div>'
-    roe_html = m("ROE", f"{r['roe']:.1f}%" if r.get('roe') is not None else "—")
     # 历史最大回撤/当前回撤/回撤进度（核心，全资产显示）
     def dd_color(progress):
         # 回撤进度: <25% 安全, 25-50% 中, 50-75% 深, >=75% 极深(接近历史大底)
@@ -101,9 +100,7 @@ def render_row(r):
         m("20日BIAS", f"{r['bias20']:+.2f}%" if r["bias20"] is not None else "—") +
         m("距1年高", fmt_pct(r["dd_hi"])) +
         m("MA20", f"{r['ma20']:.3f}") +
-        m("5日均额", f"{r['daily_yi']:.2f}亿" if r.get("daily_yi") is not None else "—") +
-        m("目标10%/15%", f"{r['target10']:.2f}/{r['target15']:.2f}") +
-        roe_html
+        m("目标10%/15%", f"{r['target10']:.2f}/{r['target15']:.2f}")
     )
     return f"""
 <div class="card">
