@@ -1,5 +1,5 @@
 {
-  "title": "ETF / 长牛资产 温度看板",
+  "title": "ETF 技术温度看板",
   "refresh_note": "手动触发更新：cd etf-dashboard && python3 update.py",
   "watchlist": [
     {
