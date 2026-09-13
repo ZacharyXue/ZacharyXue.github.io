@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>伊利股份 · 监测看板（等击球点/验证ROE锚）</title>
+<style>
+:root { --bg:#f6f7f9; --card:#fff; --line:#e6e8eb; --ink:#1f2329; --sub:#6b7280;
+  --ok:#16a34a; --warn:#d97706; --err:#dc2626; --gray:#9ca3af; --acc:#2563eb; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg); color:var(--ink); line-height:1.6; }
+.wrap { max-width:980px; margin:0 auto; padding:28px 18px 60px; }
+header h1 { font-size:22px; margin:0 0 6px; }
+header .meta { color:var(--sub); font-size:13px; }
+.verdictbar { background:#1f2937; color:#f9fafb; border-radius:12px; padding:16px 18px; margin:14px 0; font-size:14px; line-height:1.9; }
+.verdictbar b { color:#fda4af; }
+.summary { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px; margin:18px 0; box-shadow:0 1px 2px rgba(0,0,0,.04); }
+.summary .verdict { font-size:15px; font-weight:600; margin-bottom:12px; }
+.scards { display:grid; grid-template-columns:repeat(auto-fit,minmax(165px,1fr)); gap:10px; }
+.scard { background:#f9fafb; border-radius:8px; padding:10px 12px; border:1px solid #f0f1f3; }
+.sval { font-size:20px; font-weight:700; color:var(--ink); }
+.sname { font-size:12px; color:var(--sub); margin-top:2px; }
+.ssub { font-size:11px; margin-top:2px; }
+.ssub.pos { color:var(--ok); } .ssub.neg { color:var(--err); } .ssub.warn { color:var(--warn); }
+.gtitle { font-size:16px; margin:26px 0 10px; padding-left:10px; border-left:4px solid var(--acc); }
+.tgrid { display:grid; grid-template-columns:1fr; gap:12px; width:100%; }
+.tcard { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; width:100%; }
+.thead { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.cname { font-weight:600; }
+.tval { font-size:16px; font-weight:700; color:var(--acc); margin-left:auto; }
+.theader2 { font-size:12px; color:var(--sub); margin-top:6px; }
+.tw { color:var(--ink); }
+.badge { padding:2px 8px; border-radius:12px; font-size:12px; font-weight:600; }
+.badge.ok { background:#e9f8ef; color:var(--ok); } .badge.err { background:#fef2f2; color:var(--err); }
+.badge.gray { background:#f1f2f4; color:var(--sub); }
+.tsvg { margin-top:8px; background:#fafbfc; border-radius:6px; }
+.meta { margin-top:8px; font-size:12px; color:var(--sub); }
+.errnote { margin-top:8px; font-size:12px; color:var(--err); background:#fef2f2; padding:6px 10px; border-radius:6px; }
+.sus-pills { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+.sus-pill { display:inline-block; padding:5px 14px; border-radius:20px; font-size:13px; font-weight:700; }
+.sus-pill.ok { background:#e9f8ef; color:#16a34a; border:1px solid #bbf0cc; }
+.sus-pill.warn { background:#fef6e5; color:#d97706; border:1px solid #fbe3b0; }
+.sus-pill.bad { background:#fef2f2; color:#dc2626; border:1px solid #fbd0d0; }
+table.mini { width:100%; border-collapse:collapse; font-size:12px; margin-top:8px; }
+table.mini th, table.mini td { padding:6px 8px; border-bottom:1px solid var(--line); text-align:right; }
+table.mini th { background:#f1f2f4; color:var(--sub); text-align:center; font-size:11px; }
+table.mini td.pn { text-align:left; font-weight:600; }
+footer { margin-top:30px; color:var(--sub); font-size:12px; line-height:1.8; border-top:1px solid var(--line); padding-top:16px; }
+@media (max-width:640px) { .sval { font-size:17px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><h1>伊利股份 (600887) · 监测看板</h1>
+<div class="meta">更新：2026-09-13 09:17 · 逻辑：不赚成长钱，只等极端低估(股息>6%≈20元)赚均值回归 · 正确性优先 · 免费公开源</div></header>
+
+<div class="verdictbar">🎯 <b>击球点判定</b>：🔴 未到击球区(&gt;22.5,继续等)<br>
+💡 <b>当前逻辑</b>：好公司差价格。等两件事——① 原奶成本红利退潮后 <b>正常化 ROE 仍稳 17-18%</b>(锚不塌)；② 营收端出现<b>真实量价驱动</b>(管我财信号)。任一不满足，20 元都不是底。</div>
+
+<div class="summary">
+  <div class="verdict">📊 关键信号（每季对照）</div>
+  <div class="sus-pills"><span class="sus-pill ok">营收同比 +4.1%</span><span class="sus-pill ok">正常化ROE ~17.9%</span><span class="sus-pill ok">净头寸 174.4亿</span><span class="sus-pill warn">核心利润 +9.0%</span><span class="sus-pill ok">商誉剩 6.0亿</span></div>
+  <div class="scards"><div class="scard"><div class="sval">26.7 元</div><div class="sname">现价</div><div class="ssub ">52周位置 62.2%</div></div><div class="scard"><div class="sval">16.7</div><div class="sname">PE(TTM)</div><div class="ssub ">隐含增速4.8%&gt;实际</div></div><div class="scard"><div class="sval">5.18%</div><div class="sname">股息率(2025口径)</div><div class="ssub ">击球位&gt;6%</div></div><div class="scard"><div class="sval">22.5 元</div><div class="sname">合理价 r=8%</div><div class="ssub neg">正常化ROE口径: 18.9</div></div></div>
+</div>
+
+<section class="grp"><h2 class="gtitle">A 估值与击球点(买不买)</h2><div class="tgrid"><div class="tcard"><div class="thead"><span class="cname">现价/52周位置</span><span class="tval">26.7元 / 62.2%</span><span class="badge ok">正常</span></div><div class="theader2">为什么关注：<span class="tw">现价 26.66(2026-09-11)，52周位置 62%——中高位，不是极端低估区。击球点：股息率&gt;6%(约 20 元) / &gt;6.5%(约 18 元)。</span></div><div class="theader2">信号：<span class="tw">52周位置&lt;35% 或 价格&lt;20 = 进入击球区；当前 62% = 继续等</span></div><div class="meta">来源：腾讯行情 · 报告期： · 更新：2026-09-13 09:17</div></div><div class="tcard"><div class="thead"><span class="cname">股息率</span><span class="tval">5.18%</span><span class="badge ok">正常</span></div><div class="theader2">为什么关注：<span class="tw">2025 年度每股分红 1.38 元(10派9+中期10派4.8)，分红率承诺≥75%。当前 1.38/26.66≈5.18%；若 2026 利润下滑按 75% 分红率则保守分红约 1.19 → 4.46%。</span></div><div class="theader2">信号：<span class="tw">股息率&gt;6%(价格~20)=极端低估击球区；分红率守 75% = 股息底稳定</span></div><div class="meta">来源：东财分红接口(已核) · 报告期：2025年报 · 更新：2026-09-13 09:17</div></div><div class="tcard"><div class="thead"><span class="cname">PE(TTM)</span><span class="tval">16.7 倍</span><span class="badge ok">正常</span></div><div class="theader2">为什么关注：<span class="tw">当前 PE(TTM)≈16.7 倍，位于历史偏低但非极低区间。隐含增速 4.8% &gt; 实际营收 0-4%，价格略预支增长。</span></div><div class="theader2">信号：<span class="tw">PE 分位回落 + 价格下探 = 隐含增速被压缩到现实以下，安全边际变厚</span></div><div class="meta">来源：腾讯行情 · 报告期： · 更新：2026-09-13 09:17</div></div><div class="tcard"><div class="thead"><span class="cname">合理价区间(ROE锚)</span><span class="tval">22.5 / 18.0 / 15.0</span><span class="badge ok">正常</span></div><div class="theader2">为什么关注：<span class="tw">ROE 20.9%、每股净资产 8.64 元：r=8%→22.5、r=10%→18.0、r=12%→15.0。若 ROE 中枢下移至 17-18%(剔成本红利)，合理价下修至 ~20/16/13。</span></div><div class="theader2">信号：<span class="tw">价格进入 r=10% 合理价以下 = 安全边际转厚；ROE 若跌破 15%，锚整体下移</span></div><table class="mini"><thead><tr><th>口径</th><th>r=8%</th><th>r=10%</th><th>r=12%</th></tr></thead><tbody>
+<tr><td class="pn">账面ROE 20.9%</td><td>22.5</td><td>18.0</td><td>15.0</td></tr>
+<tr><td class="pn">正常化ROE 17.5%</td><td>18.9</td><td>15.1</td><td>—</td></tr>
+</tbody></table><div class="meta">来源：计算(合理PB=ROE/r, 研报口径) · 报告期：2025年报 · 更新：2026-09-13 09:17</div></div></div></section><section class="grp"><h2 class="gtitle">B 增长质量(量价驱动验证)</h2><div class="tgrid"><div class="tcard"><div class="thead"><span class="cname">营收同比(最新报告期)</span><span class="tval">644.9亿 (+4.1%)</span><span class="badge ok">正常</span></div><div class="theader2">为什么关注：<span class="tw">2026H1 营收 644.9 亿 +4.13%（2025 全年 +0.1%）。剔除澳优减值后主业没问题，但增长引擎主要靠冷饮/饮料等新品类，液体乳近零增长。</span></div><div class="theader2">信号：<span class="tw">连续 2 期营收同比&gt;4% = 复苏确认；增速回落且非季节性 = 消费降级延续</span></div><div class="meta">来源：东财 datacenter GINCOME · 报告期：2026中报 · 更新：2026-09-13 09:17</div></div><div class="tcard"><div class="thead"><span class="cname">液体乳收入同比</span><span class="tval">+0.05%</span><span class="badge gray">人工/研报口径</span></div><div class="theader2">为什么关注：<span class="tw">液体乳是基本盘(57%收入)。2026Q2 单季 +0.05%（量价双负：2025 全年销量-4.8亿/价格-22.9亿/结构-18亿）。管我财等量价驱动出现。</span></div><div class="theader2">信号：<span class="tw">液体乳同比转正且加速 = 量价驱动回归(关键买入信号之一)</span></div><div class="meta">来源：华龙证券研报(2026-05) · 报告期：2026Q2 · 更新：2026-09-13 09:17</div></div><div class="tcard"><div class="thead"><span class="cname">量/价/成本/结构四拆</span><span class="tval">四拆</span><span class="badge gray">人工/研报口径</span></div><div class="theader2">为什么关注：<span class="tw">Phase 4.5 增长归因：2025 液体乳收入下降 47.8 亿 = 销量-4.8 + 价格-22.9 + 结构-18.1 + 其他。价格贡献为负 = 无提价权。</span></div><div class="theader2">信号：<span class="tw">价格贡献转正 = 提价权恢复(护城河回归)；成本贡献&gt;50% 利润增量 = 增长不可持续</span></div><table class="mini"><thead><tr><th>项目</th><th>2025液体乳贡献(亿元)</th></tr></thead><tbody>
+<tr><td class="pn">销量</td><td class="neg">-4.8</td></tr>
+<tr><td class="pn">价格</td><td class="neg">-22.9</td></tr>
+<tr><td class="pn">结构</td><td class="neg">-18.1</td></tr>
+</tbody></table><div class="meta">来源：华龙证券研报(2025年报拆解) · 报告期：2025年报 · 更新：2026-09-13 09:17</div></div><div class="tcard"><div class="thead"><span class="cname">毛利率</span><span class="tval">36.4%</span><span class="badge ok">正常</span></div><div class="theader2">为什么关注：<span class="tw">2026H1 毛利率 36.4%（+0.38pct），液体乳毛利率 34.16%（+2.4pct）——上升主因是原奶价格低位（成本红利），不是涨价。</span></div><div class="theader2">信号：<span class="tw">毛利率回落 = 成本红利退潮(预期 2026H2-2027)；毛利率稳住且收入增长 = 真改善</span></div><div class="meta">来源：东财 datacenter GINCOME · 报告期：2026中报 · 更新：2026-09-13 09:17</div></div></div></section><section class="grp"><h2 class="gtitle">C 成本红利与正常化盈利(一次性检验)</h2><div class="tgrid"><div class="tcard"><div class="thead"><span class="cname">生鲜乳价格趋势</span><span class="tval"></span><span class="badge gray">人工/研报口径</span></div><div class="theader2">为什么关注：<span class="tw">2022-2025 生鲜乳价格创纪录下行，是伊利 2024-2026 毛利率上升的来源(成本红利)。2026 年价格企稳回升，行业供需趋于平衡。</span></div><div class="theader2">信号：<span class="tw">奶价上行 = 成本红利递减(利润承压)但行业定价秩序修复(利好龙头)；奶价低位平稳 = 红利延续</span></div><div class="meta">来源：农业农村部/研报 · 报告期：2026-08 · 更新：2026-09-13 09:17</div></div><div class="tcard"><div class="thead"><span class="cname">正常化ROE(剔成本红利)</span><span class="tval">17.9%</span><span class="badge ok">正常</span></div><div class="theader2">为什么关注：<span class="tw">账面 ROE 20.9% 含原奶成本红利；剔除后约 17-18%。估值锚用正常化 ROE 而非账面。</span></div><div class="theader2">信号：<span class="tw">锚稳：正常化 ROE 稳在 17-18% 不破 = 利润含金量过关；跌破 15% = 放弃回归逻辑</span></div><div class="meta">来源：估算(模型) · 报告期：2025年报 · 更新：2026-09-13 09:17</div></div></div></section><section class="grp"><h2 class="gtitle">D 盈利质量(ROE锚)</h2><div class="tgrid"><div class="tcard"><div class="thead"><span class="cname">账面ROE</span><span class="tval">20.9%</span><span class="badge ok">正常</span></div><div class="theader2">为什么关注：<span class="tw">2025 年报 ROE 20.9%（2024 15.8% 低谷、2023 20.2%）。行业寒冬里蒙牛 3.8%、光明亏损，伊利 ROE 20%+ 是龙头韧性的核心证据。</span></div><div class="theader2">信号：<span class="tw">ROE 连续 2 年&lt;15% = ROE 锚下移，均值回归逻辑失效；稳 18-21% = 锚稳</span></div><div class="meta">来源：东财 datacenter MAINFINADATA · 报告期：2025年报 · 更新：2026-09-13 09:17</div></div><div class="tcard"><div class="thead"><span class="cname">剔除减值后核心利润增速</span><span class="tval">82.2亿 (+9.0%)</span><span class="badge ok">正常</span></div><div class="theader2">为什么关注：<span class="tw">2026H1 归母 57.6 亿(-20%)是澳优减值 24.6 亿(商誉15.5+存货9.1)砸出的账面难看；剔除后核心经营利润 83.8 亿 +10%，创历史新高。</span></div><div class="theader2">信号：<span class="tw">核心利润增速保持 10%+ = 主业真实向好；商誉清零后报表更干净(剩 5.97亿)</span></div><div class="meta">来源：东财 datacenter GINCOME(计算) · 报告期：2026中报 · 更新：2026-09-13 09:17</div></div><div class="tcard"><div class="thead"><span class="cname">资产减值/商誉余额</span><span class="tval">减值-24.6亿 / 商誉6.0亿</span><span class="badge ok">正常</span></div><div class="theader2">为什么关注：<span class="tw">2024 减值 46.8 亿(澳优商誉30.4)、2026H1 减值 24.6 亿(商誉15.5)。累计减值 45 亿后商誉仅剩 5.97 亿，历史并购雷基本拆完。</span></div><div class="theader2">信号：<span class="tw">减值归零 + 商誉清零 = 报表轻装上阵；再出现大额减值 = 并购又踩雷(警戒)</span></div><table class="mini"><thead><tr><th>报告期</th><th>资产减值(亿元)</th></tr></thead><tbody><tr><td class='pn'>2026-06-30</td><td class='neg'>-24.56亿</td></tr><tr><td class='pn'>2025-12-31</td><td class='neg'>-7.3亿</td></tr><tr><td class='pn'>2024-12-31</td><td class='neg'>-46.76亿</td></tr><tr><td class='pn'>2023-12-31</td><td class='neg'>-15.26亿</td></tr></tbody></table><div class="meta">来源：东财 datacenter GINCOME · 报告期：2026中报 · 更新：2026-09-13 09:17</div></div></div></section><section class="grp"><h2 class="gtitle">E 财务健康(负债放大器)</h2><div class="tgrid"><div class="tcard"><div class="thead"><span class="cname">净头寸(类现金-有息负债)</span><span class="tval">174.4亿</span><span class="badge ok">正常</span></div><div class="theader2">为什么关注：<span class="tw">2026H1 类现金(货币166+其他流动240+其他非流动419)=825 亿 vs 有息负债 651 亿 → 净头寸 +174 亿。高负债是低息融资+理财息差财技，不是缺钱。</span></div><div class="theader2">信号：<span class="tw">净头寸转负 = 危险信号(财务结构恶化)；维持正 = 负债只是放大器非炸药包</span></div><div class="meta">来源：东财 datacenter GBALANCE(计算) · 报告期：2026中报 · 更新：2026-09-13 09:17</div></div><div class="tcard"><div class="thead"><span class="cname">流动比率/有息负债率</span><span class="tval">0.62 / 41.6%</span><span class="badge ok">正常</span></div><div class="theader2">为什么关注：<span class="tw">流动比率 0.69、有息负债率 33.4%——短期偿债依赖滚动融资，是「健康的紧张」。利率+100bp 净利约 -6~8%；利率+消费双杀是最大压力场景。</span></div><div class="theader2">信号：<span class="tw">流动比率持续&lt;0.6 或 有息负债率&gt;40% = 警惕；利率上行周期关注财务费用转正</span></div><div class="meta">来源：东财 datacenter MAINFINADATA · 报告期：2026中报 · 更新：2026-09-13 09:17</div></div><div class="tcard"><div class="thead"><span class="cname">财务费用(利息净额)</span><span class="tval">-5.26亿</span><span class="badge ok">正常</span></div><div class="theader2">为什么关注：<span class="tw">2026H1 财务费用 -5.26 亿(利息收入 10.7 &gt; 利息支出 5.6)——借 1.7% 低息短融做理财吃息差，净利息为正。</span></div><div class="theader2">信号：<span class="tw">财务费用由负转正 = 息差结构失效(利率快速上行或理财收益崩)；维持负 = 财技仍在</span></div><div class="meta">来源：东财 datacenter GINCOME · 报告期：2026中报 · 更新：2026-09-13 09:17</div></div></div></section><section class="grp"><h2 class="gtitle">F 同行与股东回报</h2><div class="tgrid"><div class="tcard"><div class="thead"><span class="cname">伊利 vs 蒙牛营收增速</span><span class="tval">4.1% vs 7.8%</span><span class="badge ok">正常</span></div><div class="theader2">为什么关注：<span class="tw">2026H1 伊利 +4.1% vs 蒙牛 +7.8%（蒙牛低基数+新品类鲜奶/奶酪+30%）。净利差距 37→100 亿主要是蒙牛两年减值 78 亿的节奏错位，蒙牛修复弹性更大。</span></div><div class="theader2">信号：<span class="tw">蒙牛持续双位数增速而伊利回落 = 差距收敛(老二反超苗头)；伊利增速反超 = 龙头地位强化</span></div><div class="meta">来源：公司公告(公开报道) · 报告期：2026H1 · 更新：2026-09-13 09:17</div></div><div class="tcard"><div class="thead"><span class="cname">每股分红/分红率</span><span class="tval">1.4 元/股</span><span class="badge ok">正常</span></div><div class="theader2">为什么关注：<span class="tw">2025 年度 10派13.8(每股 1.38)，2024 每股 1.22，分红率承诺≥75%，还有 10-20 亿回购注销。股息是持有者的补偿。</span></div><div class="theader2">信号：<span class="tw">分红率守 75% 承诺 + 每股分红逐年递增 = 股息底牢；下调分红 = 盈利或现金流恶化</span></div><div class="meta">来源：东财分红接口(已核) · 报告期：2025年报 · 更新：2026-09-13 09:17</div></div></div></section>
+
+<footer>
+  <b>数据源</b>：东方财富 datacenter（MAINFINADATA/GINCOME/GBALANCE）+ 腾讯行情，统一经 data-source-router 取数；研报口径指标标「人工/研报」并注明出处。<br>
+  <b>原则</b>：正确性 &gt; 及时性；远程失败即标「获取失败」+ 原因，绝不使用旧值冒充当前值。<br>
+  <b>口径</b>：营收/净利为报告期累计；ROE 为加权；净头寸 = (货币资金+其他流动+其他非流动) − (短借+1年内到期+长借)；正常化 ROE = 账面 − 成本红利修正(简化模型)。<br>
+  <b>说明</b>：本看板仅监测指标，不构成投资建议。
+</footer>
+</div>
+</body>
+</html>
