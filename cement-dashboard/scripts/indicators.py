@@ -20,7 +20,7 @@
 """
 
 # 分组顺序
-GROUPS = ["价格组", "成本组", "量组", "供给/出清组", "盈利组", "财务安全垫组", "估值/技术闸门组"]
+GROUPS = ["价格组", "成本组", "量组", "供给/出清组", "盈利组", "财务安全垫组", "估值/技术闸门组", "机构态度组"]
 
 INDICATORS = [
     # ============ ① 价格组（最优先·周度） ============
@@ -144,6 +144,28 @@ INDICATORS = [
          meaning="动量确认，避免拿基本面数据做高频交易。",
          signal="MACD零轴下金叉+RSI回升=动能转强",
          getter="macd_rsi_calc"),
+
+    # ============ ⑧ 机构态度组（月度·不看报价看动作） ============
+    dict(id="report_coverage", group="机构态度组", name="研报覆盖密度", unit="篇·家", ttl="month",
+         source="东财研报中心", source_url="https://data.eastmoney.com/report/",
+         meaning="近12个月研报篇数+覆盖机构家数，对比3年均值。研报少了=卖方在撤离，是比评级更真实的信号(卖方评级永远喊多)。",
+         signal="近12月篇数与3年均值比收缩>30%=机构撤离；恢复=关注度回升",
+         getter="report_coverage"),
+    dict(id="rating_dist", group="机构态度组", name="评级分布(近12月)", unit="篇", ttl="month",
+         source="东财研报中心", source_url="https://data.eastmoney.com/report/",
+         meaning="近12个月评级分布(买入/增持/中性/谨慎/卖出)。注意卖方评级钝化，分布只能作参考，覆盖密度才是硬指标。",
+         signal="出现中性/谨慎=态度实质转弱；全买入=看多但无定价",
+         getter="rating_dist"),
+    dict(id="target_price_coverage", group="机构态度组", name="目标价覆盖(近12月)", unit="篇", ttl="month",
+         source="东财研报中心", source_url="https://data.eastmoney.com/report/",
+         meaning="近12个月给出目标价的研报数。0篇=机构不敢给估值锚，隐含'跌到哪不知道'，是比下调评级更强烈的看空信号。",
+         signal="0篇且历史曾给过=机构'不敢定价'，看空信号；恢复给出=信心回升",
+         getter="target_price_coverage"),
+    dict(id="forecast_eps", group="机构态度组", name="盈利预测(机构一致 EPS)", unit="元", ttl="month",
+         source="东财研报中心", source_url="https://data.eastmoney.com/report/",
+         meaning="近12月机构预测EPS区间(今年/明年)。预测不变=机构维持现状判断；下修=基本面恶化确认。",
+         signal="预测EPS下修=机构认输；维持横盘=等方向",
+         getter="forecast_eps"),
 ]
 # 供 fetch 使用的 getter 集合(需在 fetch.py 实现)
 GETTERS = sorted({i["getter"] for i in INDICATORS})

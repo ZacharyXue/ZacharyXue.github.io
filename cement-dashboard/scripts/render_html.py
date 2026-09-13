@@ -31,7 +31,15 @@ def fmt_val(ind):
     # 通用单值
     val = v.get("latest") if v.get("latest") is not None else v.get("close")
     unit = ind.get("unit", "")
-    valstr = f"{val:,.1f} {unit}" if isinstance(val, (int, float)) else (v.get("note") or "待接入")
+    if isinstance(val, (int, float)):
+        if unit == "篇":
+            valstr = f"{int(val)} {unit}"
+        else:
+            valstr = f"{val:,.1f} {unit}"
+    elif isinstance(val, str):
+        valstr = f"{val} {unit}".strip()
+    else:
+        valstr = v.get("note") or "待接入"
     extra = ""
     if v.get("yoy_1y") is not None:
         extra = f" <span class='sub'>1年{v['yoy_1y']:+.1f}%</span>"
