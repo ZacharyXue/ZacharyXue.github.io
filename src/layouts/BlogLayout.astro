@@ -100,7 +100,9 @@ const showToc = toc.length > 1;
         var pre = blocks[i];
         var div = document.createElement('div');
         div.className = 'mermaid-wrapper';
-        div.textContent = pre.textContent || '';
+        // 只取 <code> 内的代码文本：复制按钮是 pre 的子元素，取 pre.textContent 会把"复制"二字喂给 mermaid 解析器（曾导致 xychart/flowchart 报 Syntax error）
+        var codeEl = pre.querySelector('code');
+        div.textContent = (codeEl ? codeEl : pre).textContent || '';
         pre.replaceWith(div);
       }
       mermaid.run({ querySelector: '.mermaid-wrapper' });
