@@ -13,3 +13,7 @@ __pycache__/
 .zsxq-cli/
 *.key
 
+
+# 水泥看板过程数据：可重新 fetch 生成，不进公开仓
+cement-dashboard/cache/
+cement-dashboard/output/
