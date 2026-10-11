@@ -91,6 +91,20 @@ def build_card(r):
         biglabel = "当前回撤（距历史高点）"
         bar = ""
         sub = "<div class='perow'>该指数无公开历史 PE 序列</div>"
+    # PB 分位（天天基金 10y 口径；有则与 PE 并列展示）
+    pb = r.get("pb10y")
+    if pb is not None:
+        pbcol = "#e11d48" if pb >= 90 else ("#f59e0b" if pb >= 70 else "#22a06b" if pb >= 40 else "#16a34a")
+        pbv = r.get("pb")
+        pbtxt = ("PB %.2f" % pbv) if pbv is not None else "PB —"
+        roetxt = (" · ROE %.1f%%" % r["roe"]) if r.get("roe") is not None else ""
+        pb_block = (f"<div class='hcol side'><div class='k'>PB 估值分位（近 10 年）</div>"
+                    f"<div class='big2' style='color:{pbcol}'>{pb:.0f}<span class='u'>%</span></div>"
+                    f"<div class='zone' style='color:{pbcol}'>{pbtxt}{roetxt}</div></div>")
+        hero_cls = "hero2"
+    else:
+        pb_block = ""
+        hero_cls = "hero1"
     # 三格数据（用户 2026-10 定：去掉现价/今日涨跌，把 MA20 放回来并标破位状态）
     cells = []
     if r.get("cur_dd") is not None:
@@ -137,8 +151,14 @@ h1{{font-size:82px;font-weight:800;margin-top:30px;letter-spacing:-1px;line-heig
 .oneline{{font-size:31px;color:#374151;margin-top:20px;line-height:1.5}}
 .hero{{margin-top:44px;background:#f8fafc;border:2px solid #eef2f7;border-radius:32px;padding:46px 48px 38px}}
 .hero .k{{font-size:28px;color:#6b7280;font-weight:600}}
+.herocols{{display:flex;gap:44px;align-items:flex-start}}
+.hcol{{flex:1;min-width:0}}
+.hcol.side{{border-left:2px solid #eef2f7;padding-left:40px}}
 .hero .big{{font-size:186px;font-weight:800;line-height:1;margin-top:8px;color:{col};letter-spacing:-4px}}
 .hero .big .u{{font-size:84px;margin-left:6px}}
+.hero .big2{{font-size:132px;font-weight:800;line-height:1;margin-top:16px;letter-spacing:-4px}}
+.hero .big2 .u{{font-size:62px;margin-left:4px}}
+.hero.hero2 .big{{font-size:158px}}
 .zone{{font-size:30px;font-weight:700;color:{col};margin-top:10px}}
 .bar{{position:relative;height:22px;border-radius:12px;background:#e9edf2;margin-top:26px;overflow:hidden}}
 .bar .fill{{position:absolute;left:0;top:0;bottom:0;border-radius:12px}}
@@ -163,10 +183,15 @@ font-size:22px;color:#b6bec9}}
   <div class="code">{esc(mt.get('full_name') or name)}{('　' + esc(code)) if code else ''}</div>
   <div class="oneline">{esc(oneline)}</div>
 
-  <div class="hero">
-    <div class="k">{biglabel}</div>
-    <div class="big">{big}</div>
-    <div class="zone">{esc(zone_txt)}</div>
+  <div class="hero {hero_cls}">
+    <div class="herocols">
+      <div class="hcol main">
+        <div class="k">{biglabel}</div>
+        <div class="big">{big}</div>
+        <div class="zone">{esc(zone_txt)}</div>
+      </div>
+      {pb_block}
+    </div>
     {bar}
     {sub}
   </div>

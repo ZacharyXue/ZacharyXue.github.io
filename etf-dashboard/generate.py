@@ -120,7 +120,7 @@ def ttskill_index_info(index_id):
             return {}
         _TT["ok"] += 1
         return {"name": None, "pe10y": d.get("pe_pct_10y"), "pb10y": d.get("pb_pct_10y"),
-                "pb": None, "roe": d.get("roe"), "pe_ttm": d.get("pe_ttm")}
+                "pb": d.get("pb"), "roe": d.get("roe"), "pe_ttm": d.get("pe_ttm")}
     except Exception:
         return {}
 
@@ -306,6 +306,22 @@ def view(r):
         if lo and hi and hi > lo:
             posr = "（区间位置 %.0f%%）" % ((cur - lo) / (hi - lo) * 100)
         o["valuation"] = "PE %s 处近 5 年区间 %s~%s%s，分位 %.0f%%——%s。" % (cur, lo, hi, posr, p, band)
+        # PE/PB 背离检测（用户要求两个估值都有后新增：单看 PE 会漏掉「盈利被压缩出来的便宜」）
+        pb10 = r.get("pb10y")
+        if pb10 is not None:
+            gap = p - pb10
+            pbs = ("%.2f" % r["pb"]) if r.get("pb") is not None else "—"
+            if gap >= 25:
+                o["valuation"] += ("　PB 分位 %.0f%%（PB %s），PE 比 PB 高 %.0f 个百分点——"
+                                   "盈利端比资产端贵，通常对应高 ROE/轻资产，也可能是盈利正处在周期高位。"
+                                   % (pb10, pbs, gap))
+            elif gap <= -25:
+                o["valuation"] += ("　⚠ PB 分位 %.0f%%（PB %s），**PE 比 PB 低 %.0f 个百分点**——"
+                                   "资产端并不便宜，PE 低更可能是「盈利被压缩」压出来的（分母效应），"
+                                   "不能只看 PE 就判定便宜。"
+                                   % (pb10, pbs, abs(gap)))
+            else:
+                o["valuation"] += "　PB 分位 %.0f%%（PB %s），与 PE 口径一致，两者不矛盾。" % (pb10, pbs)
     dd, mx, prog = r.get("cur_dd"), r.get("max_dd"), r.get("dd_progress")
     if dd is not None:
         depth = ("已深于历史最大回撤的一半，属于周期性机会区" if (prog or 0) >= 0.5 else
