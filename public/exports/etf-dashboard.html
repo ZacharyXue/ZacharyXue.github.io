@@ -10,8 +10,21 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,"PingFang S
 .header h1{font-size:26px;font-weight:700}
 .header .meta{margin-top:8px;font-size:13px;color:var(--sub)}
 .header .note{margin-top:10px;font-size:13px;color:#5a6b82;background:#f0f5fb;border-radius:8px;padding:8px 12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.grid{display:flex;flex-direction:column;gap:12px}
+.card{margin:0}
+.card>summary{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 20px;cursor:pointer;list-style:none;position:relative}
+.card>summary::-webkit-details-marker{display:none}
+.card>summary::after{content:"▾";position:absolute;right:18px;top:16px;color:var(--sub);transition:.15s}
+.card[open]>summary{border-radius:14px 14px 0 0}
+.card[open]>summary::after{content:"▴"}
+.srow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-right:24px}
+.sname{font-size:17px;font-weight:700}
+.scode{font-size:12px;color:var(--sub)}
+.sconcl{font-size:13px;color:#4b5563;margin-top:7px;line-height:1.6;padding-right:24px}
+.dot-sig{width:10px;height:10px;border-radius:50%;flex:none}
+.dot-sig.add{background:var(--ok)} .dot-sig.dca{background:var(--warn)}
+.dot-sig.hot{background:var(--hot)} .dot-sig.dip{background:var(--down)} .dot-sig.watch{background:var(--watch)}
+.cbody{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 14px 14px;padding:16px 20px 18px;display:flex;flex-direction:column;gap:12px}
 .card .top{display:flex;justify-content:space-between;align-items:flex-start}
 .card .name{font-size:17px;font-weight:600}
 .card .code{font-size:12px;color:var(--sub);margin-top:2px}
@@ -47,184 +60,205 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,"PingFang S
 <body>
   <div class="header">
     <h1>ETF 技术温度看板</h1>
-    <div class="meta">更新: 2026-10-11 23:37 &nbsp;·&nbsp; K线截止: 2026-10-09 &nbsp;·&nbsp; 数据源: 中证官网(PE5y 主锚) + 腾讯行情/K线 <b style="color:#d97706">｜PB10y 未取到：ttskill 登录已过期（token 30 天，需重扫）（主锚 PE5y 不受影响）</b></div>
+    <div class="meta">更新: 2026-10-11 23:49 &nbsp;·&nbsp; K线截止: 2026-10-09 &nbsp;·&nbsp; 数据源: 中证官网(PE5y 主锚) + 腾讯行情/K线 <b style="color:#d97706">｜PB10y 未取到：ttskill 登录已过期（token 30 天，需重扫）（主锚 PE5y 不受影响）</b></div>
     <div class="note"><b>信号 = 技术面(回撤/MA/BIAS) × 估值面(PE 5年分位)</b> 双视角交叉。<br>「现在该怎么做」给的是可执行动作，判断前请结合估值分位(高位>90%别追高，<50%相对便宜)。本页不构成投资建议。</div>
   </div>
   <div class="grid">
-<div class="card">
-  <div class="top">
-    <div>
-      <div class="name">标普500</div>
-      <div class="code">%5EGSPC</div>
-      <div class="price">7811.540</div>
-      <div class="chg up">+0.59%</div>
+<details class="card">
+  <summary>
+    <div class="srow">
+      <span class="dot-sig watch"></span>
+      <span class="sname">标普500</span>
+      <span class="scode">%5EGSPC</span>
+      <span class="badge watch" style="margin-left:auto">观望</span>
     </div>
-    <div class="badge watch">观望</div>
+    <div class="sconcl">估值数据缺失，只能按价格与均线判断：当前 观望。建议把这只的仓位决策权重降低，或先补齐估值口径再动手。</div>
+  </summary>
+  <div class="cbody">
+    <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-56.8% <span style="font-size:12px;color:var(--sub)">(2009-03-09)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--ok);font-size:15px">-0.1% <span style="font-size:12px;color:var(--sub)">(峰2026-10-06)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--ok);font-size:15px">0% <span style="font-size:12px;color:var(--sub)">(历史57%)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">+1.2%</div></div><div class="met"><div class="lab">近20日</div><div class="val">+2.0%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">+1.39%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-0.1%</div></div><div class="met"><div class="lab">MA20</div><div class="val">7704.774</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">8475.25/8860.49</div></div></div>
+    <div class="insight"><div class="iv"><span class="ivk">估值面</span>该指数非中证编制，公开渠道拿不到历史 PE 序列 → 估值面不参与判断。这是<b>数据限制，不等于它便宜</b>，只能用价格位置（回撤/BIAS）替代。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -0.1%，历史最大回撤 -56.8%（2009-03-09），回撤进度 0%——回撤走完不到历史最大回撤的一半。</div><div class="iv take"><span class="ivk">综合</span>估值数据缺失，只能按价格与均线判断：当前 观望。建议把这只的仓位决策权重降低，或先补齐估值口径再动手。</div></div>
+    <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>标准普尔 500 指数　^GSPC（ETF 类无对应）</span></div><div class="abrow"><span class="abk">编制</span><span>美国 500 家大型上市公司按市值加权，覆盖美股约八成总市值；是全球风险资产的定价基准。</span></div><div class="abrow"><span class="abk">代表</span><span>美国大盘蓝筹 + 科技权重约占三分之一，长期年化回报的锚。</span></div><div class="abrow"><span class="abk">怎么用</span><span>判断全球风险偏好的位置：它深跌时，其它风险资产通常也在跌，是系统性机会的先行信号。</span></div></details>
+    <div class="action"><b>现在该怎么做：</b>数据不足或中性：暂不动，等回撤加深(≥10%) + 5年PE分位回落再看。</div>
+    <div class="sharebar"><a class="sharebtn" href="share/sp500.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
   </div>
-  <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-56.8% <span style="font-size:12px;color:var(--sub)">(2009-03-09)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--ok);font-size:15px">-0.1% <span style="font-size:12px;color:var(--sub)">(峰2026-10-06)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--ok);font-size:15px">0% <span style="font-size:12px;color:var(--sub)">(历史57%)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">+1.2%</div></div><div class="met"><div class="lab">近20日</div><div class="val">+2.0%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">+1.39%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-0.1%</div></div><div class="met"><div class="lab">MA20</div><div class="val">7704.774</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">8475.25/8860.49</div></div></div>
-  <div class="insight"><div class="iv"><span class="ivk">估值面</span>该指数非中证编制，公开渠道拿不到历史 PE 序列 → 估值面不参与判断。这是<b>数据限制，不等于它便宜</b>，只能用价格位置（回撤/BIAS）替代。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -0.1%，历史最大回撤 -56.8%（2009-03-09），回撤进度 0%——回撤走完不到历史最大回撤的一半。</div><div class="iv take"><span class="ivk">综合</span>估值数据缺失，只能按价格与均线判断：当前 观望。建议把这只的仓位决策权重降低，或先补齐估值口径再动手。</div></div>
-  <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>标准普尔 500 指数　^GSPC（ETF 类无对应）</span></div><div class="abrow"><span class="abk">编制</span><span>美国 500 家大型上市公司按市值加权，覆盖美股约八成总市值；是全球风险资产的定价基准。</span></div><div class="abrow"><span class="abk">代表</span><span>美国大盘蓝筹 + 科技权重约占三分之一，长期年化回报的锚。</span></div><div class="abrow"><span class="abk">怎么用</span><span>判断全球风险偏好的位置：它深跌时，其它风险资产通常也在跌，是系统性机会的先行信号。</span></div></details>
-  <div class="action"><b>现在该怎么做：</b>数据不足或中性：暂不动，等回撤加深(≥10%) + 5年PE分位回落再看。</div>
-  <div class="sharebar"><a class="sharebtn" href="share/sp500.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
-</div>
+</details>
 
-<div class="card">
-  <div class="top">
-    <div>
-      <div class="name">纳斯达克100</div>
-      <div class="code">%5ENDX</div>
-      <div class="price">30883.150</div>
-      <div class="chg up">+0.51%</div>
+<details class="card">
+  <summary>
+    <div class="srow">
+      <span class="dot-sig watch"></span>
+      <span class="sname">纳斯达克100</span>
+      <span class="scode">%5ENDX</span>
+      <span class="badge watch" style="margin-left:auto">观望</span>
     </div>
-    <div class="badge watch">观望</div>
+    <div class="sconcl">估值数据缺失，只能按价格与均线判断：当前 观望。建议把这只的仓位决策权重降低，或先补齐估值口径再动手。</div>
+  </summary>
+  <div class="cbody">
+    <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-82.9% <span style="font-size:12px;color:var(--sub)">(2002-10-07)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--ok);font-size:15px">-1.1% <span style="font-size:12px;color:var(--sub)">(峰2026-10-06)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--ok);font-size:15px">1% <span style="font-size:12px;color:var(--sub)">(历史83%)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">+0.2%</div></div><div class="met"><div class="lab">近20日</div><div class="val">+5.2%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">+1.88%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-1.1%</div></div><div class="met"><div class="lab">MA20</div><div class="val">30313.866</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">33345.25/34860.95</div></div></div>
+    <div class="insight"><div class="iv"><span class="ivk">估值面</span>该指数非中证编制，公开渠道拿不到历史 PE 序列 → 估值面不参与判断。这是<b>数据限制，不等于它便宜</b>，只能用价格位置（回撤/BIAS）替代。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -1.1%，历史最大回撤 -82.9%（2002-10-07），回撤进度 1%——回撤走完不到历史最大回撤的一半。</div><div class="iv take"><span class="ivk">综合</span>估值数据缺失，只能按价格与均线判断：当前 观望。建议把这只的仓位决策权重降低，或先补齐估值口径再动手。</div></div>
+    <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>纳斯达克 100 指数　^NDX（ETF 类无对应）</span></div><div class="abrow"><span class="abk">编制</span><span>纳斯达克交易所市值最大的 100 家非金融公司，市值加权。</span></div><div class="abrow"><span class="abk">代表</span><span>科技与成长风格的极致代表（软件、半导体、消费互联网）。</span></div><div class="abrow"><span class="abk">怎么用</span><span>成长资产的位置标尺：它的回撤深度决定成长风格整体的风险补偿够不够。</span></div><div class="abrow caveat"><span class="abk">注意</span><span>历史最大回撤极端（互联网泡沫期），用回撤判断买点时必须同时看「回撤进度」。</span></div></details>
+    <div class="action"><b>现在该怎么做：</b>数据不足或中性：暂不动，等回撤加深(≥10%) + 5年PE分位回落再看。</div>
+    <div class="sharebar"><a class="sharebtn" href="share/nasdaq100.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
   </div>
-  <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-82.9% <span style="font-size:12px;color:var(--sub)">(2002-10-07)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--ok);font-size:15px">-1.1% <span style="font-size:12px;color:var(--sub)">(峰2026-10-06)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--ok);font-size:15px">1% <span style="font-size:12px;color:var(--sub)">(历史83%)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">+0.2%</div></div><div class="met"><div class="lab">近20日</div><div class="val">+5.2%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">+1.88%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-1.1%</div></div><div class="met"><div class="lab">MA20</div><div class="val">30313.866</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">33345.25/34860.95</div></div></div>
-  <div class="insight"><div class="iv"><span class="ivk">估值面</span>该指数非中证编制，公开渠道拿不到历史 PE 序列 → 估值面不参与判断。这是<b>数据限制，不等于它便宜</b>，只能用价格位置（回撤/BIAS）替代。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -1.1%，历史最大回撤 -82.9%（2002-10-07），回撤进度 1%——回撤走完不到历史最大回撤的一半。</div><div class="iv take"><span class="ivk">综合</span>估值数据缺失，只能按价格与均线判断：当前 观望。建议把这只的仓位决策权重降低，或先补齐估值口径再动手。</div></div>
-  <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>纳斯达克 100 指数　^NDX（ETF 类无对应）</span></div><div class="abrow"><span class="abk">编制</span><span>纳斯达克交易所市值最大的 100 家非金融公司，市值加权。</span></div><div class="abrow"><span class="abk">代表</span><span>科技与成长风格的极致代表（软件、半导体、消费互联网）。</span></div><div class="abrow"><span class="abk">怎么用</span><span>成长资产的位置标尺：它的回撤深度决定成长风格整体的风险补偿够不够。</span></div><div class="abrow caveat"><span class="abk">注意</span><span>历史最大回撤极端（互联网泡沫期），用回撤判断买点时必须同时看「回撤进度」。</span></div></details>
-  <div class="action"><b>现在该怎么做：</b>数据不足或中性：暂不动，等回撤加深(≥10%) + 5年PE分位回落再看。</div>
-  <div class="sharebar"><a class="sharebtn" href="share/nasdaq100.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
-</div>
+</details>
 
-<div class="card">
-  <div class="top">
-    <div>
-      <div class="name">黄金</div>
-      <div class="code">GC=F</div>
-      <div class="price">4216.300</div>
-      <div class="chg up">+1.43%</div>
+<details class="card">
+  <summary>
+    <div class="srow">
+      <span class="dot-sig watch"></span>
+      <span class="sname">黄金</span>
+      <span class="scode">GC=F</span>
+      <span class="badge watch" style="margin-left:auto">观望</span>
     </div>
-    <div class="badge watch">观望</div>
+    <div class="sconcl">估值数据缺失，只能按价格与均线判断：当前 观望。建议把这只的仓位决策权重降低，或先补齐估值口径再动手。</div>
+  </summary>
+  <div class="cbody">
+    <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-44.4% <span style="font-size:12px;color:var(--sub)">(2015-12-17)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--down);font-size:15px">-20.7% <span style="font-size:12px;color:var(--sub)">(峰2026-01-29)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--down);font-size:15px">47% <span style="font-size:12px;color:var(--sub)">(历史44%)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">+1.3%</div></div><div class="met"><div class="lab">近20日</div><div class="val">-4.4%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">-1.20%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-20.7%</div></div><div class="met"><div class="lab">MA20</div><div class="val">4267.600</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">4694.36/4907.74</div></div></div>
+    <div class="insight"><div class="iv"><span class="ivk">估值面</span>该指数非中证编制，公开渠道拿不到历史 PE 序列 → 估值面不参与判断。这是<b>数据限制，不等于它便宜</b>，只能用价格位置（回撤/BIAS）替代。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -20.7%，历史最大回撤 -44.4%（2015-12-17），回撤进度 47%——回撤进度过半，接近历史级别的调整。</div><div class="iv take"><span class="ivk">综合</span>估值数据缺失，只能按价格与均线判断：当前 观望。建议把这只的仓位决策权重降低，或先补齐估值口径再动手。</div></div>
+    <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>COMEX 黄金期货连续合约　GC=F</span></div><div class="abrow"><span class="abk">编制</span><span>纽约商品交易所黄金期货主力连续价格，反映国际金价；黄金无现金流，价格由实际利率、美元与避险需求驱动。</span></div><div class="abrow"><span class="abk">代表</span><span>与股债相关性低的实物资产，通常作为组合的分散器与危机对冲。</span></div><div class="abrow"><span class="abk">怎么用</span><span>对冲与再平衡：它大幅回撤时往往是市场风险偏好回升或实际利率上行阶段。</span></div></details>
+    <div class="action"><b>现在该怎么做：</b>数据不足或中性：暂不动，等回撤加深(≥10%) + 5年PE分位回落再看。</div>
+    <div class="sharebar"><a class="sharebtn" href="share/gold.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
   </div>
-  <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-44.4% <span style="font-size:12px;color:var(--sub)">(2015-12-17)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--down);font-size:15px">-20.7% <span style="font-size:12px;color:var(--sub)">(峰2026-01-29)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--down);font-size:15px">47% <span style="font-size:12px;color:var(--sub)">(历史44%)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">+1.3%</div></div><div class="met"><div class="lab">近20日</div><div class="val">-4.4%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">-1.20%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-20.7%</div></div><div class="met"><div class="lab">MA20</div><div class="val">4267.600</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">4694.36/4907.74</div></div></div>
-  <div class="insight"><div class="iv"><span class="ivk">估值面</span>该指数非中证编制，公开渠道拿不到历史 PE 序列 → 估值面不参与判断。这是<b>数据限制，不等于它便宜</b>，只能用价格位置（回撤/BIAS）替代。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -20.7%，历史最大回撤 -44.4%（2015-12-17），回撤进度 47%——回撤进度过半，接近历史级别的调整。</div><div class="iv take"><span class="ivk">综合</span>估值数据缺失，只能按价格与均线判断：当前 观望。建议把这只的仓位决策权重降低，或先补齐估值口径再动手。</div></div>
-  <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>COMEX 黄金期货连续合约　GC=F</span></div><div class="abrow"><span class="abk">编制</span><span>纽约商品交易所黄金期货主力连续价格，反映国际金价；黄金无现金流，价格由实际利率、美元与避险需求驱动。</span></div><div class="abrow"><span class="abk">代表</span><span>与股债相关性低的实物资产，通常作为组合的分散器与危机对冲。</span></div><div class="abrow"><span class="abk">怎么用</span><span>对冲与再平衡：它大幅回撤时往往是市场风险偏好回升或实际利率上行阶段。</span></div></details>
-  <div class="action"><b>现在该怎么做：</b>数据不足或中性：暂不动，等回撤加深(≥10%) + 5年PE分位回落再看。</div>
-  <div class="sharebar"><a class="sharebtn" href="share/gold.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
-</div>
+</details>
 
-<div class="card">
-  <div class="top">
-    <div>
-      <div class="name">红利ETF易方达</div>
-      <div class="code">515180</div>
-      <div class="price">1.443</div>
-      <div class="chg up">+0.70%</div>
+<details class="card">
+  <summary>
+    <div class="srow">
+      <span class="dot-sig hot"></span>
+      <span class="sname">红利ETF易方达</span>
+      <span class="scode">515180</span>
+      <span class="badge hot" style="margin-left:auto">过热/减</span>
     </div>
-    <div class="badge hot">过热/减</div>
+    <div class="sconcl"><b>高位 + 浅回撤</b>：估值接近 5 年顶部、价格又没跌下来，此刻买入拿不到风险补偿。</div>
+  </summary>
+  <div class="cbody">
+    <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-15.9% <span style="font-size:12px;color:var(--sub)">(2024-09-13)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--ok);font-size:15px">-3.2% <span style="font-size:12px;color:var(--sub)">(峰2026-03-12)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--ok);font-size:15px">20% <span style="font-size:12px;color:var(--sub)">(历史16%)</span></div></div><div class="met pe5"><div class="lab">PE5y 分位 <b>主锚</b></div><div class="val" style="color:var(--down);font-size:18px">97% <span style="font-size:12px;color:var(--sub)">(PE8.67, 5.27~9.03)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">+2.4%</div></div><div class="met"><div class="lab">近20日</div><div class="val">-0.5%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">+1.07%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-3.9%</div></div><div class="met"><div class="lab">MA20</div><div class="val">1.428</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">1.57/1.64</div></div></div>
+    <div class="insight"><div class="iv"><span class="ivk">估值面</span>PE 8.67 处近 5 年区间 5.27~9.03（区间位置 90%），分位 97%——已到近 5 年最贵的十分之一区间，此时买入等于为「稳定」付溢价。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -3.2%，历史最大回撤 -15.9%（2024-09-13），回撤进度 20%——回撤走完不到历史最大回撤的一半。</div><div class="iv take"><span class="ivk">综合</span><b>高位 + 浅回撤</b>：估值接近 5 年顶部、价格又没跌下来，此刻买入拿不到风险补偿。</div></div>
+    <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>中证红利指数　000922 / ETF 515180</span></div><div class="abrow"><span class="abk">编制</span><span>从沪深 A 股中选取现金股息率高、分红稳定、有一定规模与流动性的 100 只证券，采用<b>股息率加权</b>（股息率越高、权重越大）。</span></div><div class="abrow"><span class="abk">代表</span><span>成熟行业的现金流资产，成分以银行、煤炭、交通运输、公用事业等为主，天然偏价值风格。</span></div><div class="abrow"><span class="abk">怎么用</span><span>当作「类固收替代」的底仓：核心看股息率 vs 无风险利率的息差，而不是看它涨得快不快。</span></div><div class="abrow caveat"><span class="abk">注意</span><span>股息率加权意味着涨得越多、股息率越低、权重自动下降——指数自带「高抛低吸」机制，但也意味着被资金抱团时股息率会被买薄。</span></div></details>
+    <div class="action"><b>现在该怎么做：</b>高位区：不追高。持有可先减 1/3 锁盈，回落 PE5y<80% 或 BIAS<5% 再考虑回补。</div>
+    <div class="sharebar"><a class="sharebtn" href="share/515180.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
   </div>
-  <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-15.9% <span style="font-size:12px;color:var(--sub)">(2024-09-13)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--ok);font-size:15px">-3.2% <span style="font-size:12px;color:var(--sub)">(峰2026-03-12)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--ok);font-size:15px">20% <span style="font-size:12px;color:var(--sub)">(历史16%)</span></div></div><div class="met pe5"><div class="lab">PE5y 分位 <b>主锚</b></div><div class="val" style="color:var(--down);font-size:18px">97% <span style="font-size:12px;color:var(--sub)">(PE8.67, 5.27~9.03)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">+2.4%</div></div><div class="met"><div class="lab">近20日</div><div class="val">-0.5%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">+1.07%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-3.9%</div></div><div class="met"><div class="lab">MA20</div><div class="val">1.428</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">1.57/1.64</div></div></div>
-  <div class="insight"><div class="iv"><span class="ivk">估值面</span>PE 8.67 处近 5 年区间 5.27~9.03（区间位置 90%），分位 97%——已到近 5 年最贵的十分之一区间，此时买入等于为「稳定」付溢价。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -3.2%，历史最大回撤 -15.9%（2024-09-13），回撤进度 20%——回撤走完不到历史最大回撤的一半。</div><div class="iv take"><span class="ivk">综合</span><b>高位 + 浅回撤</b>：估值接近 5 年顶部、价格又没跌下来，此刻买入拿不到风险补偿。</div></div>
-  <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>中证红利指数　000922 / ETF 515180</span></div><div class="abrow"><span class="abk">编制</span><span>从沪深 A 股中选取现金股息率高、分红稳定、有一定规模与流动性的 100 只证券，采用<b>股息率加权</b>（股息率越高、权重越大）。</span></div><div class="abrow"><span class="abk">代表</span><span>成熟行业的现金流资产，成分以银行、煤炭、交通运输、公用事业等为主，天然偏价值风格。</span></div><div class="abrow"><span class="abk">怎么用</span><span>当作「类固收替代」的底仓：核心看股息率 vs 无风险利率的息差，而不是看它涨得快不快。</span></div><div class="abrow caveat"><span class="abk">注意</span><span>股息率加权意味着涨得越多、股息率越低、权重自动下降——指数自带「高抛低吸」机制，但也意味着被资金抱团时股息率会被买薄。</span></div></details>
-  <div class="action"><b>现在该怎么做：</b>高位区：不追高。持有可先减 1/3 锁盈，回落 PE5y<80% 或 BIAS<5% 再考虑回补。</div>
-  <div class="sharebar"><a class="sharebtn" href="share/515180.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
-</div>
+</details>
 
-<div class="card">
-  <div class="top">
-    <div>
-      <div class="name">红利低波ETF易方达</div>
-      <div class="code">563020</div>
-      <div class="price">1.188</div>
-      <div class="chg down">-0.17%</div>
+<details class="card">
+  <summary>
+    <div class="srow">
+      <span class="dot-sig hot"></span>
+      <span class="sname">红利低波ETF易方达</span>
+      <span class="scode">563020</span>
+      <span class="badge hot" style="margin-left:auto">过热/减</span>
     </div>
-    <div class="badge hot">过热/减</div>
+    <div class="sconcl"><b>高位 + 浅回撤</b>：估值接近 5 年顶部、价格又没跌下来，此刻买入拿不到风险补偿。</div>
+  </summary>
+  <div class="cbody">
+    <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-14.9% <span style="font-size:12px;color:var(--sub)">(2024-09-11)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--ok);font-size:15px">-3.3% <span style="font-size:12px;color:var(--sub)">(峰2025-11-12)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--ok);font-size:15px">22% <span style="font-size:12px;color:var(--sub)">(历史15%)</span></div></div><div class="met pe5"><div class="lab">PE5y 分位 <b>主锚</b></div><div class="val" style="color:var(--down);font-size:18px">96% <span style="font-size:12px;color:var(--sub)">(PE8.07, 4.63~8.51)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">+2.1%</div></div><div class="met"><div class="lab">近20日</div><div class="val">+0.7%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">+1.09%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-3.8%</div></div><div class="met"><div class="lab">MA20</div><div class="val">1.175</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">1.29/1.35</div></div></div>
+    <div class="insight"><div class="iv"><span class="ivk">估值面</span>PE 8.07 处近 5 年区间 4.63~8.51（区间位置 89%），分位 96%——已到近 5 年最贵的十分之一区间，此时买入等于为「稳定」付溢价。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -3.3%，历史最大回撤 -14.9%（2024-09-11），回撤进度 22%——回撤走完不到历史最大回撤的一半。</div><div class="iv take"><span class="ivk">综合</span><b>高位 + 浅回撤</b>：估值接近 5 年顶部、价格又没跌下来，此刻买入拿不到风险补偿。</div></div>
+    <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>中证红利低波动指数　H30269 / ETF 563020</span></div><div class="abrow"><span class="abk">编制</span><span>在「连续分红 + 高股息」的样本中，再筛出股价波动率更低的一批成分，即<b>高股息 + 低波动双因子</b>，股息率加权。</span></div><div class="abrow"><span class="abk">代表</span><span>红利板块里更偏防御的那一端：同样的股息，波动更小，回撤通常也更浅。</span></div><div class="abrow"><span class="abk">怎么用</span><span>风险偏好低、又想吃股息时：用它替代纯红利指数，代价是牛市中弹性也更小。</span></div><div class="abrow caveat"><span class="abk">注意</span><span>双因子筛选会让成分更集中在少数低波动行业，行业分散度不及母指数。</span></div></details>
+    <div class="action"><b>现在该怎么做：</b>高位区：不追高。持有可先减 1/3 锁盈，回落 PE5y<80% 或 BIAS<5% 再考虑回补。</div>
+    <div class="sharebar"><a class="sharebtn" href="share/563020.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
   </div>
-  <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-14.9% <span style="font-size:12px;color:var(--sub)">(2024-09-11)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--ok);font-size:15px">-3.3% <span style="font-size:12px;color:var(--sub)">(峰2025-11-12)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--ok);font-size:15px">22% <span style="font-size:12px;color:var(--sub)">(历史15%)</span></div></div><div class="met pe5"><div class="lab">PE5y 分位 <b>主锚</b></div><div class="val" style="color:var(--down);font-size:18px">96% <span style="font-size:12px;color:var(--sub)">(PE8.07, 4.63~8.51)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">+2.1%</div></div><div class="met"><div class="lab">近20日</div><div class="val">+0.7%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">+1.09%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-3.8%</div></div><div class="met"><div class="lab">MA20</div><div class="val">1.175</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">1.29/1.35</div></div></div>
-  <div class="insight"><div class="iv"><span class="ivk">估值面</span>PE 8.07 处近 5 年区间 4.63~8.51（区间位置 89%），分位 96%——已到近 5 年最贵的十分之一区间，此时买入等于为「稳定」付溢价。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -3.3%，历史最大回撤 -14.9%（2024-09-11），回撤进度 22%——回撤走完不到历史最大回撤的一半。</div><div class="iv take"><span class="ivk">综合</span><b>高位 + 浅回撤</b>：估值接近 5 年顶部、价格又没跌下来，此刻买入拿不到风险补偿。</div></div>
-  <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>中证红利低波动指数　H30269 / ETF 563020</span></div><div class="abrow"><span class="abk">编制</span><span>在「连续分红 + 高股息」的样本中，再筛出股价波动率更低的一批成分，即<b>高股息 + 低波动双因子</b>，股息率加权。</span></div><div class="abrow"><span class="abk">代表</span><span>红利板块里更偏防御的那一端：同样的股息，波动更小，回撤通常也更浅。</span></div><div class="abrow"><span class="abk">怎么用</span><span>风险偏好低、又想吃股息时：用它替代纯红利指数，代价是牛市中弹性也更小。</span></div><div class="abrow caveat"><span class="abk">注意</span><span>双因子筛选会让成分更集中在少数低波动行业，行业分散度不及母指数。</span></div></details>
-  <div class="action"><b>现在该怎么做：</b>高位区：不追高。持有可先减 1/3 锁盈，回落 PE5y<80% 或 BIAS<5% 再考虑回补。</div>
-  <div class="sharebar"><a class="sharebtn" href="share/563020.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
-</div>
+</details>
 
-<div class="card">
-  <div class="top">
-    <div>
-      <div class="name">港股通红利ETF广发</div>
-      <div class="code">520900</div>
-      <div class="price">1.003</div>
-      <div class="chg up">+0.50%</div>
+<details class="card">
+  <summary>
+    <div class="srow">
+      <span class="dot-sig dca"></span>
+      <span class="sname">港股通红利ETF广发</span>
+      <span class="scode">520900</span>
+      <span class="badge dca" style="margin-left:auto">分批</span>
     </div>
-    <div class="badge dca">分批</div>
+    <div class="sconcl"><b>中位区间</b>：估值与价格都在中间地带，没有极端值得下重手的理由，按计划分批即可。</div>
+  </summary>
+  <div class="cbody">
+    <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-19.6% <span style="font-size:12px;color:var(--sub)">(2026-06-30)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--warn);font-size:15px">-10.8% <span style="font-size:12px;color:var(--sub)">(峰2026-03-12)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--warn);font-size:15px">55% <span style="font-size:12px;color:var(--sub)">(历史20%)</span></div></div><div class="met pe5"><div class="lab">PE5y 分位 <b>主锚</b></div><div class="val" style="color:var(--ok);font-size:18px">55% <span style="font-size:12px;color:var(--sub)">(PE9.7, 7.32~11.08)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">+1.1%</div></div><div class="met"><div class="lab">近20日</div><div class="val">-0.2%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">+0.17%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-11.4%</div></div><div class="met"><div class="lab">MA20</div><div class="val">1.001</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">1.10/1.15</div></div></div>
+    <div class="insight"><div class="iv"><span class="ivk">估值面</span>PE 9.7 处近 5 年区间 7.32~11.08（区间位置 63%），分位 55%——处近 5 年中位，估值上没有明显倾向。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -10.8%，历史最大回撤 -19.6%（2026-06-30），回撤进度 55%——已深于历史最大回撤的一半，属于周期性机会区。</div><div class="iv take"><span class="ivk">综合</span><b>中位区间</b>：估值与价格都在中间地带，没有极端值得下重手的理由，按计划分批即可。</div></div>
+    <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>中证国新港股通央企红利指数　931722 / ETF 520900</span></div><div class="abrow"><span class="abk">编制</span><span>从<b>港股通标的的中央国有企业</b>中选取股息率高的股票，股息率加权；成分如中国海洋石油、中国移动等。</span></div><div class="abrow"><span class="abk">代表</span><span>港股央企的高股息组合——同一批央企在港股的价格通常低于 A 股，因此股息率更高。</span></div><div class="abrow"><span class="abk">怎么用</span><span>想在红利资产里找「更高股息 + 更低估值」时：A 股红利被买贵后，港股央企红利往往是替代选择。</span></div><div class="abrow caveat"><span class="abk">注意</span><span>港股通有额度和交易日差异，A/H 溢价会长期存在，不能简单按「同股同价」套利。</span></div></details>
+    <div class="action"><b>现在该怎么做：</b>进入买点区：可分 3 批布局，每批 1/3，跌破 MA20 或回撤加深再加，跌破 -20% 停手。</div>
+    <div class="sharebar"><a class="sharebtn" href="share/520900.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
   </div>
-  <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-19.6% <span style="font-size:12px;color:var(--sub)">(2026-06-30)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--warn);font-size:15px">-10.8% <span style="font-size:12px;color:var(--sub)">(峰2026-03-12)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--warn);font-size:15px">55% <span style="font-size:12px;color:var(--sub)">(历史20%)</span></div></div><div class="met pe5"><div class="lab">PE5y 分位 <b>主锚</b></div><div class="val" style="color:var(--ok);font-size:18px">55% <span style="font-size:12px;color:var(--sub)">(PE9.7, 7.32~11.08)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">+1.1%</div></div><div class="met"><div class="lab">近20日</div><div class="val">-0.2%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">+0.17%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-11.4%</div></div><div class="met"><div class="lab">MA20</div><div class="val">1.001</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">1.10/1.15</div></div></div>
-  <div class="insight"><div class="iv"><span class="ivk">估值面</span>PE 9.7 处近 5 年区间 7.32~11.08（区间位置 63%），分位 55%——处近 5 年中位，估值上没有明显倾向。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -10.8%，历史最大回撤 -19.6%（2026-06-30），回撤进度 55%——已深于历史最大回撤的一半，属于周期性机会区。</div><div class="iv take"><span class="ivk">综合</span><b>中位区间</b>：估值与价格都在中间地带，没有极端值得下重手的理由，按计划分批即可。</div></div>
-  <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>中证国新港股通央企红利指数　931722 / ETF 520900</span></div><div class="abrow"><span class="abk">编制</span><span>从<b>港股通标的的中央国有企业</b>中选取股息率高的股票，股息率加权；成分如中国海洋石油、中国移动等。</span></div><div class="abrow"><span class="abk">代表</span><span>港股央企的高股息组合——同一批央企在港股的价格通常低于 A 股，因此股息率更高。</span></div><div class="abrow"><span class="abk">怎么用</span><span>想在红利资产里找「更高股息 + 更低估值」时：A 股红利被买贵后，港股央企红利往往是替代选择。</span></div><div class="abrow caveat"><span class="abk">注意</span><span>港股通有额度和交易日差异，A/H 溢价会长期存在，不能简单按「同股同价」套利。</span></div></details>
-  <div class="action"><b>现在该怎么做：</b>进入买点区：可分 3 批布局，每批 1/3，跌破 MA20 或回撤加深再加，跌破 -20% 停手。</div>
-  <div class="sharebar"><a class="sharebtn" href="share/520900.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
-</div>
+</details>
 
-<div class="card">
-  <div class="top">
-    <div>
-      <div class="name">港股通红利低波ETF易方达</div>
-      <div class="code">159545</div>
-      <div class="price">1.295</div>
-      <div class="chg up">+0.70%</div>
+<details class="card">
+  <summary>
+    <div class="srow">
+      <span class="dot-sig watch"></span>
+      <span class="sname">港股通红利低波ETF易方达</span>
+      <span class="scode">159545</span>
+      <span class="badge watch" style="margin-left:auto">观望</span>
     </div>
-    <div class="badge watch">观望</div>
+    <div class="sconcl">估值数据缺失，只能按价格与均线判断：当前 观望。建议把这只的仓位决策权重降低，或先补齐估值口径再动手。</div>
+  </summary>
+  <div class="cbody">
+    <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-21.2% <span style="font-size:12px;color:var(--sub)">(2026-06-30)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--warn);font-size:15px">-13.6% <span style="font-size:12px;color:var(--sub)">(峰2026-02-11)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--warn);font-size:15px">64% <span style="font-size:12px;color:var(--sub)">(历史21%)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">+1.3%</div></div><div class="met"><div class="lab">近20日</div><div class="val">-1.1%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">-0.14%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-14.0%</div></div><div class="met"><div class="lab">MA20</div><div class="val">1.297</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">1.43/1.49</div></div></div>
+    <div class="insight"><div class="iv"><span class="ivk">估值面</span>该指数非中证编制，公开渠道拿不到历史 PE 序列 → 估值面不参与判断。这是<b>数据限制，不等于它便宜</b>，只能用价格位置（回撤/BIAS）替代。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -13.6%，历史最大回撤 -21.2%（2026-06-30），回撤进度 64%——已深于历史最大回撤的一半，属于周期性机会区。</div><div class="iv take"><span class="ivk">综合</span>估值数据缺失，只能按价格与均线判断：当前 观望。建议把这只的仓位决策权重降低，或先补齐估值口径再动手。</div></div>
+    <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>恒生港股通高股息低波动指数　HSHYLV / ETF 159545</span></div><div class="abrow"><span class="abk">编制</span><span>由恒生指数公司编制（<b>非中证系</b>），从港股通标的中筛出高股息且波动率低的成分。</span></div><div class="abrow"><span class="abk">代表</span><span>港股版的防御红利：同一逻辑在港股市场再执行一遍，叠加港股整体低估值。</span></div><div class="abrow"><span class="abk">怎么用</span><span>把红利配置分散到港股，降低单一市场集中度。</span></div><div class="abrow caveat"><span class="abk">注意</span><span>非中证编制指数，公开渠道拿不到历史 PE 序列 → 本看板不给它 PE 分位，信号退化为回撤/BIAS 判断。</span></div></details>
+    <div class="action"><b>现在该怎么做：</b>数据不足或中性：暂不动，等回撤加深(≥10%) + 5年PE分位回落再看。</div>
+    <div class="sharebar"><a class="sharebtn" href="share/159545.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
   </div>
-  <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-21.2% <span style="font-size:12px;color:var(--sub)">(2026-06-30)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--warn);font-size:15px">-13.6% <span style="font-size:12px;color:var(--sub)">(峰2026-02-11)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--warn);font-size:15px">64% <span style="font-size:12px;color:var(--sub)">(历史21%)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">+1.3%</div></div><div class="met"><div class="lab">近20日</div><div class="val">-1.1%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">-0.14%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-14.0%</div></div><div class="met"><div class="lab">MA20</div><div class="val">1.297</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">1.43/1.49</div></div></div>
-  <div class="insight"><div class="iv"><span class="ivk">估值面</span>该指数非中证编制，公开渠道拿不到历史 PE 序列 → 估值面不参与判断。这是<b>数据限制，不等于它便宜</b>，只能用价格位置（回撤/BIAS）替代。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -13.6%，历史最大回撤 -21.2%（2026-06-30），回撤进度 64%——已深于历史最大回撤的一半，属于周期性机会区。</div><div class="iv take"><span class="ivk">综合</span>估值数据缺失，只能按价格与均线判断：当前 观望。建议把这只的仓位决策权重降低，或先补齐估值口径再动手。</div></div>
-  <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>恒生港股通高股息低波动指数　HSHYLV / ETF 159545</span></div><div class="abrow"><span class="abk">编制</span><span>由恒生指数公司编制（<b>非中证系</b>），从港股通标的中筛出高股息且波动率低的成分。</span></div><div class="abrow"><span class="abk">代表</span><span>港股版的防御红利：同一逻辑在港股市场再执行一遍，叠加港股整体低估值。</span></div><div class="abrow"><span class="abk">怎么用</span><span>把红利配置分散到港股，降低单一市场集中度。</span></div><div class="abrow caveat"><span class="abk">注意</span><span>非中证编制指数，公开渠道拿不到历史 PE 序列 → 本看板不给它 PE 分位，信号退化为回撤/BIAS 判断。</span></div></details>
-  <div class="action"><b>现在该怎么做：</b>数据不足或中性：暂不动，等回撤加深(≥10%) + 5年PE分位回落再看。</div>
-  <div class="sharebar"><a class="sharebtn" href="share/159545.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
-</div>
+</details>
 
-<div class="card">
-  <div class="top">
-    <div>
-      <div class="name">成长ETF易方达</div>
-      <div class="code">159259</div>
-      <div class="price">1.174</div>
-      <div class="chg down">-1.92%</div>
+<details class="card">
+  <summary>
+    <div class="srow">
+      <span class="dot-sig dip"></span>
+      <span class="sname">成长ETF易方达</span>
+      <span class="scode">159259</span>
+      <span class="badge dip" style="margin-left:auto">超跌</span>
     </div>
-    <div class="badge dip">超跌</div>
+    <div class="sconcl">估值数据缺失，只能按价格与均线判断：当前 超跌。建议把这只的仓位决策权重降低，或先补齐估值口径再动手。</div>
+  </summary>
+  <div class="cbody">
+    <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-37.7% <span style="font-size:12px;color:var(--sub)">(2026-07-30)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--hot);font-size:15px">-35.7% <span style="font-size:12px;color:var(--sub)">(峰2026-06-22)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--hot);font-size:15px">95% <span style="font-size:12px;color:var(--sub)">(历史38%)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">-13.1%</div></div><div class="met"><div class="lab">近20日</div><div class="val">-10.5%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">-11.27%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-35.7%</div></div><div class="met"><div class="lab">MA20</div><div class="val">1.323</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">1.46/1.52</div></div></div>
+    <div class="insight"><div class="iv"><span class="ivk">估值面</span>该指数非中证编制，公开渠道拿不到历史 PE 序列 → 估值面不参与判断。这是<b>数据限制，不等于它便宜</b>，只能用价格位置（回撤/BIAS）替代。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -35.7%，历史最大回撤 -37.7%（2026-07-30），回撤进度 95%——已深于历史最大回撤的一半，属于周期性机会区。</div><div class="iv take"><span class="ivk">综合</span>估值数据缺失，只能按价格与均线判断：当前 超跌。建议把这只的仓位决策权重降低，或先补齐估值口径再动手。</div></div>
+    <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>国证成长 100 指数　980080 / ETF 159259</span></div><div class="abrow"><span class="abk">编制</span><span>由国证指数公司编制，从 A 股中选取成长特征（营收/利润增速等）最突出的 100 家公司，成长风格纯度高。</span></div><div class="abrow"><span class="abk">代表</span><span>与红利资产完全相反的一极：高估值、高波动、盈利预期驱动。</span></div><div class="abrow"><span class="abk">怎么用</span><span>风格轮动的另一端：和红利指数对照着看，能判断资金当前偏好成长还是价值。</span></div><div class="abrow caveat"><span class="abk">注意</span><span>非中证编制且 ETF 2025-08 才上市，历史样本短，无公开 PE 分位 → 信号退化为回撤/BIAS。</span></div></details>
+    <div class="action"><b>现在该怎么做：</b>短线超跌：可轻仓博反弹，首次反弹到 MA20 附近减仓，不恋战。</div>
+    <div class="sharebar"><a class="sharebtn" href="share/159259.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
   </div>
-  <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-37.7% <span style="font-size:12px;color:var(--sub)">(2026-07-30)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--hot);font-size:15px">-35.7% <span style="font-size:12px;color:var(--sub)">(峰2026-06-22)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--hot);font-size:15px">95% <span style="font-size:12px;color:var(--sub)">(历史38%)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">-13.1%</div></div><div class="met"><div class="lab">近20日</div><div class="val">-10.5%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">-11.27%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-35.7%</div></div><div class="met"><div class="lab">MA20</div><div class="val">1.323</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">1.46/1.52</div></div></div>
-  <div class="insight"><div class="iv"><span class="ivk">估值面</span>该指数非中证编制，公开渠道拿不到历史 PE 序列 → 估值面不参与判断。这是<b>数据限制，不等于它便宜</b>，只能用价格位置（回撤/BIAS）替代。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -35.7%，历史最大回撤 -37.7%（2026-07-30），回撤进度 95%——已深于历史最大回撤的一半，属于周期性机会区。</div><div class="iv take"><span class="ivk">综合</span>估值数据缺失，只能按价格与均线判断：当前 超跌。建议把这只的仓位决策权重降低，或先补齐估值口径再动手。</div></div>
-  <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>国证成长 100 指数　980080 / ETF 159259</span></div><div class="abrow"><span class="abk">编制</span><span>由国证指数公司编制，从 A 股中选取成长特征（营收/利润增速等）最突出的 100 家公司，成长风格纯度高。</span></div><div class="abrow"><span class="abk">代表</span><span>与红利资产完全相反的一极：高估值、高波动、盈利预期驱动。</span></div><div class="abrow"><span class="abk">怎么用</span><span>风格轮动的另一端：和红利指数对照着看，能判断资金当前偏好成长还是价值。</span></div><div class="abrow caveat"><span class="abk">注意</span><span>非中证编制且 ETF 2025-08 才上市，历史样本短，无公开 PE 分位 → 信号退化为回撤/BIAS。</span></div></details>
-  <div class="action"><b>现在该怎么做：</b>短线超跌：可轻仓博反弹，首次反弹到 MA20 附近减仓，不恋战。</div>
-  <div class="sharebar"><a class="sharebtn" href="share/159259.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
-</div>
+</details>
 
-<div class="card">
-  <div class="top">
-    <div>
-      <div class="name">游戏ETF华夏</div>
-      <div class="code">159869</div>
-      <div class="price">1.047</div>
-      <div class="chg up">+3.46%</div>
+<details class="card">
+  <summary>
+    <div class="srow">
+      <span class="dot-sig add"></span>
+      <span class="sname">游戏ETF华夏</span>
+      <span class="scode">159869</span>
+      <span class="badge add" style="margin-left:auto">加仓</span>
     </div>
-    <div class="badge add">加仓</div>
+    <div class="sconcl"><b>低位 + 深回撤</b>：估值接近 5 年最低、价格也跌透，是赔率与胜率都占优的位置。</div>
+  </summary>
+  <div class="cbody">
+    <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-57.7% <span style="font-size:12px;color:var(--sub)">(2024-07-24)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--warn);font-size:15px">-38.4% <span style="font-size:12px;color:var(--sub)">(峰2026-01-12)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--warn);font-size:15px">67% <span style="font-size:12px;color:var(--sub)">(历史58%)</span></div></div><div class="met pe5"><div class="lab">PE5y 分位 <b>主锚</b></div><div class="val" style="color:var(--ok);font-size:18px">1% <span style="font-size:12px;color:var(--sub)">(PE16.85, 15.65~47.23)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">-1.2%</div></div><div class="met"><div class="lab">近20日</div><div class="val">-4.6%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">-3.09%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-40.5%</div></div><div class="met"><div class="lab">MA20</div><div class="val">1.080</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">1.19/1.24</div></div></div>
+    <div class="insight"><div class="iv"><span class="ivk">估值面</span>PE 16.85 处近 5 年区间 15.65~47.23（区间位置 4%），分位 1%——趴在近 5 年最低区间，估值端赔率最好。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -38.4%，历史最大回撤 -57.7%（2024-07-24），回撤进度 67%——已深于历史最大回撤的一半，属于周期性机会区。</div><div class="iv take"><span class="ivk">综合</span><b>低位 + 深回撤</b>：估值接近 5 年最低、价格也跌透，是赔率与胜率都占优的位置。</div></div>
+    <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>中证动漫游戏指数　930901 / ETF 159869</span></div><div class="abrow"><span class="abk">编制</span><span>选取 A 股中动漫、游戏、影视等内容产业公司，覆盖研发、发行与平台环节。</span></div><div class="abrow"><span class="abk">代表</span><span>传媒内容行业的主题指数，业绩由产品周期（版号、新游流水）和 AI 应用叙事驱动。</span></div><div class="abrow"><span class="abk">怎么用</span><span>主题博弈：波动极大，适合用估值分位 + 深回撤来框定「赔率是否够」的位置，而不是长期持有。</span></div><div class="abrow caveat"><span class="abk">注意</span><span>主题指数盈利波动大，PE 极值参考意义强，中枢参考意义弱——分位比绝对值更重要。</span></div></details>
+    <div class="action"><b>现在该怎么做：</b>深回撤+低估值双重买点：可一次性买入计划的 1/2，剩余按季分批，拿住等估值修复。</div>
+    <div class="sharebar"><a class="sharebtn" href="share/159869.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
   </div>
-  <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-57.7% <span style="font-size:12px;color:var(--sub)">(2024-07-24)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--warn);font-size:15px">-38.4% <span style="font-size:12px;color:var(--sub)">(峰2026-01-12)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--warn);font-size:15px">67% <span style="font-size:12px;color:var(--sub)">(历史58%)</span></div></div><div class="met pe5"><div class="lab">PE5y 分位 <b>主锚</b></div><div class="val" style="color:var(--ok);font-size:18px">1% <span style="font-size:12px;color:var(--sub)">(PE16.85, 15.65~47.23)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">-1.2%</div></div><div class="met"><div class="lab">近20日</div><div class="val">-4.6%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">-3.09%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-40.5%</div></div><div class="met"><div class="lab">MA20</div><div class="val">1.080</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">1.19/1.24</div></div></div>
-  <div class="insight"><div class="iv"><span class="ivk">估值面</span>PE 16.85 处近 5 年区间 15.65~47.23（区间位置 4%），分位 1%——趴在近 5 年最低区间，估值端赔率最好。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -38.4%，历史最大回撤 -57.7%（2024-07-24），回撤进度 67%——已深于历史最大回撤的一半，属于周期性机会区。</div><div class="iv take"><span class="ivk">综合</span><b>低位 + 深回撤</b>：估值接近 5 年最低、价格也跌透，是赔率与胜率都占优的位置。</div></div>
-  <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>中证动漫游戏指数　930901 / ETF 159869</span></div><div class="abrow"><span class="abk">编制</span><span>选取 A 股中动漫、游戏、影视等内容产业公司，覆盖研发、发行与平台环节。</span></div><div class="abrow"><span class="abk">代表</span><span>传媒内容行业的主题指数，业绩由产品周期（版号、新游流水）和 AI 应用叙事驱动。</span></div><div class="abrow"><span class="abk">怎么用</span><span>主题博弈：波动极大，适合用估值分位 + 深回撤来框定「赔率是否够」的位置，而不是长期持有。</span></div><div class="abrow caveat"><span class="abk">注意</span><span>主题指数盈利波动大，PE 极值参考意义强，中枢参考意义弱——分位比绝对值更重要。</span></div></details>
-  <div class="action"><b>现在该怎么做：</b>深回撤+低估值双重买点：可一次性买入计划的 1/2，剩余按季分批，拿住等估值修复。</div>
-  <div class="sharebar"><a class="sharebtn" href="share/159869.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
-</div>
+</details>
 
-<div class="card">
-  <div class="top">
-    <div>
-      <div class="name">电池ETF汇添富</div>
-      <div class="code">159796</div>
-      <div class="price">0.767</div>
-      <div class="chg down">-0.39%</div>
+<details class="card">
+  <summary>
+    <div class="srow">
+      <span class="dot-sig add"></span>
+      <span class="sname">电池ETF汇添富</span>
+      <span class="scode">159796</span>
+      <span class="badge add" style="margin-left:auto">加仓</span>
     </div>
-    <div class="badge add">加仓</div>
+    <div class="sconcl"><b>低位 + 深回撤</b>：估值接近 5 年最低、价格也跌透，是赔率与胜率都占优的位置。</div>
+  </summary>
+  <div class="cbody">
+    <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-63.8% <span style="font-size:12px;color:var(--sub)">(2024-02-05)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--warn);font-size:15px">-37.2% <span style="font-size:12px;color:var(--sub)">(峰2022-07-07)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--warn);font-size:15px">58% <span style="font-size:12px;color:var(--sub)">(历史64%)</span></div></div><div class="met pe5"><div class="lab">PE5y 分位 <b>主锚</b></div><div class="val" style="color:var(--ok);font-size:18px">20% <span style="font-size:12px;color:var(--sub)">(PE20.03, 13.71~107.85)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">-0.4%</div></div><div class="met"><div class="lab">近20日</div><div class="val">-5.3%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">-1.86%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-38.0%</div></div><div class="met"><div class="lab">MA20</div><div class="val">0.782</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">0.86/0.90</div></div></div>
+    <div class="insight"><div class="iv"><span class="ivk">估值面</span>PE 20.03 处近 5 年区间 13.71~107.85（区间位置 7%），分位 20%——处近 5 年偏低位置，估值端有安全垫。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -37.2%，历史最大回撤 -63.8%（2024-02-05），回撤进度 58%——已深于历史最大回撤的一半，属于周期性机会区。</div><div class="iv take"><span class="ivk">综合</span><b>低位 + 深回撤</b>：估值接近 5 年最低、价格也跌透，是赔率与胜率都占优的位置。</div></div>
+    <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>中证电池主题指数　931719 / ETF 159796</span></div><div class="abrow"><span class="abk">编制</span><span>覆盖动力电池与储能电池产业链：上游材料（锂、正负极、隔膜、电解液）、中游电芯与 PACK、配套设备。</span></div><div class="abrow"><span class="abk">代表</span><span>新能源车与储能需求的高 Beta 表达，制造业属性强，价格随产能周期大幅波动。</span></div><div class="abrow"><span class="abk">怎么用</span><span>周期性成长资产的估值回归观察：从产能过剩到出清的完整周期里，PE 分位能标出「贵」与「便宜」的两端。</span></div><div class="abrow caveat"><span class="abk">注意</span><span>制造业下行期利润被压缩，PE 可能因分母变小而虚高——要结合 PB 或产能周期一起看。</span></div></details>
+    <div class="action"><b>现在该怎么做：</b>深回撤+低估值双重买点：可一次性买入计划的 1/2，剩余按季分批，拿住等估值修复。</div>
+    <div class="sharebar"><a class="sharebtn" href="share/159796.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
   </div>
-  <div class="metrics"><div class="met pe5"><div class="lab">历史最大回撤</div><div class="val" style="color:var(--down);font-size:15px">-63.8% <span style="font-size:12px;color:var(--sub)">(2024-02-05)</span></div></div><div class="met pe5"><div class="lab">当前回撤</div><div class="val" style="color:var(--warn);font-size:15px">-37.2% <span style="font-size:12px;color:var(--sub)">(峰2022-07-07)</span></div></div><div class="met pe5"><div class="lab">回撤进度 <b>(vs 历史最大)</b></div><div class="val" style="color:var(--warn);font-size:15px">58% <span style="font-size:12px;color:var(--sub)">(历史64%)</span></div></div><div class="met pe5"><div class="lab">PE5y 分位 <b>主锚</b></div><div class="val" style="color:var(--ok);font-size:18px">20% <span style="font-size:12px;color:var(--sub)">(PE20.03, 13.71~107.85)</span></div></div><div class="met"><div class="lab">近5日</div><div class="val">-0.4%</div></div><div class="met"><div class="lab">近20日</div><div class="val">-5.3%</div></div><div class="met"><div class="lab">20日BIAS</div><div class="val">-1.86%</div></div><div class="met"><div class="lab">距1年高</div><div class="val">-38.0%</div></div><div class="met"><div class="lab">MA20</div><div class="val">0.782</div></div><div class="met"><div class="lab">目标10%/15%</div><div class="val">0.86/0.90</div></div></div>
-  <div class="insight"><div class="iv"><span class="ivk">估值面</span>PE 20.03 处近 5 年区间 13.71~107.85（区间位置 7%），分位 20%——处近 5 年偏低位置，估值端有安全垫。</div><div class="iv"><span class="ivk">价格面</span>现价距历史高点 -37.2%，历史最大回撤 -63.8%（2024-02-05），回撤进度 58%——已深于历史最大回撤的一半，属于周期性机会区。</div><div class="iv take"><span class="ivk">综合</span><b>低位 + 深回撤</b>：估值接近 5 年最低、价格也跌透，是赔率与胜率都占优的位置。</div></div>
-  <details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary><div class="abrow"><span class="abk">指数</span><span>中证电池主题指数　931719 / ETF 159796</span></div><div class="abrow"><span class="abk">编制</span><span>覆盖动力电池与储能电池产业链：上游材料（锂、正负极、隔膜、电解液）、中游电芯与 PACK、配套设备。</span></div><div class="abrow"><span class="abk">代表</span><span>新能源车与储能需求的高 Beta 表达，制造业属性强，价格随产能周期大幅波动。</span></div><div class="abrow"><span class="abk">怎么用</span><span>周期性成长资产的估值回归观察：从产能过剩到出清的完整周期里，PE 分位能标出「贵」与「便宜」的两端。</span></div><div class="abrow caveat"><span class="abk">注意</span><span>制造业下行期利润被压缩，PE 可能因分母变小而虚高——要结合 PB 或产能周期一起看。</span></div></details>
-  <div class="action"><b>现在该怎么做：</b>深回撤+低估值双重买点：可一次性买入计划的 1/2，剩余按季分批，拿住等估值修复。</div>
-  <div class="sharebar"><a class="sharebtn" href="share/159796.png" target="_blank" rel="noopener">生成分享图 · 小红书竖版</a><span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>
-</div></div>
+</details></div>
   
   <div class="footer">
     <h3>指标速查</h3>
     <b>MA20</b> = 20日均线，现价在其上=趋势偏多，之下=转弱。<br>
-    <b>BIAS(乖离率)</b> = (现价−MA20)/MA20，衡量涨跌是否过度：>10%过热，负值=超跌。<br>
+    <b>BIAS(乖离率)</b> = (现价−MA20)/MA20。<b>20 日口径参考区间</b>：±5% 内=常态、|BIAS|≥5%=偏大、≥8%=极端（公开口径：10 日乖离率 ±4% 常态/±8% 超买超卖，30 日 ±6%，20 日居中取值）。<br>
+    <b>MA20 破位</b> = 现价跌破 20 日均线（标红），站上则标绿——破位代表短期趋势转弱，是「现在该怎么做」的前置过滤器。<br>
     <b>PE5y 分位</b> = 当前PE在近5年所处百分位（用中证官网 <code>indexCsiDsPe</code> 全历史PE自算），判断贵贱的主锚，<b>不依赖登录</b>。<br>
     <b>PE5y 区间</b> = 近5年 PE 的最低~最高，用于定位「当前 PE 离历史底部/顶部还有多远」。<br>
     <b>PB10y 分位</b> = 当前PB在近10年百分位（天天基金口径，可选增强源——该源 token 30 天过期，失效时显示「—」并在此行上方标注；中证官网无 PB 历史，全网免费源暂无 5y PB）。<br>

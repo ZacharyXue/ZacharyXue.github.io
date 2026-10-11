@@ -17,8 +17,21 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,"PingFang S
 .header h1{font-size:26px;font-weight:700}
 .header .meta{margin-top:8px;font-size:13px;color:var(--sub)}
 .header .note{margin-top:10px;font-size:13px;color:#5a6b82;background:#f0f5fb;border-radius:8px;padding:8px 12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.grid{display:flex;flex-direction:column;gap:12px}
+.card{margin:0}
+.card>summary{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 20px;cursor:pointer;list-style:none;position:relative}
+.card>summary::-webkit-details-marker{display:none}
+.card>summary::after{content:"▾";position:absolute;right:18px;top:16px;color:var(--sub);transition:.15s}
+.card[open]>summary{border-radius:14px 14px 0 0}
+.card[open]>summary::after{content:"▴"}
+.srow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-right:24px}
+.sname{font-size:17px;font-weight:700}
+.scode{font-size:12px;color:var(--sub)}
+.sconcl{font-size:13px;color:#4b5563;margin-top:7px;line-height:1.6;padding-right:24px}
+.dot-sig{width:10px;height:10px;border-radius:50%;flex:none}
+.dot-sig.add{background:var(--ok)} .dot-sig.dca{background:var(--warn)}
+.dot-sig.hot{background:var(--hot)} .dot-sig.dip{background:var(--down)} .dot-sig.watch{background:var(--watch)}
+.cbody{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 14px 14px;padding:16px 20px 18px;display:flex;flex-direction:column;gap:12px}
 .card .top{display:flex;justify-content:space-between;align-items:flex-start}
 .card .name{font-size:17px;font-weight:600}
 .card .code{font-size:12px;color:var(--sub);margin-top:2px}
@@ -141,22 +154,24 @@ def render_row(r):
              f'生成分享图 · 小红书竖版</a>'
              f'<span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>')
     return f"""
-<div class="card">
-  <div class="top">
-    <div>
-      <div class="name">{r['name']}</div>
-      <div class="code">{r['etf_code']}</div>
-      <div class="price">{r['price']:.3f}</div>
-      <div class="chg {chg_cls}">{chg_s}</div>
+<details class="card">
+  <summary>
+    <div class="srow">
+      <span class="dot-sig {sig}"></span>
+      <span class="sname">{r['name']}</span>
+      <span class="scode">{r['etf_code']}</span>
+      <span class="badge {sig}" style="margin-left:auto">{SIG_LABEL.get(sig, sig)}</span>
     </div>
-    <div class="badge {sig}">{SIG_LABEL.get(sig, sig)}</div>
+    <div class="sconcl">{md(vw.get("take")) or "（无结论）"}</div>
+  </summary>
+  <div class="cbody">
+    <div class="metrics">{metrics}</div>
+    {insight}
+    {about}
+    <div class="action"><b>现在该怎么做：</b>{ACTIONS.get(sig, "暂观望")}</div>
+    {share}
   </div>
-  <div class="metrics">{metrics}</div>
-  {insight}
-  {about}
-  <div class="action"><b>现在该怎么做：</b>{ACTIONS.get(sig, "暂观望")}</div>
-  {share}
-</div>"""
+</details>"""
 
 def build_html(cfg, rows, errs, kline_date, src_status=None):
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -187,7 +202,8 @@ def build_html(cfg, rows, errs, kline_date, src_status=None):
   <div class="footer">
     <h3>指标速查</h3>
     <b>MA20</b> = 20日均线，现价在其上=趋势偏多，之下=转弱。<br>
-    <b>BIAS(乖离率)</b> = (现价−MA20)/MA20，衡量涨跌是否过度：>10%过热，负值=超跌。<br>
+    <b>BIAS(乖离率)</b> = (现价−MA20)/MA20。<b>20 日口径参考区间</b>：±5% 内=常态、|BIAS|≥5%=偏大、≥8%=极端（公开口径：10 日乖离率 ±4% 常态/±8% 超买超卖，30 日 ±6%，20 日居中取值）。<br>
+    <b>MA20 破位</b> = 现价跌破 20 日均线（标红），站上则标绿——破位代表短期趋势转弱，是「现在该怎么做」的前置过滤器。<br>
     <b>PE5y 分位</b> = 当前PE在近5年所处百分位（用中证官网 <code>indexCsiDsPe</code> 全历史PE自算），判断贵贱的主锚，<b>不依赖登录</b>。<br>
     <b>PE5y 区间</b> = 近5年 PE 的最低~最高，用于定位「当前 PE 离历史底部/顶部还有多远」。<br>
     <b>PB10y 分位</b> = 当前PB在近10年百分位（天天基金口径，可选增强源——该源 token 30 天过期，失效时显示「—」并在此行上方标注；中证官网无 PB 历史，全网免费源暂无 5y PB）。<br>

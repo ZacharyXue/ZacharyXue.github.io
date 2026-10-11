@@ -91,23 +91,36 @@ def build_card(r):
         biglabel = "当前回撤（距历史高点）"
         bar = ""
         sub = "<div class='perow'>该指数无公开历史 PE 序列</div>"
-    # 三格数据
+    # 三格数据（用户 2026-10 定：去掉现价/今日涨跌，把 MA20 放回来并标破位状态）
     cells = []
     if r.get("cur_dd") is not None:
-        cells.append(("当前回撤", f"{r['cur_dd']:.1f}%", "距历史高点"))
+        cells.append(("当前回撤", f"{r['cur_dd']:.1f}%", "距历史高点", "#111827"))
     if r.get("dd_progress") is not None:
-        cells.append(("回撤进度", f"{r['dd_progress']*100:.0f}%", "vs 历史最大"))
+        cells.append(("回撤进度", f"{r['dd_progress']*100:.0f}%", "vs 历史最大", "#111827"))
     if r.get("max_dd") is not None:
-        cells.append(("历史最大回撤", f"{r['max_dd']:.1f}%", str(r.get("max_dd_date") or "")))
+        cells.append(("历史最大回撤", f"{r['max_dd']:.1f}%", str(r.get("max_dd_date") or ""), "#111827"))
+    # MA20：站上/破位（跌破 MA20 = 破位→红；站上→绿）
+    ma20, price_ = r.get("ma20"), r.get("price")
+    if ma20 and price_:
+        gap = (price_ / ma20 - 1) * 100
+        if gap < 0:
+            cells.append(("MA20 均线", f"{ma20:.3f}", "破位 %.2f%%" % gap, "#e11d48"))
+        else:
+            cells.append(("MA20 均线", f"{ma20:.3f}", "站上 +%.2f%%" % gap, "#16a34a"))
+    # BIAS：按公开公认区间标注（10日 ±4% 常态/±8% 极端；30日 ±6%；20日居中取 ±5%/±8%）
     if r.get("bias20") is not None:
-        cells.append(("20日 BIAS", f"{r['bias20']:+.2f}%", "偏离均线"))
-    if chg is not None:
-        cells.append(("今日涨跌", f"{chg:+.2f}%", ""))
-    if price is not None:
-        cells.append(("现价", f"{price:.3f}", code))
+        b = r["bias20"]
+        if abs(b) >= 8:
+            btxt, bcol = "极端区（|BIAS|≥8%）", "#e11d48"
+        elif abs(b) >= 5:
+            btxt, bcol = "偏大（|BIAS|≥5%）", "#f59e0b"
+        else:
+            btxt, bcol = "常态区间（±5% 内）", "#16a34a"
+        cells.append(("20日 BIAS", f"{b:+.2f}%", btxt, bcol))
     cells_html = "".join(
         f"<div class='cell'><div class='ck'>{esc(k)}</div>"
-        f"<div class='cv'>{esc(v)}</div><div class='cs'>{esc(s)}</div></div>" for k, v, s in cells[:6])
+        f"<div class='cv' style='color:{col}'>{esc(v)}</div><div class='cs'>{esc(s)}</div></div>"
+        for k, v, s, col in cells[:6])
     take = (vw.get("take") or "").replace("**", "")
     price_line = (vw.get("price") or "").replace("**", "")
     # 指数一句话定位
