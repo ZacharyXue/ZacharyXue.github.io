@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """从 generate.py 的数据层读取并生成 HTML 看板页面."""
-import json, os, sys, datetime
+import json, os, sys, datetime, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -34,6 +34,18 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,"PingFang S
 .met .val{font-size:15px;font-weight:600;margin-top:2px}
 .pe5{background:#fff7ed;border:1px solid #fde68a}
 .action{margin-top:2px;background:#eef7f0;border-radius:10px;padding:10px 14px;font-size:13px;color:#33503a;border-left:4px solid var(--ok)}
+.insight{margin-top:12px;border-left:3px solid #2c6ee8;background:#f7f9fd;border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.75}
+.iv{margin:3px 0;color:#374151}
+.ivk{display:inline-block;min-width:46px;font-weight:700;color:#1f2937;margin-right:4px}
+.iv.take{color:#111827}
+.about{margin-top:10px;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:12.5px;background:#fcfcfd}
+.about summary{cursor:pointer;color:#2c6ee8;font-weight:600}
+.abrow{display:flex;gap:8px;margin-top:6px;line-height:1.7;color:#4b5563}
+.abk{flex:none;width:52px;color:#9ca3af;font-weight:600}
+.abrow.caveat{color:#b45309}
+.sharebar{margin-top:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.sharebtn{display:inline-block;padding:7px 16px;background:#ff2e4d;color:#fff;border-radius:20px;font-size:13px;font-weight:600;text-decoration:none}
+.sharehint{font-size:11.5px;color:#9ca3af}
 .footer{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 28px;font-size:13px;color:var(--sub);line-height:1.8}
 .footer h3{color:var(--ink);font-size:15px;margin-bottom:8px}
 .err{background:#fdf0ef;color:#b0322b;border-radius:8px;padding:8px 12px;margin-top:12px;font-size:13px}
@@ -52,18 +64,15 @@ def render_row(r):
         style = f' style="color:{vcol}"' if vcol else ""
         return f'<div class="met{cls}"><div class="lab">{lab}</div><div class="val"{style}>{val}</div></div>'
     # PE5y 分位 → 主锚, 放第一位, 高中低着色
-    pe5_block = "—"
-    pe5_cls = ""
+    # 无数据就直接不渲染该格（用户要求：没有的估值指标去掉，别留一排「—」）
+    pe5_html = ""
     if r["pe5_pct"] is not None:
         p = r["pe5_pct"]
-        pe5_cls = " pe5"
         vcol = "var(--down)" if p >= 90 else ("var(--warn)" if p >= 70 else "var(--ok)")
-        pe5_block = (f'{p:.0f}% <span style="font-size:12px;color:var(--sub)">'
-                     f'(PE{r["pe5_cur"]}, {r["pe5_lo"]}~{r["pe5_hi"]})</span>')
-        pe5_html = f'<div class="met{pe5_cls}"><div class="lab">PE5y 分位 <b>主锚</b></div><div class="val" style="color:{vcol};font-size:18px">{pe5_block}</div></div>'
-    else:
-        pe5_html = '<div class="met"><div class="lab">PE5y 分位</div><div class="val">—</div></div>'
-    # PB 分位(天天基金10y口径; 5y无数据源) — 顶部已显示现价, 此处替换为 PB 分位
+        pe5_html = (f'<div class="met pe5"><div class="lab">PE5y 分位 <b>主锚</b></div>'
+                    f'<div class="val" style="color:{vcol};font-size:18px">{p:.0f}% '
+                    f'<span style="font-size:12px;color:var(--sub)">(PE{r["pe5_cur"]}, {r["pe5_lo"]}~{r["pe5_hi"]})</span></div></div>')
+    pb_html = ""
     if r.get("pb10y") is not None:
         pbv = r["pb10y"]
         pbcol = "var(--down)" if pbv >= 90 else ("var(--warn)" if pbv >= 70 else "var(--ok)")
@@ -71,8 +80,6 @@ def render_row(r):
         pb_html = (f'<div class="met pe5"><div class="lab">PB10y 分位</div>'
                    f'<div class="val" style="color:{pbcol};font-size:15px">{pbv:.0f}% '
                    f'<span style="font-size:12px;color:var(--sub)">(PB{pbval})</span></div></div>')
-    else:
-        pb_html = '<div class="met"><div class="lab">PB10y 分位</div><div class="val">—</div></div>'
     # 历史最大回撤/当前回撤/回撤进度（核心，全资产显示）
     def dd_color(progress):
         # 回撤进度: <25% 安全, 25-50% 中, 50-75% 深, >=75% 极深(接近历史大底)
@@ -102,6 +109,37 @@ def render_row(r):
         m("MA20", f"{r['ma20']:.3f}") +
         m("目标10%/15%", f"{r['target10']:.2f}/{r['target15']:.2f}")
     )
+    # ---- 指数说明 + 位置解读 + 分享 ----
+    def md(s):
+        return re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", s or "")
+    vw = r.get("views") or {}
+    mt = r.get("meta") or {}
+    if mt:
+        about = ('<details class="about"><summary>指数是什么 · 怎么用（点开看编制与适用场景）</summary>'
+                 '<div class="abrow"><span class="abk">指数</span>'
+                 f'<span>{md(mt.get("full_name", ""))}　{md(mt.get("code", ""))}</span></div>'
+                 '<div class="abrow"><span class="abk">编制</span>'
+                 f'<span>{md(mt.get("what", ""))}</span></div>'
+                 '<div class="abrow"><span class="abk">代表</span>'
+                 f'<span>{md(mt.get("represent", ""))}</span></div>'
+                 '<div class="abrow"><span class="abk">怎么用</span>'
+                 f'<span>{md(mt.get("use_for", ""))}</span></div>'
+                 + (f'<div class="abrow caveat"><span class="abk">注意</span>'
+                    f'<span>{md(mt.get("caveat"))}</span></div>' if mt.get("caveat") else "")
+                 + '</details>')
+    else:
+        about = ""
+    insight = ('<div class="insight">'
+               f'<div class="iv"><span class="ivk">估值面</span>{md(vw.get("valuation"))}</div>'
+               f'<div class="iv"><span class="ivk">价格面</span>{md(vw.get("price"))}</div>'
+               f'<div class="iv take"><span class="ivk">综合</span>{md(vw.get("take"))}</div>'
+               '</div>') if (vw.get("valuation") or vw.get("price")) else ""
+    share_code = (mt.get("share_slug") or r.get("etf_code") or r.get("name"))
+    share_code = "".join(ch if (ch.isalnum() or ch in "-_") else "" for ch in str(share_code))
+    share = (f'<div class="sharebar">'
+             f'<a class="sharebtn" href="share/{share_code}.png" target="_blank" rel="noopener">'
+             f'生成分享图 · 小红书竖版</a>'
+             f'<span class="sharehint">点开新窗口 → 右键/长按保存图片，即可直接发布</span></div>')
     return f"""
 <div class="card">
   <div class="top">
@@ -114,7 +152,10 @@ def render_row(r):
     <div class="badge {sig}">{SIG_LABEL.get(sig, sig)}</div>
   </div>
   <div class="metrics">{metrics}</div>
+  {insight}
+  {about}
   <div class="action"><b>现在该怎么做：</b>{ACTIONS.get(sig, "暂观望")}</div>
+  {share}
 </div>"""
 
 def build_html(cfg, rows, errs, kline_date, src_status=None):
