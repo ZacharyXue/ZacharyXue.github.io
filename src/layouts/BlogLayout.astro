@@ -20,6 +20,17 @@ const { frontmatter, headings = [], readingMinutes = 0, prevNav, nextNav } = Ast
 // 目录只收集 h2/h3（h1 是文章标题，不算）
 const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
 const showToc = toc.length > 1;
+// 长文（≥3 节）额外给一个正文顶部可折叠目录：左侧悬浮抽屉太隐蔽，
+// 桌面首屏几乎注意不到，长文阅读需要更明显的入口。
+const showInlineToc = toc.length >= 3;
+
+// ===== 邮件讨论：mailto 预填，标题带文章名、正文预填原文链接 =====
+const SITE = 'https://zacharyxue.github.io';
+const DISCUSS_EMAIL = 'xuezihao2016@outlook.com';
+const canonicalUrl = new URL(Astro.url.pathname, SITE).href;
+const discussSubject = `讨论：《${frontmatter.title}》`;
+const discussBody = `原文：${canonicalUrl}\n\n我的评论：\n`;
+const mailtoHref = `mailto:${DISCUSS_EMAIL}?subject=${encodeURIComponent(discussSubject)}&body=${encodeURIComponent(discussBody)}`;
 ---
 
 <BaseLayout title={frontmatter.title} description={frontmatter.description} ogType="article">
@@ -47,9 +58,35 @@ const showToc = toc.length > 1;
         </div>
       )}
     </header>
+    {showInlineToc && (
+      <details class="toc-inline">
+        <summary>
+          <span class="toc-inline-title">📑 本文目录</span>
+          <span class="toc-inline-count">{toc.length} 节</span>
+        </summary>
+        <ul class="toc-inline-list">
+          {toc.map(item => (
+            <li class={`toc-inline-item toc-inline-lv-${item.depth}`}>
+              <a href={`#${item.slug}`}>{item.text}</a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    )}
     <div class="article-body">
       <slot />
     </div>
+
+    <section class="discuss" aria-label="邮件讨论">
+      <div class="discuss-text">
+        <strong>📮 想聊聊这篇？</strong>
+        <span>点按钮会打开你的邮件客户端，标题和原文链接已自动填好，直接写评论即可。</span>
+      </div>
+      <a class="discuss-btn" href={mailtoHref}>写邮件讨论</a>
+      <div class="discuss-mail">
+        或用你自己的邮箱发到 <a href={`mailto:${DISCUSS_EMAIL}`}><code>{DISCUSS_EMAIL}</code></a>
+      </div>
+    </section>
   </article>
 
   <nav class="post-nav" aria-label="文章导航">
@@ -193,6 +230,18 @@ const showToc = toc.length > 1;
       }, 1800);
     });
     pre.appendChild(btn);
+  });
+
+  // ===== 表格包一层横向滚动容器 =====
+  // 表格本体不能自己 display:block（窄表右侧会多出一段空白 + 竖线），
+  // 滚动与外框交给外层 .table-scroll。
+  document.querySelectorAll<HTMLTableElement>('article .article-body table').forEach(table => {
+    const parent = table.parentElement;
+    if (!parent || parent.classList.contains('table-scroll')) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'table-scroll';
+    parent.insertBefore(wrap, table);
+    wrap.appendChild(table);
   });
 </script>
 
@@ -356,5 +405,100 @@ const showToc = toc.length > 1;
   @media (max-width: 768px) {
     article { padding: 1rem; }
     .article-header h1 { font-size: 1.6rem; }
+  }
+  /* ===== 正文顶部可折叠目录（长文入口） ===== */
+  .toc-inline {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--card-bg);
+    margin-bottom: 2rem;
+    padding: 0.2rem 1rem;
+  }
+  .toc-inline > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    cursor: pointer;
+    padding: 0.7rem 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-color);
+    list-style: none;
+  }
+  .toc-inline > summary::-webkit-details-marker { display: none; }
+  .toc-inline > summary::after {
+    content: '▾';
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+  }
+  .toc-inline[open] > summary::after { transform: rotate(180deg); }
+  .toc-inline-count {
+    margin-left: auto;
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+  .toc-inline-list {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  /* 长目录（如 29 节）展开后会占满整屏、把正文推下去，这里限高内部滚动 */
+  .toc-inline[open] .toc-inline-list {
+    max-height: min(60vh, 460px);
+    overflow-y: auto;
+  }
+  .toc-inline-item a {
+    display: block;
+    padding: 0.2rem 0.2rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .toc-inline-item a:hover { color: var(--accent-color); }
+  .toc-inline-lv-3 a { padding-left: 1.3rem; font-size: 0.85rem; }
+
+  /* ===== 邮件讨论 ===== */
+  .discuss {
+    margin-top: 2.5rem;
+    padding: 1.2rem 1.3rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--card-bg);
+    box-shadow: var(--card-shadow);
+    text-align: center;
+  }
+  .discuss-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 0.9rem;
+  }
+  .discuss-text strong { font-size: 1rem; color: var(--text-color); }
+  .discuss-text span { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+  .discuss-btn {
+    display: inline-block;
+    padding: 0.5rem 1.4rem;
+    border-radius: 999px;
+    background: var(--accent-color);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: filter 0.15s ease, transform 0.15s ease;
+  }
+  .discuss-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .discuss-mail { margin-top: 0.7rem; font-size: 0.78rem; color: var(--text-muted); }
+  .discuss-mail code {
+    font-family: var(--font-mono);
+    font-size: 0.95em;
+    user-select: all;
   }
 </style>

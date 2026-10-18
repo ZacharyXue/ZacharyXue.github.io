@@ -176,23 +176,39 @@ article img {
 }
 article img:hover { box-shadow: var(--card-shadow-hover); }
 
-/* 表格 */
+/* 表格
+   结构：JS 给每张表包一层 .table-scroll（横向滚动容器 + 外框），
+   表格本体恢复 display:table，避免 display:block 时外框按 100% 宽绘制
+   而在窄表右侧留下一段空白 + 竖线（看起来像多出一列）。 */
+.table-scroll {
+  overflow-x: auto;
+  margin-bottom: 1.2rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  -webkit-overflow-scrolling: touch;
+}
 article table {
   border-collapse: collapse;
   width: 100%;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0;
   font-size: 0.95em;
-  display: block;
-  overflow-x: auto;
   border: 1px solid var(--border-color);
   border-radius: 8px;
 }
+.table-scroll > table {
+  border: none;
+  border-radius: 0;
+}
 article table th,
 article table td {
-  border: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
   padding: 0.6em 0.9em;
   text-align: left;
 }
+article table th:last-child,
+article table td:last-child { border-right: none; }
+article table tr:last-child td { border-bottom: none; }
 article table th {
   background: var(--blockquote-bg);
   font-weight: 600;
@@ -200,6 +216,14 @@ article table th {
 }
 article table tr:nth-child(even) {
   background: color-mix(in srgb, var(--border-color) 25%, transparent);
+}
+/* 命令/选项列不拆行：曾出现 `ls -lah` 被折成 `ls -` + `lah`、
+   `ln -s` 折成 `ln -` + `s`。表格过宽时交给外层横向滚动。 */
+article table td:first-child { white-space: nowrap; }
+@media (max-width: 560px) {
+  article table { font-size: 0.9em; }
+  article table th,
+  article table td { padding: 0.55em 0.7em; }
 }
 
 /* ===== 图片 lightbox ===== */
