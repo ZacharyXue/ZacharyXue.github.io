@@ -124,6 +124,24 @@ const mailtoHref = `mailto:${DISCUSS_EMAIL}?subject=${encodeURIComponent(discuss
       <button class="toc-toggle" id="toc-toggle" aria-label="展开目录" title="目录">📑</button>
     </>
   )}
+
+  <div class="reading-pref" id="reading-pref">
+    <button class="rp-toggle" id="rp-toggle" type="button" aria-expanded="false" aria-label="阅读设置：字号与行距">Aa</button>
+    <div class="rp-panel" id="rp-panel" hidden>
+      <div class="rp-row">
+        <span class="rp-label">字号</span>
+        <button type="button" data-font="15">小</button>
+        <button type="button" data-font="16">标准</button>
+        <button type="button" data-font="18">大</button>
+      </div>
+      <div class="rp-row">
+        <span class="rp-label">行距</span>
+        <button type="button" data-lh="1.6">紧</button>
+        <button type="button" data-lh="1.8">标准</button>
+        <button type="button" data-lh="2.1">松</button>
+      </div>
+    </div>
+  </div>
 </BaseLayout>
 
 <script is:inline>
@@ -244,6 +262,96 @@ const mailtoHref = `mailto:${DISCUSS_EMAIL}?subject=${encodeURIComponent(discuss
     parent.insertBefore(wrap, table);
     wrap.appendChild(table);
   });
+
+  // ===== S6 标题锚点：hover 显形，点一下复制「本节链接」=====
+  document.querySelectorAll<HTMLElement>('article .article-body :is(h2, h3, h4)').forEach(h => {
+    if (!h.id || h.querySelector('.heading-anchor')) return;
+    const a = document.createElement('a');
+    a.className = 'heading-anchor';
+    a.href = '#' + h.id;
+    a.title = '复制本节链接';
+    a.setAttribute('aria-label', '复制本节链接');
+    a.textContent = '#';
+    a.addEventListener('click', ev => {
+      const url = location.origin + location.pathname + '#' + h.id;
+      if (!navigator.clipboard?.writeText) return; // 不支持就按普通锚点跳转
+      ev.preventDefault();
+      navigator.clipboard.writeText(url).then(() => {
+        a.textContent = '✓';
+        setTimeout(() => { a.textContent = '#'; }, 1200);
+      }).catch(() => { location.hash = h.id; });
+    });
+    h.appendChild(a);
+  });
+
+  // ===== S7 代码块横向溢出提示 =====
+  document.querySelectorAll<HTMLElement>('article .article-body pre').forEach(pre => {
+    // mermaid 块会被替换成图形，不包（否则留下空壳容器）
+    if (pre.dataset.language === 'mermaid') return;
+    if (pre.parentElement?.classList.contains('code-scroll')) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'code-scroll';
+    pre.parentNode?.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+    // Astro 给每个代码块内联了 white-space:pre-wrap + word-wrap:break-word。
+    // 对代码是坏事：换行后的行看起来像新语句、注释被拆断、缩进错乱
+    // （手机上尤其明显）→ 改回不换行，交给横向滚动 + 下方提示。
+    pre.style.whiteSpace = 'pre';
+    pre.style.wordWrap = 'normal';
+    pre.style.overflowWrap = 'normal';
+    const sync = () => {
+      wrap.classList.toggle('is-scrollable', pre.scrollWidth > pre.clientWidth + 2);
+    };
+    sync();
+    window.addEventListener('resize', sync);
+    setTimeout(sync, 400); // 字体/布局稳定后再量一次
+  });
+
+  // ===== S8 阅读设置：字号 / 行距（存 localStorage，跨页生效）=====
+  const rpToggle = document.getElementById('rp-toggle');
+  const rpPanel = document.getElementById('rp-panel');
+  const RP_KEY = 'reading-pref';
+  const rpRead = (): { font?: string; lh?: string } => {
+    try { return JSON.parse(localStorage.getItem(RP_KEY) || '{}'); } catch { return {}; }
+  };
+  const rpApply = (pref: { font?: string; lh?: string }) => {
+    const font = pref.font || '16';
+    const lh = pref.lh || '1.8';
+    document.documentElement.style.fontSize = font + 'px';
+    document.documentElement.style.setProperty('--reading-line-height', lh);
+    rpPanel?.querySelectorAll<HTMLButtonElement>('[data-font]').forEach(b => {
+      b.setAttribute('aria-pressed', String(b.dataset.font === font));
+    });
+    rpPanel?.querySelectorAll<HTMLButtonElement>('[data-lh]').forEach(b => {
+      b.setAttribute('aria-pressed', String(b.dataset.lh === lh));
+    });
+  };
+  let rpPref = rpRead();
+  rpApply(rpPref);
+  if (rpToggle && rpPanel) {
+    const rpClose = () => { rpPanel.hidden = true; rpToggle.setAttribute('aria-expanded', 'false'); };
+    rpToggle.addEventListener('click', () => {
+      if (rpPanel.hidden) {
+        rpPanel.hidden = false;
+        rpToggle.setAttribute('aria-expanded', 'true');
+      } else {
+        rpClose();
+      }
+    });
+    rpPanel.addEventListener('click', e => {
+      const btn = (e.target as HTMLElement).closest('button');
+      if (!btn) return;
+      if (btn.dataset.font) rpPref.font = btn.dataset.font;
+      if (btn.dataset.lh) rpPref.lh = btn.dataset.lh;
+      rpApply(rpPref);
+      try { localStorage.setItem(RP_KEY, JSON.stringify(rpPref)); } catch { /* 隐私模式下忽略 */ }
+    });
+    document.addEventListener('click', e => {
+      const t = e.target as Node;
+      if (!rpPanel.hidden && !rpPanel.contains(t) && !rpToggle.contains(t)) rpClose();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') rpClose(); });
+  }
 </script>
 
 <script>
@@ -495,4 +603,68 @@ const mailtoHref = `mailto:${DISCUSS_EMAIL}?subject=${encodeURIComponent(discuss
   }
   /* 收一收「上一篇/下一篇」的上边距，避免讨论按钮悬在两段大留白中间 */
   .post-nav { margin-top: 2rem; }
+
+  /* ===== 阅读设置（字号 / 行距）===== */
+  .reading-pref {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 45;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+  .rp-toggle {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: var(--bg-color);
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .rp-toggle:hover { color: var(--accent-color); border-color: var(--accent-color); }
+  .rp-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 0.7rem 0.8rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: var(--card-shadow-hover);
+  }
+  .rp-panel[hidden] { display: none; }
+  .rp-row {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.78rem;
+  }
+  .rp-label { color: var(--text-muted); margin-right: 0.1rem; }
+  .rp-row button {
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-color);
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+  .rp-row button:hover { color: var(--accent-color); border-color: var(--accent-color); }
+  .rp-row button[aria-pressed='true'] {
+    color: #fff;
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+  }
+  @media (max-width: 560px) {
+    .reading-pref { right: 0.7rem; bottom: 0.7rem; }
+  }
 </style>

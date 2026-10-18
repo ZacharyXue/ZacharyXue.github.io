@@ -43,6 +43,14 @@ const ogDesc = description || title;
       } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.documentElement.setAttribute('data-theme', 'dark');
       }
+      // 阅读设置（字号/行距）在首帧前套用，避免刷新时先大后小的跳变
+      try {
+        var rp = JSON.parse(localStorage.getItem('reading-pref') || 'null');
+        if (rp) {
+          if (rp.font) document.documentElement.style.fontSize = rp.font + 'px';
+          if (rp.lh) document.documentElement.style.setProperty('--reading-line-height', rp.lh);
+        }
+      } catch (e) {}
     })();
   </script>
 </head>
