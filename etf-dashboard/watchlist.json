@@ -85,6 +85,15 @@
       "etf_code": "159796",
       "kind": "tencent",
       "note": "中证电池主题"
+    },
+    {
+      "name": "港股通汽车ETF广发",
+      "csindex": "931239",
+      "ttfund_index": "931239",
+      "etf_symbol": "sh520600",
+      "etf_code": "520600",
+      "kind": "tencent",
+      "note": "中证港股通汽车产业主题(931239, 港元计价); ETF 2024-12 上市"
     }
   ]
 }
