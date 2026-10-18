@@ -77,16 +77,17 @@ const mailtoHref = `mailto:${DISCUSS_EMAIL}?subject=${encodeURIComponent(discuss
       <slot />
     </div>
 
-    <section class="discuss" aria-label="邮件讨论">
-      <div class="discuss-text">
-        <strong>📮 想聊聊这篇？</strong>
-        <span>点按钮会打开你的邮件客户端，标题和原文链接已自动填好，直接写评论即可。</span>
-      </div>
-      <a class="discuss-btn" href={mailtoHref}>写邮件讨论</a>
-      <div class="discuss-mail">
-        或用你自己的邮箱发到 <a href={`mailto:${DISCUSS_EMAIL}`}><code>{DISCUSS_EMAIL}</code></a>
-      </div>
-    </section>
+    <div class="discuss">
+      <a
+        class="discuss-link"
+        href={mailtoHref}
+        title={`邮件讨论本文 · ${DISCUSS_EMAIL}`}
+        aria-label={`邮件讨论：${frontmatter.title}`}
+      >
+        <span class="discuss-icon" aria-hidden="true">✉</span>
+        <span>邮件讨论</span>
+      </a>
+    </div>
   </article>
 
   <nav class="post-nav" aria-label="文章导航">
@@ -465,40 +466,33 @@ const mailtoHref = `mailto:${DISCUSS_EMAIL}?subject=${encodeURIComponent(discuss
   .toc-inline-item a:hover { color: var(--accent-color); }
   .toc-inline-lv-3 a { padding-left: 1.3rem; font-size: 0.85rem; }
 
-  /* ===== 邮件讨论 ===== */
+  /* ===== 邮件讨论：轻描边小胶囊，静息可见、hover 点亮 ===== */
   .discuss {
     margin-top: 2.5rem;
-    padding: 1.2rem 1.3rem;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    background: var(--card-bg);
-    box-shadow: var(--card-shadow);
     text-align: center;
   }
-  .discuss-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    margin-bottom: 0.9rem;
-  }
-  .discuss-text strong { font-size: 1rem; color: var(--text-color); }
-  .discuss-text span { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
-  .discuss-btn {
-    display: inline-block;
-    padding: 0.5rem 1.4rem;
+  .discuss-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--text-muted) 30%, var(--border-color));
     border-radius: 999px;
-    background: var(--accent-color);
-    color: #fff;
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-muted);
     text-decoration: none;
-    transition: filter 0.15s ease, transform 0.15s ease;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
   }
-  .discuss-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
-  .discuss-mail { margin-top: 0.7rem; font-size: 0.78rem; color: var(--text-muted); }
-  .discuss-mail code {
-    font-family: var(--font-mono);
-    font-size: 0.95em;
-    user-select: all;
+  .discuss-link:hover {
+    color: var(--accent-color);
+    border-color: color-mix(in srgb, var(--accent-color) 40%, transparent);
+    background: color-mix(in srgb, var(--accent-color) 8%, transparent);
   }
+  .discuss-icon { font-size: 0.95rem; line-height: 1; }
+  .discuss-link:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--accent-color) 60%, transparent);
+    outline-offset: 2px;
+  }
+  /* 收一收「上一篇/下一篇」的上边距，避免讨论按钮悬在两段大留白中间 */
+  .post-nav { margin-top: 2rem; }
 </style>
