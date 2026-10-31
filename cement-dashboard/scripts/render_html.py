@@ -28,6 +28,10 @@ def fmt_val(ind):
     # 特化：MACD/RSI
     if v.get("rsi14") is not None and v.get("macd") is not None:
         return f"RSI {v['rsi14']} · MACD {v['macd']}", "", v.get("latest_date")
+    # 特化：海螺归母净利(含同比) —— value 只有 np/np_yoy/rev，没有 latest，
+    # 不特化会被判成「待接入」（README 记录过同类坑）2026-10 修
+    if v.get("np_yoy") is not None and v.get("np") is not None and v.get("latest") is None:
+        return f"{v['np']:,.1f} 亿 · 同比 {v['np_yoy']:+.1f}%", "", v.get("report")
     # 通用单值
     val = v.get("latest") if v.get("latest") is not None else v.get("close")
     unit = ind.get("unit", "")
@@ -156,9 +160,12 @@ def build():
             else:
                 src_link = f'<a href="{esc(src_url)}" target="_blank">{esc(src)}</a>' if src_url else esc(src)
             fetch_t = ind.get("fetched_at", fetched)
+            # 财报类指标要显式标出「报告期」，否则「更新时间=提取时间」会被误读成数据是当期的
+            _rep = (ind.get("value") or {}).get("report") if isinstance(ind.get("value"), dict) else None
             meta = (f'<div class="meta"><span class="m">来源：{src_link}</span>'
                     f'<span class="m">更新时间：{esc(fetch_t)}</span>'
                     f'<span class="m">TTL：{esc(ttl)}</span>'
+                    + (f'<span class="m">报告期：{esc(_rep)}</span>' if _rep else "")
                     + (f'<span class="m">数据日期：{esc(ldate)}</span>' if ldate and ldate != "近一周均值" else "")
                     + '</div>')
             # 失败/旧值参考
