@@ -1,7 +1,7 @@
 ---
 title: "神火股份（000933）"
-domain: "entities"
-domainLabel: "实体档案"
+domain: "stocks"
+domainLabel: "个股与指数"
 created: "2026-09-05"
 updated: "2026-09-05"
 type: "entity"
@@ -29,10 +29,10 @@ summary: "电解铝 + 煤炭双主业的「价格周期股」——需求还在�
 - 判断重心：供给侧红线（4500 万吨）支撑价格 vs 海外新增产能压制——见[周期股分析框架](/wiki/investing/cycle-stock-framework)
 
 ## 方法论价值
-- 该标的是「价格周期股」与[海螺水泥](/wiki/entities/hailuo-cement)（需求周期）的对照组——同一估值体系下判断完全相反
+- 该标的是「价格周期股」与[海螺水泥](/wiki/stocks/hailuo-cement)（需求周期）的对照组——同一估值体系下判断完全相反
 - 时点财务数据（单季净利/ROE/股息率）见博客原文，不应沉淀进 wiki
 
 ## 相关
 - [周期股分析框架](/wiki/investing/cycle-stock-framework)（核心框架）
-- [海螺水泥](/wiki/entities/hailuo-cement)（需求周期对照）
+- [海螺水泥](/wiki/stocks/hailuo-cement)（需求周期对照）
 - [财务质量验证法](/wiki/investing/financial-quality-verification)（利润质量验证）

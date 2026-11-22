@@ -605,8 +605,8 @@
     "updated": "2026-09-07"
   },
   {
-    "domain": "entities",
-    "domainLabel": "实体档案",
+    "domain": "stocks",
+    "domainLabel": "个股与指数",
     "slug": "hailuo-cement",
     "title": "海螺水泥（600585）",
     "summary": "亚洲最大水泥商，需求周期（永久下滑）的代表——表面便宜但盈利中枢永久下移，价值陷阱候选。",
@@ -618,8 +618,8 @@
     "updated": "2026-09-05"
   },
   {
-    "domain": "entities",
-    "domainLabel": "实体档案",
+    "domain": "stocks",
+    "domainLabel": "个股与指数",
     "slug": "hk-soe-dividend-931722",
     "title": "港股央企红利指数931722",
     "summary": "「最根正苗红的央企 × 港股折价 × 高股息」的股息驱动型资产——收益 3/4 来自股息而非股价，买点由回撤深度决定。",
@@ -632,8 +632,8 @@
     "updated": "2026-09-05"
   },
   {
-    "domain": "entities",
-    "domainLabel": "实体档案",
+    "domain": "stocks",
+    "domainLabel": "个股与指数",
     "slug": "renfu-pharma",
     "title": "人福医药（ST人福 600079）",
     "summary": "麻醉镇痛药垄断龙头被 ST（股东资金占用）压制的估值——治理型困境反转：需求刚性、护城河真实、财务自愈中。",
@@ -645,8 +645,8 @@
     "updated": "2026-09-05"
   },
   {
-    "domain": "entities",
-    "domainLabel": "实体档案",
+    "domain": "stocks",
+    "domainLabel": "个股与指数",
     "slug": "shenhuo-000933",
     "title": "神火股份（000933）",
     "summary": "电解铝 + 煤炭双主业的「价格周期股」——需求还在，利润跟着铝价和成本波动，价格能回中枢的标的。",

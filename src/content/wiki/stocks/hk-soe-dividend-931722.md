@@ -1,7 +1,7 @@
 ---
 title: "港股央企红利指数931722"
-domain: "entities"
-domainLabel: "实体档案"
+domain: "stocks"
+domainLabel: "个股与指数"
 created: "2026-09-05"
 updated: "2026-09-05"
 type: "entity"

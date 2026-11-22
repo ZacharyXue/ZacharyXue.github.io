@@ -33,14 +33,18 @@ DEST = BLOG / "src" / "content" / "wiki"
 INDEX_JSON = BLOG / "src" / "data" / "wiki-index.json"
 
 # 域目录 → 展示名（顺序即站点索引页分区顺序）
-DOMAINS = {
-    "investing": "投资认知",
-    "cloud-native": "云原生",
-    "llm-eng": "LLM 工程",
-    "algorithms": "算法范式",
-    "soft-skills": "读书软技能",
-    "entities": "实体档案",
-}
+# 域配置：(站点 domain id, 源相对路径, 展示名)
+# domain id 直接决定 URL：/wiki/<id>/<slug>
+DOMAIN_SPECS = [
+    ("investing",    "concepts/investing",    "投资认知"),
+    ("cloud-native", "concepts/cloud-native", "云原生"),
+    ("llm-eng",      "concepts/llm-eng",      "LLM 工程"),
+    ("algorithms",   "concepts/algorithms",   "算法范式"),
+    ("soft-skills",  "concepts/soft-skills",  "读书软技能"),
+    ("stocks",       "entities/investing",    "个股与指数"),
+    ("systems",      "entities/systems",      "个人系统"),
+]
+DOMAINS = {d: label for d, _, label in DOMAIN_SPECS}
 
 # 目录级公开白名单：只有这些目录下的页默认公开。
 # 不在白名单 = 默认私有（新目录/新实体页不会自动出网）。
@@ -50,6 +54,8 @@ PUBLIC_DIRS = {
     "concepts/llm-eng",
     "concepts/algorithms",
     "concepts/soft-skills",
+    "entities/investing",   # 个股/指数/基金 → 公开
+    # entities/systems 故意不在白名单：简历/看板/技能库/内网代理等个人系统默认私有
 }
 
 # 拒绝级：命中即不进公开站（个人路径 / 薪酬 / 持仓成本）
@@ -135,18 +141,17 @@ def extract_essence(body: str, fm: dict) -> str | None:
 
 def collect() -> list[dict]:
     pages = []
-    for domain in DOMAINS:
-        d = WIKI / ("entities" if domain == "entities" else f"concepts/{domain}")
+    for domain, relpath, _label in DOMAIN_SPECS:
+        d = WIKI / relpath
         if not d.exists():
             continue
         for f in sorted(d.glob("*.md")):
             text = f.read_text(encoding="utf-8")
             fm, body = split_fm(text)
-            dirpath = "entities" if domain == "entities" else f"concepts/{domain}"
             pages.append({
                 "domain": domain,
                 "slug": f.stem,
-                "dirpath": dirpath,
+                "dirpath": relpath,
                 "path": f,
                 "fm": fm,
                 "body": body,

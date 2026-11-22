@@ -55,4 +55,4 @@ summary: "红利 ETF 不是同质化的——按「地域 × 成分股属性」�
 - [周期股分析框架](/wiki/investing/cycle-stock-framework)：利润归因 / 需求周期思路
 - [估值锚定体系](/wiki/investing/valuation-anchoring)：PE 分位判断
 - [财务质量验证法](/wiki/investing/financial-quality-verification)：如何发现周期顶点的"景气利润"
-- 实体：[港股央企红利指数931722](/wiki/entities/hk-soe-dividend-931722)
+- 实体：[港股央企红利指数931722](/wiki/stocks/hk-soe-dividend-931722)

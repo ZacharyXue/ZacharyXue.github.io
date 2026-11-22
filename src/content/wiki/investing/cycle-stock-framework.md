@@ -50,4 +50,4 @@ summary: "先判别「价格周期」还是「需求周期」，再决定用哪�
 - [价值陷阱与困境反转判别](/wiki/investing/value-trap-vs-reversal)：需求周期股是价值陷阱的最典型候选
 - [估值锚定体系](/wiki/investing/valuation-anchoring)：ROE 锚定法如何落地（海螺案例：ROE 4.5% ↔ PB 0.45）
 - [红利资产风险分层](/wiki/investing/dividend-risk-layers)：周期型红利 vs 稳定吃息型的分野
-- 实体：[神火股份](/wiki/entities/shenhuo-000933)、[海螺水泥](/wiki/entities/hailuo-cement)
+- 实体：[神火股份](/wiki/stocks/shenhuo-000933)、[海螺水泥](/wiki/stocks/hailuo-cement)

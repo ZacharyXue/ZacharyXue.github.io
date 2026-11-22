@@ -44,4 +44,4 @@ summary: "表面便宜（低 PB + 高股息）要先问「压估值的是永久�
 - [周期股分析框架](/wiki/investing/cycle-stock-framework)：需求周期股 = 价值陷阱最典型候选
 - [估值锚定体系](/wiki/investing/valuation-anchoring)：ROE 锚定判断便宜是否真便宜
 - [伪质量红利识别](/wiki/investing/pseudo-quality-dividend)：伪质量是被动的价值陷阱
-- 实体：[海螺水泥](/wiki/entities/hailuo-cement)、[人福医药](/wiki/entities/renfu-pharma)
+- 实体：[海螺水泥](/wiki/stocks/hailuo-cement)、[人福医药](/wiki/stocks/renfu-pharma)

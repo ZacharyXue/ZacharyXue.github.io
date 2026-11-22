@@ -46,4 +46,4 @@ summary: "不用「别人给多少 PE」定价，而是用「我能要求多少�
 ## 相关
 - [周期股分析框架](/wiki/investing/cycle-stock-framework)：周期股「正常化盈利」如何代入锚定法
 - [财务质量验证法](/wiki/investing/financial-quality-verification)：ROE 是滞后指标，先验证质量再锚定
-- 实体：[海螺水泥](/wiki/entities/hailuo-cement)、[神火股份](/wiki/entities/shenhuo-000933)
+- 实体：[海螺水泥](/wiki/stocks/hailuo-cement)、[神火股份](/wiki/stocks/shenhuo-000933)

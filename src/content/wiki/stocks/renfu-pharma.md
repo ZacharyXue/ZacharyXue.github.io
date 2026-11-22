@@ -1,7 +1,7 @@
 ---
 title: "人福医药（ST人福 600079）"
-domain: "entities"
-domainLabel: "实体档案"
+domain: "stocks"
+domainLabel: "个股与指数"
 created: "2026-09-05"
 updated: "2026-09-05"
 type: "entity"
@@ -29,7 +29,7 @@ summary: "麻醉镇痛药垄断龙头被 ST（股东资金占用）压制的估�
 - 政策风险：麻醉药政策变化对垄断地位的影响
 
 ## 困境反转判定（复用框架）
-- 与[海螺水泥](/wiki/entities/hailuo-cement)相反：需求在、护城河真、压制因素可解除 → 归入「反转」案例
+- 与[海螺水泥](/wiki/stocks/hailuo-cement)相反：需求在、护城河真、压制因素可解除 → 归入「反转」案例
 - 新药管线（RFUS-188）是**远期期权**：上市 5-7 年、成功率个位数，短期无业绩影响——不构成买入理由
 
 ## 方法论价值
@@ -38,5 +38,5 @@ summary: "麻醉镇痛药垄断龙头被 ST（股东资金占用）压制的估�
 
 ## 相关
 - [价值陷阱与困境反转判别](/wiki/investing/value-trap-vs-reversal)（反转对照案例）
-- [海螺水泥](/wiki/entities/hailuo-cement)（陷阱对照）
+- [海螺水泥](/wiki/stocks/hailuo-cement)（陷阱对照）
 - [财务质量验证法](/wiki/investing/financial-quality-verification)（财务自愈验证）

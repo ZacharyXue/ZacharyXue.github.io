@@ -1,7 +1,7 @@
 ---
 title: "海螺水泥（600585）"
-domain: "entities"
-domainLabel: "实体档案"
+domain: "stocks"
+domainLabel: "个股与指数"
 created: "2026-09-05"
 updated: "2026-09-05"
 type: "entity"
@@ -34,7 +34,7 @@ summary: "亚洲最大水泥商，需求周期（永久下滑）的代表——�
 - 定位：**平庸生意 · 便宜价**——可交易，不可重仓
 
 ## 方法论价值
-- 与[神火股份](/wiki/entities/shenhuo-000933)构成「价格周期 vs 需求周期」的标准对照组
+- 与[神火股份](/wiki/stocks/shenhuo-000933)构成「价格周期 vs 需求周期」的标准对照组
 - 时点数据（PB/股息率/具体目标价测算）见博客原文
 
 ## 相关
