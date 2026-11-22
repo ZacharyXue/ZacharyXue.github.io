@@ -53,7 +53,7 @@ PUBLIC_DIRS = {
     "concepts/cloud-native",
     "concepts/llm-eng",
     "concepts/algorithms",
-    "concepts/soft-skills",
+    # concepts/soft-skills 故意不在白名单：个人软技能/读书笔记属私领域，不出网
     "entities/investing",   # 个股/指数/基金 → 公开
     # entities/systems 故意不在白名单：简历/看板/技能库/内网代理等个人系统默认私有
 }
