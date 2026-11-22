@@ -24,7 +24,24 @@ const projectsCollection = defineCollection({
   }),
 });
 
+const wikiCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    domain: z.string(),
+    domainLabel: z.string(),
+    created: z.string().default(''),
+    updated: z.string().default(''),
+    type: z.string().default('concept'),
+    tags: z.array(z.string()).default([]),
+    sources: z.array(z.string()).default([]),
+    confidence: z.string().default(''),
+    summary: z.string().default(''),
+  }),
+});
+
 export const collections = {
   blog: blogCollection,
   projects: projectsCollection,
+  wiki: wikiCollection,
 };

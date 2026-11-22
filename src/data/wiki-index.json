@@ -1,0 +1,660 @@
+[
+  {
+    "domain": "investing",
+    "domainLabel": "投资认知",
+    "slug": "cycle-stock-framework",
+    "title": "周期股分析框架",
+    "summary": "先判别「价格周期」还是「需求周期」，再决定用哪套估值逻辑——这是周期股投资的第一分叉。",
+    "tags": [
+      "周期股",
+      "估值",
+      "财务分析"
+    ],
+    "updated": "2026-09-05"
+  },
+  {
+    "domain": "investing",
+    "domainLabel": "投资认知",
+    "slug": "dividend-risk-layers",
+    "title": "红利资产风险分层",
+    "summary": "红利 ETF 不是同质化的——按「地域 × 成分股属性」分层，波动和收益来源完全不同。",
+    "tags": [
+      "红利",
+      "ETF",
+      "港股"
+    ],
+    "updated": "2026-09-05"
+  },
+  {
+    "domain": "investing",
+    "domainLabel": "投资认知",
+    "slug": "financial-quality-verification",
+    "title": "财务质量验证法",
+    "summary": "报表好看 ≠ 质量好：先拆「指标是领先还是滞后」、再验「利润是不是真金白银」、最后看「高回报来自经营还是杠杆」。",
+    "tags": [
+      "财务分析",
+      "红利",
+      "周期股"
+    ],
+    "updated": "2026-09-05"
+  },
+  {
+    "domain": "investing",
+    "domainLabel": "投资认知",
+    "slug": "fund-research-framework",
+    "title": "基金研究框架",
+    "summary": "验证基金要「言行一致」：基金经理季报怎么说，持仓和结构要能对上——对不上就是言行不一，要警惕。",
+    "tags": [
+      "基金",
+      "财务分析",
+      "红利",
+      "方法论"
+    ],
+    "updated": "2026-09-05"
+  },
+  {
+    "domain": "investing",
+    "domainLabel": "投资认知",
+    "slug": "pseudo-quality-dividend",
+    "title": "伪质量红利识别",
+    "summary": "「质量因子」选出的高 ROE 白马红利，往往是刚开始走下坡路的伪质量——验证三个怀疑全中就是陷阱。",
+    "tags": [
+      "红利",
+      "财务分析",
+      "价值陷阱"
+    ],
+    "updated": "2026-09-05"
+  },
+  {
+    "domain": "investing",
+    "domainLabel": "投资认知",
+    "slug": "real-interest-rate-gold",
+    "title": "实际利率与黄金的定价锚",
+    "summary": "黄金的长期定价锚是「实际利率」，不是「加不加息」这个动作。 黄金不产生现金流，持有它的机会成本 = 把钱放在生息资产上的真实回报。 实际利率高 → 持有黄金代价大 → 金价长期受压；实际利率接近零或为负 → 黄金没有泡沫定价的压力。",
+    "tags": [
+      "黄金",
+      "宏观",
+      "实际利率"
+    ],
+    "updated": "2026-09-28"
+  },
+  {
+    "domain": "investing",
+    "domainLabel": "投资认知",
+    "slug": "valuation-anchoring",
+    "title": "估值锚定体系",
+    "summary": "不用「别人给多少 PE」定价，而是用「我能要求多少回报」倒推合理价。",
+    "tags": [
+      "估值",
+      "财务分析",
+      "ROIC"
+    ],
+    "updated": "2026-09-05"
+  },
+  {
+    "domain": "investing",
+    "domainLabel": "投资认知",
+    "slug": "value-trap-vs-reversal",
+    "title": "价值陷阱与困境反转判别",
+    "summary": "表面便宜（低 PB + 高股息）要先问「压估值的是永久性恶化还是可修复的短期问题」——前者是价值陷阱，后者才可能是困境反转。",
+    "tags": [
+      "价值陷阱",
+      "困境反转",
+      "估值",
+      "经验"
+    ],
+    "updated": "2026-09-05"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "alerting-on-degradation",
+    "title": "降级即告警：有兜底的系统怎么被观测",
+    "summary": "降级兜底会把故障对用户隐藏——用户永不报障，传统的「失败率」告警也就永不触发。 所以这类系统的第一告警项不是「失败了多少」，而是「有多少请求走了兜底路径」。",
+    "tags": [
+      "监控",
+      "运维",
+      "架构"
+    ],
+    "updated": "2026-10-02"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "arp-mechanism",
+    "title": "ARP 机制与广播风暴",
+    "summary": "一句话本质：ARP 是同一条链路上的「IP → MAC 翻译官」——广播问、单播答、缓存复用；跨子网时它只问网关，因为它管不到链路的另一边。",
+    "tags": [
+      "网络",
+      "运维"
+    ],
+    "updated": "2026-10-01"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "buildkit-cache-mechanics",
+    "title": "BuildKit 缓存机制：三层结构与并发冲突",
+    "summary": "构建缓存分三层（本地镜像层 / cache mount / 远程导出），三层的生命周期和导出能力完全不同——cache mount 不进镜像、也不随 --cache-to 导出，因此一次性 runner 上它天然为空；并发读写冲突由 sharing 三档参数管理，而默认 shared 之所以安全，是因为现代包管理器自己做了原子写。",
+    "tags": [
+      "容器",
+      "buildkit",
+      "缓存",
+      "io",
+      "并发"
+    ],
+    "updated": "2026-11-14"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "cidr-addressing",
+    "title": "CIDR 编址",
+    "summary": "一句话本质：IP/前缀长度，斜杠后的数字 = 网络号占几位；前缀是\"网络有多大\"的刻度，剩下的位数才是主机号。",
+    "tags": [
+      "网络"
+    ],
+    "updated": "2026-09-27"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "container-build-evolution",
+    "title": "容器镜像构建的四代演进与主流形态",
+    "summary": "镜像构建的演进主线只有一条：在「隔离性」和「缓存复用」之间找平衡——dind 买到隔离却丢了缓存，Dokanless 构建丢掉特权却仍无跨机缓存，BuildKit 的远程缓存导出才是真正的分水岭，因为它把缓存从「本机行为」变成了可外置、可分发的基础设施。",
+    "tags": [
+      "容器",
+      "构建",
+      "buildkit",
+      "ci"
+    ],
+    "updated": "2026-11-14"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "container-runtime-chain",
+    "title": "容器运行时链路：从 Pod 到隔离的进程",
+    "summary": "容器不是轻量虚拟机，而是「被隔离的进程 + 资源限制 + rootfs」；一个 Pod 从创建到运行经过 kubelet→CRI→containerd→shim→runc 的清晰链路，其中 shim 的进程隔离、snapshot/lease/GC 的内容寻址存储与 cgroup 单一写者原则，分别解释了「containerd 重启容器不死」「删容器 root…",
+    "tags": [
+      "容器",
+      "containerd"
+    ],
+    "updated": "2026-09-07"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "crc-and-integrity-check",
+    "title": "CRC 与数据完整性校验",
+    "summary": "一句话本质：CRC 用模 2 除法给数据算一段\"指纹\"附在帧尾，链路每跳验证——查错能力很强（漏检仅 2⁻³²），但因为没有密钥，只能防意外损坏、防不了篡改。",
+    "tags": [
+      "网络",
+      "运维"
+    ],
+    "updated": "2026-10-01"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "dhcp-address-assignment",
+    "title": "DHCP 地址分配",
+    "summary": "一句话本质：DHCP 把「IP + 掩码 + 网关 + DNS + 租期」整套配置自动送上门（DORA 四步），之后靠 T1/T2 定时续租维持——所以拿到的 IP 是「概率性固定」，不是真固定。",
+    "tags": [
+      "网络",
+      "运维"
+    ],
+    "updated": "2026-09-27"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "dind-gitlab-ci",
+    "title": "Docker in Docker：GitLab CI 的 service 模式原理",
+    "summary": "dind 不是「把 docker 塞进你的容器」，而是起第二个 dockerd 当独立服务；job 容器里的 docker 命令只是个 TCP/REST 客户端，docker 这个主机名来自 /etc/hosts 的一条记录（或网络别名）——全程没有端口映射。",
+    "tags": [
+      "容器",
+      "dind",
+      "gitlab-ci",
+      "网络",
+      "排障"
+    ],
+    "updated": "2026-11-14"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "dns-resolution",
+    "title": "DNS 解析流程",
+    "summary": "一句话本质：DNS 把「人类域名」翻成「网络 IP」，查询按固定顺序逐级下探、缓存优先；翻译完成后使命结束——之后包上写的都是 IP。",
+    "tags": [
+      "网络",
+      "运维"
+    ],
+    "updated": "2026-10-01"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "fastapi-architecture",
+    "title": "FastAPI 架构：类型驱动、DI 管道与异步模型",
+    "summary": "FastAPI 的本质是「类型标注即一切」——同一份类型标注同时是校验（Pydantic）、文档（OpenAPI）和编辑器提示；依赖注入不是简单的「注入数据库连接」而是可组合的请求处理管道（依赖图拓扑执行、请求内缓存、yield 清理）；性能与正确性的关键在 async def/def 决策规则和分层不越界。",
+    "tags": [
+      "架构",
+      "监控"
+    ],
+    "updated": "2026-09-07"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "fleeting-plugin-architecture",
+    "title": "Fleeting 插件架构（GitLab Runner 云厂商适配）",
+    "summary": "插件是「翻译官 + 眼睛」，不是「大脑」：它把云厂商的机器池翻译成 Runner 能指挥的标准接口， 每次汇报云上实况；决定要几台的是 taskscaler，记住状态的是 fleeting 库，插件自己无状态。",
+    "tags": [
+      "k8s",
+      "架构",
+      "CI/CD"
+    ],
+    "updated": "2026-10-10"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "go-context-subprocess",
+    "title": "Go context 与子进程：cancel 到不了的地方",
+    "summary": "context 是「协作式取消」——它只能通知那些主动监听它的代码，对不监听的协程、以及已经 exec 出去的操作系统进程没有任何约束力。「超时了」不等于「事情停了」。",
+    "tags": [
+      "go",
+      "架构",
+      "运维"
+    ],
+    "updated": "2026-10-02"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "image-attestation",
+    "title": "镜像供应链证明：SBOM 与 provenance",
+    "summary": "两个 attestation 回答两个不同的问题：SBOM = 这个镜像里有什么（成分表），provenance = 它是怎么被造出来的（生产记录）；两者都以 in-toto JSON 包成 OCI 元数据挂在镜像上、可被 cosign 签名。provenance 默认就是开着的，而它的 mode=max 会暴露 build args 的值——这是最容易踩的…",
+    "tags": [
+      "容器",
+      "供应链",
+      "sbom",
+      "slsa",
+      "安全"
+    ],
+    "updated": "2026-11-14"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "k8s-label-vs-annotation",
+    "title": "K8s Label 与 Annotation 之分",
+    "summary": "Label = 资源对外暴露的身份证（可被 selector 查、可被控制器认领）；Annotation = 快递单上的备注（程序读配置/存状态，永不参与认领）。 边界本质：你愿不愿接受格式约束，来交换「资源可被选择/关联」这个能力。",
+    "tags": [
+      "k8s",
+      "架构"
+    ],
+    "updated": "2026-09-13"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "layer2-switching",
+    "title": "二层转发与交换机",
+    "summary": "一句话本质：交换机是「定向分拣」不是「共享总线」——按目的 MAC 查表转发到对应端口，端口间独立带宽；目的 MAC 决定谁处理，交换机决定谁收到。",
+    "tags": [
+      "网络",
+      "架构"
+    ],
+    "updated": "2026-09-19"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "linux-ops-heuristics",
+    "title": "Linux 运维判据与排障方法论",
+    "summary": "命令会忘、判据不会：能沉淀的是不随日期失效的排障判断框架——inode 消耗光也会报 No space、内存看 available 而非 free、si/so 非零说明在 swap、2>&1 是值拷贝而非引用绑定、grep/awk/sed 三剑客的分工心智模型；具体命令清单留博客。",
+    "tags": [
+      "监控",
+      "运维"
+    ],
+    "updated": "2026-09-07"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "long-connection-lifecycle",
+    "title": "长连接在中间层的生命周期",
+    "summary": "长连接穿过负载均衡/入口网关时，会撞上两个完全独立的问题：路由（这条连接该打到哪个实例）和寿命（这条连接能活多久）。归因时必须先分清是哪一类，否则会在错误的层上折腾。",
+    "tags": [
+      "网络",
+      "k8s",
+      "运维",
+      "架构"
+    ],
+    "updated": "2026-11-14"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "loopback-address",
+    "title": "环回地址",
+    "summary": "一句话本质：127.0.0.0/8（IPv6 ::1）是本机自留地——发给它的包不出物理网卡，在内核协议栈内部直接折返。",
+    "tags": [
+      "网络",
+      "运维"
+    ],
+    "updated": "2026-09-19"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "network-config-four-pieces",
+    "title": "网络配置四件套与子网约束",
+    "summary": "一句话本质：IP + 掩码 + 广播地址 + 网关 是一套团队——掩码是地基（决定谁是我的邻居），网关是小区唯一大门；名单错了，你连门都找不到。",
+    "tags": [
+      "网络",
+      "运维",
+      "架构"
+    ],
+    "updated": "2026-09-27"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "network-layer-stack",
+    "title": "网络分层与出网链路",
+    "summary": "一句话本质：HTTP 说\"我要买什么\"，TCP 说\"保证送到并确认\"，IP 说\"最终去哪个服务器\"，MAC 说\"当前这一段交给谁\"——四层各司其职，每层把上层数据当不可分负载。",
+    "tags": [
+      "网络",
+      "架构"
+    ],
+    "updated": "2026-09-19"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "proxy-as-pipeline",
+    "title": "代理是管道不是解析器",
+    "summary": "代理的稳定性来自「不解析业务报文」——只搬运字节，就与协议演进彻底解耦；一旦开始解析，就被绑到某个协议版本上，从此跟着上游跑。",
+    "tags": [
+      "架构",
+      "网络"
+    ],
+    "updated": "2026-10-02"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "user-kernel-network-path",
+    "title": "用户态与内核态的网络路径",
+    "summary": "一句话本质：应用碰不到网卡——一切联网都要通过系统调用把请求交给内核，内核干完活再把结果交还应用；数据在一台机器上要穿越「用户态 → 内核态 → 用户态」。",
+    "tags": [
+      "网络",
+      "运维",
+      "架构"
+    ],
+    "updated": "2026-10-01"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "volcano-scheduling",
+    "title": "Volcano 调度器：gang 调度与多调度器机制",
+    "summary": "K8s 调度器不必是唯一的：Volcano 通过 Pod 的 schedulerName 字段从默认调度器手里「认领」Pod，用「定时拍快照、内存统一决策」（乐观并发控制）和「Action 管做什么、Plugin 管怎么判断」的分离设计，让 gang、DRF、binpack 等批量调度策略自由组合，解决分布式训练多 Pod 协同调度的死锁问题。",
+    "tags": [
+      "k8s",
+      "调度"
+    ],
+    "updated": "2026-09-07"
+  },
+  {
+    "domain": "cloud-native",
+    "domainLabel": "云原生",
+    "slug": "websocket-protocol",
+    "title": "WebSocket 协议机制",
+    "summary": "WebSocket 不是新协议，是\"从 HTTP 原地换车\"——先用一个假的 HTTP 请求商量好，服务端回 101 Switching Protocols，从此这条 TCP 连接脱离 HTTP 语义，变成双向对等的字节流。",
+    "tags": [
+      "网络",
+      "架构",
+      "运维"
+    ],
+    "updated": "2026-11-14"
+  },
+  {
+    "domain": "llm-eng",
+    "domainLabel": "LLM 工程",
+    "slug": "agent-eval-framework",
+    "title": "Agent 评测体系：五层 / 四步 / 三阶段",
+    "summary": "评测体系要回答三个不同问题——「评什么」（五层评测对象）「评完怎么办」（四步质量归因）「怎么上线」（三阶段治理）；判据方法分规则/模型/实验三层且互相校准（实验层校准模型层，模型层放大规则层），最容易被忽略的是级联风险：下层不干净，上层白评。",
+    "tags": [
+      "评测",
+      "agent"
+    ],
+    "updated": "2026-10-02"
+  },
+  {
+    "domain": "llm-eng",
+    "domainLabel": "LLM 工程",
+    "slug": "context-compression-strategies",
+    "title": "上下文压缩策略：续跑 vs 防僵尸——任务形态与成本模型双根因",
+    "summary": "两个 agent 解决同一个问题（长 tool-use 对话撑爆上下文窗口）给出几乎处处相反的设计，分叉根因只有两条：任务形态（连续长跑 vs 随时转向）决定摘要语义（续跑 vs 防僵尸）；prompt cache 成本模型（神圣 vs 无顾虑）决定谁做摘要（aux 小模型 vs 主模型）和敢不敢后台异步。看穿这两条，任何 agent 的上下文管理策略都能读…",
+    "tags": [
+      "上下文压缩",
+      "agent"
+    ],
+    "updated": "2026-09-07"
+  },
+  {
+    "domain": "llm-eng",
+    "domainLabel": "LLM 工程",
+    "slug": "deterministic-agent-hybrid",
+    "title": "确定性工程 × Agent 混合架构：LLM 只做判断题",
+    "summary": "把 LLM 容易失控的环节（审哪些文件、每文件用什么规则、评论落哪一行、预算/并发/超时）全部搬回确定性程序，LLM 只保留「判断问题是否真实」这一件事——「能写成程序的约束问题不需要开放式推理」，以刻意牺牲 Recall 为代价换取 Precision/F1 更高、token 约 1/9、更快。",
+    "tags": [
+      "agent",
+      "代码评审"
+    ],
+    "updated": "2026-10-02"
+  },
+  {
+    "domain": "llm-eng",
+    "domainLabel": "LLM 工程",
+    "slug": "llm-judge-self-iteration",
+    "title": "LLM-as-a-Judge：三层打分架构与自我迭代",
+    "summary": "用 LLM 做评测不该直接打总分，而应拆成「全局 Rubric 定方向、逐题 Criterion 定检查点」的三层架构（生成器→打分器→聚合器），并以「打分全程留痕→复盘器定位错因层级→生成候选改法→人工审核」实现自我迭代，用训练/测试集分工防退化——底层哲学是让 LLM 把 bad case 变成具体改法，而不是让它自己宣布「我变好了」。",
+    "tags": [
+      "评测",
+      "agent"
+    ],
+    "updated": "2026-10-02"
+  },
+  {
+    "domain": "llm-eng",
+    "domainLabel": "LLM 工程",
+    "slug": "loop-engineering",
+    "title": "Loop Engineering：用负反馈闭环收敛概率错误",
+    "summary": "Loop Engineering 是控制论在 AI 工程的落地：LLM 是概率模型，复杂任务分治叠加让正确率指数衰减（单步 90% 六步后约 53%），必须用负反馈闭环修正累积概率损失；范式从「我指挥 AI 干活」迁移到「设计一个循环去 prompt agent、把人从流程中拔出来」，把负反馈提供者从人换成系统。",
+    "tags": [
+      "loop",
+      "agent"
+    ],
+    "updated": "2026-09-07"
+  },
+  {
+    "domain": "llm-eng",
+    "domainLabel": "LLM 工程",
+    "slug": "multi-agent-team-protocols",
+    "title": "多 Agent 协作协议：角色矩阵、文件所有权与独立评审门禁",
+    "summary": "多 Agent 系统的本质不是再造一个「AI 版 Jira」（调度服务器+任务队列+状态数据库），而是把真实软件团队的合作习惯——分工、交接、评审、止损——显式化成 Agent 可反复读取的系统。Agent 能否成为可信的工程同事，取决于文件所有权互斥、仓库文件共享记忆、独立评审门禁和可恢复状态这五样东西，而非角色名字像不像人。",
+    "tags": [
+      "多agent",
+      "agent"
+    ],
+    "updated": "2026-09-07"
+  },
+  {
+    "domain": "llm-eng",
+    "domainLabel": "LLM 工程",
+    "slug": "noise-robust-convergence",
+    "title": "噪声中的信号判断：高精度优于高覆盖",
+    "summary": "从噪声数据里判断\"真实信号\"（如某商品的策略是否已收敛）时，正确姿势不是提高覆盖率，而是层层过滤掉不可信样本 + 用组合抵消个体噪声 + 只留高精度小集合——\"宁可大量样本不进结论，也不让不可信数据污染结论\"。",
+    "tags": [
+      "方法论",
+      "评测"
+    ],
+    "updated": "2026-10-02"
+  },
+  {
+    "domain": "llm-eng",
+    "domainLabel": "LLM 工程",
+    "slug": "rubric-based-judge",
+    "title": "Rubric 化评估器：把主观打分变成逐条判定",
+    "summary": "LLM-as-Judge 只是「代理指标」（测看起来好不好，不等于业务有没有用），裸打分必踩三个系统性陷阱；Rubric 化的解法是「判据人写 + 逐条判定 + 统计纪律（Bootstrap 稳定性筛选 / 交叉验证贪心）+ 换锚校准（人工与业务）」——目标是高精度优于高覆盖。",
+    "tags": [
+      "评测",
+      "agent",
+      "方法论"
+    ],
+    "updated": "2026-10-02"
+  },
+  {
+    "domain": "algorithms",
+    "domainLabel": "算法范式",
+    "slug": "auxiliary-structure-sync",
+    "title": "辅助结构同步追踪（O(1) 聚合查询）",
+    "summary": "主数据结构操作已 O1、但某个聚合查询（如最小值）也要 O1 时，用辅助结构同步追踪：每一步把当时的查询答案同步压入辅助栈，pop 时同步弹出，查询直接读辅助栈顶——空间换时间、零扫描、答案随 pop 自动恢复。",
+    "tags": [
+      "数据结构",
+      "复杂度"
+    ],
+    "updated": "2026-09-07"
+  },
+  {
+    "domain": "algorithms",
+    "domainLabel": "算法范式",
+    "slug": "enumerate-and-encode-comparison",
+    "title": "组合枚举 + 等级编码比较",
+    "summary": "「从大集合中枚举小组合、逐方案评估取最优」是组合题的通用框架：候选规模是常数级时直接全枚举（如 C7,5=21 次），并把多级判据编码成「等级 + 关键字序列」的可比较结构，让复杂比较退化为字典序逐位比较。",
+    "tags": [
+      "数据结构",
+      "复杂度"
+    ],
+    "updated": "2026-09-07"
+  },
+  {
+    "domain": "algorithms",
+    "domainLabel": "算法范式",
+    "slug": "game-dp-difference-method",
+    "title": "博弈型动态规划：差值法 + 记忆化搜索",
+    "summary": "博弈型 DP 的完整套路：四个信号识别（最优性/轮流最优/顺序结构/无后效性）→ 暴力递归加 lru_cache 验证重叠子问题 → 差值法状态「当前玩家比对手多拿多少」→ 转移「我这轮拿的 − 对手最优」→ 最后 差值 + 总和/2 还原先手总数；零和博弈中「你多就是我少」使差值法天然最简。",
+    "tags": [
+      "dp",
+      "博弈"
+    ],
+    "updated": "2026-09-07"
+  },
+  {
+    "domain": "algorithms",
+    "domainLabel": "算法范式",
+    "slug": "monotonic-queue-sliding-maximum",
+    "title": "单调队列：滑动窗口最值与单调结构思维链",
+    "summary": "单调队列 = 普通队列管窗口内容/和 + 单调递减队列管最值：入队前先弹出所有被新值「压过」的队尾候选（新值无条件入队），队首恒为窗口最大值；每个元素只入队一次、出队至多一次 → 均摊 O1。",
+    "tags": [
+      "数据结构",
+      "复杂度"
+    ],
+    "updated": "2026-09-07"
+  },
+  {
+    "domain": "algorithms",
+    "domainLabel": "算法范式",
+    "slug": "prime-sieve-optimization-ladder",
+    "title": "质数筛选：从试除到埃氏筛的优化阶梯",
+    "summary": "判定/筛选质数的所有优化是同一件事——缩小因子搜索空间：因子成对 → 试除只需到 √n；合数除数无意义 → 只试已知质数；终极一步思维反转，从「逐数点查」改为「批量划倍数」的埃氏筛（划到 √N、从 p² 起划、每个合数被其最小质因子恰好划一次 → ON log log N）。",
+    "tags": [
+      "数论",
+      "复杂度"
+    ],
+    "updated": "2026-09-07"
+  },
+  {
+    "domain": "algorithms",
+    "domainLabel": "算法范式",
+    "slug": "ternary-search-multiway-divide",
+    "title": "三分法与多路分治搜索",
+    "summary": "一次比较/实验有 k 种互斥结果、且每种结果都能把候选集收缩进唯一嫌疑子区间时，用 k 分法——天平的三态输出天然对应三分，每轮区间缩至约 1/k，达到 Olog₃N；二分只是 k=2 的特例。",
+    "tags": [
+      "分治",
+      "复杂度"
+    ],
+    "updated": "2026-09-07"
+  },
+  {
+    "domain": "soft-skills",
+    "domainLabel": "读书软技能",
+    "slug": "critical-conversations",
+    "title": "关键对话：高难度沟通方法论",
+    "summary": "关键对话（观点分歧 + 高风险 + 情绪强烈）的成败不取决于技巧本身，而取决于能否建立「共享观点库」——让双方自由交流信息；全书提供一条从自我出发、先建安全感再谈内容的九步操作路径，核心心理学基础是「情绪是自己制造的：事实→想法→情绪」的行为路径模型。",
+    "tags": [
+      "沟通",
+      "读书"
+    ],
+    "updated": "2026-09-07"
+  },
+  {
+    "domain": "entities",
+    "domainLabel": "实体档案",
+    "slug": "hailuo-cement",
+    "title": "海螺水泥（600585）",
+    "summary": "亚洲最大水泥商，需求周期（永久下滑）的代表——表面便宜但盈利中枢永久下移，价值陷阱候选。",
+    "tags": [
+      "周期股",
+      "水泥",
+      "价值陷阱"
+    ],
+    "updated": "2026-09-05"
+  },
+  {
+    "domain": "entities",
+    "domainLabel": "实体档案",
+    "slug": "hk-soe-dividend-931722",
+    "title": "港股央企红利指数931722",
+    "summary": "「最根正苗红的央企 × 港股折价 × 高股息」的股息驱动型资产——收益 3/4 来自股息而非股价，买点由回撤深度决定。",
+    "tags": [
+      "港股",
+      "红利",
+      "央企",
+      "指数"
+    ],
+    "updated": "2026-09-05"
+  },
+  {
+    "domain": "entities",
+    "domainLabel": "实体档案",
+    "slug": "renfu-pharma",
+    "title": "人福医药（ST人福 600079）",
+    "summary": "麻醉镇痛药垄断龙头被 ST（股东资金占用）压制的估值——治理型困境反转：需求刚性、护城河真实、财务自愈中。",
+    "tags": [
+      "医药",
+      "困境反转",
+      "ST"
+    ],
+    "updated": "2026-09-05"
+  },
+  {
+    "domain": "entities",
+    "domainLabel": "实体档案",
+    "slug": "shenhuo-000933",
+    "title": "神火股份（000933）",
+    "summary": "电解铝 + 煤炭双主业的「价格周期股」——需求还在，利润跟着铝价和成本波动，价格能回中枢的标的。",
+    "tags": [
+      "周期股",
+      "电解铝",
+      "煤炭"
+    ],
+    "updated": "2026-09-05"
+  }
+]

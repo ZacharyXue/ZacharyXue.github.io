@@ -1,0 +1,223 @@
+---
+/**
+ * /wiki — 知识点索引
+ *
+ * 数据来自 src/data/wiki-index.json（由 scripts/wiki-sync.py 从 /root/wiki 生成）。
+ * 分组顺序 = DOMAINS 配置顺序，与 wiki 侧 index.md 的域划分一致。
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '/src/styles/global.css';
+import wikiIndex from '../../data/wiki-index.json';
+
+const DOMAIN_ORDER = ['investing', 'cloud-native', 'llm-eng', 'algorithms', 'soft-skills', 'entities'];
+
+const groups = DOMAIN_ORDER
+  .map(key => ({
+    key,
+    label: wikiIndex.find(p => p.domain === key)?.domainLabel ?? key,
+    pages: wikiIndex.filter(p => p.domain === key),
+  }))
+  .filter(g => g.pages.length > 0);
+
+const totalPages = wikiIndex.length;
+const allTags = [...new Set(wikiIndex.flatMap(p => p.tags || []))].sort();
+---
+
+<BaseLayout title="知识点" description="单个知识点的判据卡：原理、机制、判断框架。长文在博客，点在这里。">
+  <main class="wiki-index">
+    <header class="wiki-intro">
+      <h1>知识点 <span class="count">({totalPages})</span></h1>
+      <p class="lede">
+        这里是<strong>点</strong>——单个知识点的判据卡：一句话本质 + 判据表 + 因果链。<br />
+        把它们串起来解决一个完整问题，那是<a href="/blog">博客</a>里的<strong>线</strong>。
+      </p>
+      <div class="stats">
+        {groups.map(g => (
+          <a class="stat" href={`#${g.key}`}>
+            <span class="stat-num">{g.pages.length}</span>
+            <span class="stat-label">{g.label}</span>
+          </a>
+        ))}
+      </div>
+    </header>
+
+    <div class="filter-bar">
+      <input
+        type="text"
+        id="wiki-search"
+        class="search-input"
+        placeholder="在知识点里搜标题 / 摘要 / 标签…"
+        autocomplete="off"
+      />
+      <button id="wiki-clear" class="clear-search" aria-label="清空" hidden>×</button>
+    </div>
+
+    <p class="empty" id="wiki-empty" style="display:none">没有匹配的知识点。</p>
+
+    <div id="wiki-sections">
+      {groups.map(g => (
+        <section class="domain" id={g.key}>
+          <h2 class="domain-title">
+            {g.label}
+            <span class="domain-count">{g.pages.length}</span>
+          </h2>
+          <ul class="cards">
+            {g.pages.map(p => (
+              <li
+                class="card"
+                data-search={`${p.title} ${p.summary} ${(p.tags || []).join(' ')}`.toLowerCase()}
+              >
+                <a href={`/wiki/${p.domain}/${p.slug}`}>
+                  <h3>{p.title}</h3>
+                  {p.summary && <p class="summary">{p.summary}</p>}
+                </a>
+                <div class="card-foot">
+                  {(p.tags || []).slice(0, 4).map(t => (
+                    <a class="tag" href={`#${g.key}`} data-tag={t}>{t}</a>
+                  ))}
+                  {p.updated && <time class="updated">{p.updated}</time>}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  const input = document.getElementById('wiki-search') as HTMLInputElement;
+  const clearBtn = document.getElementById('wiki-clear') as HTMLButtonElement;
+  const empty = document.getElementById('wiki-empty') as HTMLElement;
+  const cards = Array.from(document.querySelectorAll('.card')) as HTMLElement[];
+  const sections = Array.from(document.querySelectorAll('.domain')) as HTMLElement[];
+
+  function applyFilter() {
+    const kw = input.value.trim().toLowerCase();
+    clearBtn.hidden = !kw;
+    let visible = 0;
+    cards.forEach(card => {
+      const hit = !kw || (card.dataset.search || '').includes(kw);
+      card.style.display = hit ? '' : 'none';
+      if (hit) visible++;
+    });
+    // 域分组整组空则隐藏
+    sections.forEach(sec => {
+      const any = Array.from(sec.querySelectorAll('.card')).some(
+        c => (c as HTMLElement).style.display !== 'none'
+      );
+      sec.style.display = any ? '' : 'none';
+    });
+    empty.style.display = visible === 0 ? '' : 'none';
+  }
+
+  input.addEventListener('input', applyFilter);
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
+    applyFilter();
+    input.focus();
+  });
+
+  // 标签点击 → 填入搜索框过滤
+  document.querySelectorAll('.card .tag').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      input.value = (a as HTMLElement).dataset.tag || '';
+      applyFilter();
+      input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+</script>
+
+<style>
+  .wiki-index { max-width: var(--max-width); margin: 0 auto; padding: 3rem 1rem; }
+  .wiki-intro h1 { font-size: 2rem; color: var(--text-color); margin-bottom: 0.8rem; }
+  .count { font-size: 1rem; color: var(--text-muted); font-weight: normal; }
+  .lede { color: var(--text-muted); font-size: 0.95rem; line-height: 1.75; margin-bottom: 1.5rem; }
+  .lede a { color: var(--accent-color); text-decoration: none; }
+  .lede a:hover { border-bottom: 1px solid var(--accent-color); }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2rem; }
+  .stat {
+    display: flex; flex-direction: column; align-items: center; gap: 0.15rem;
+    min-width: 5.5rem; padding: 0.6rem 0.9rem;
+    border: 1px solid var(--border-color); border-radius: 10px;
+    background: var(--card-bg); text-decoration: none;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .stat:hover { border-color: var(--accent-color); transform: translateY(-2px); }
+  .stat-num { font-size: 1.15rem; font-weight: 600; color: var(--accent-color); }
+  .stat-label { font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; }
+
+  .filter-bar { position: relative; margin-bottom: 2rem; max-width: 100%; }
+  .search-input {
+    width: 100%; padding: 0.55rem 2rem 0.55rem 1rem; font-size: 0.95rem;
+    border: 1px solid var(--border-color); border-radius: 10px; outline: none;
+    background: var(--bg-color); color: var(--text-color);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .search-input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 15%, transparent);
+  }
+  .clear-search {
+    position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%);
+    background: none; border: none; color: var(--text-muted);
+    font-size: 1.1rem; cursor: pointer; line-height: 1;
+  }
+  .clear-search:hover { color: var(--accent-color); }
+
+  .domain { margin-bottom: 2.5rem; scroll-margin-top: 80px; }
+  .domain-title {
+    display: flex; align-items: center; gap: 0.55rem;
+    font-size: 1.15rem; color: var(--text-color);
+    margin-bottom: 1rem; padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .domain-count {
+    font-size: 0.75rem; font-weight: normal; color: var(--accent-color);
+    background: color-mix(in srgb, var(--accent-color) 12%, transparent);
+    padding: 0.1em 0.55em; border-radius: 999px;
+  }
+
+  .cards { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.9rem; }
+  .card {
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--border-color); border-radius: 12px;
+    background: var(--card-bg); box-shadow: var(--card-shadow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px); box-shadow: var(--card-shadow-hover);
+    border-color: var(--accent-color);
+  }
+  .card a { text-decoration: none; }
+  .card h3 { font-size: 1.05rem; color: var(--text-color); margin-bottom: 0.35rem; transition: color 0.15s ease; text-wrap: balance; }
+  .card a:hover h3 { color: var(--accent-color); }
+  .summary {
+    color: var(--text-muted); font-size: 0.9rem; line-height: 1.65;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .card-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; margin-top: 0.6rem; }
+  .card-foot .tag {
+    font-size: 0.72rem; padding: 0.1em 0.55em; border-radius: 10px;
+    background: color-mix(in srgb, var(--accent-color) 10%, transparent);
+    color: var(--accent-color); text-decoration: none; cursor: pointer;
+  }
+  .card-foot .tag:hover { background: var(--accent-color); color: #fff; }
+  .updated { margin-left: auto; font-size: 0.72rem; color: var(--text-muted); opacity: 0.8; }
+
+  .empty { color: var(--text-muted); text-align: center; padding: 2rem 0; }
+
+  @media (min-width: 900px) {
+    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    /* 搜索框与卡片左列同宽，避免"半截输入框"的观感 */
+    .filter-bar { max-width: calc(50% - 0.45rem); }
+  }
+  @media (max-width: 768px) {
+    .wiki-index { padding: 2rem 1rem; }
+    .wiki-intro h1 { font-size: 1.6rem; }
+    .stat { min-width: 4.5rem; padding: 0.5rem 0.7rem; }
+  }
+</style>
