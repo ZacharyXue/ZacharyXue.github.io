@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BlogLayout from '/src/layouts/BlogLayout.astro';
+import linksData from '/src/data/wiki-links.json';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -12,6 +13,11 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content, headings } = await post.render();
+
+// 本文拆出的知识点（wiki 页 sources 里引用了这篇博客的反查结果）
+const blogSlug = post.id.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, '');
+const blogToWiki = (linksData as { blogToWiki: Record<string, any[]> }).blogToWiki;
+const relatedWiki = blogToWiki[blogSlug] ?? [];
 
 // 全部非草稿文章按时间排序，用于上一篇 / 下一篇导航
 const allPosts = (await getCollection('blog'))
@@ -33,6 +39,6 @@ const nextNav = idx >= 0 && idx < allPosts.length - 1
 const readingMinutes = Math.max(1, Math.round((post.body || '').length / 500));
 ---
 
-<BlogLayout frontmatter={post.data} headings={headings} readingMinutes={readingMinutes} prevNav={prevNav} nextNav={nextNav}>
+<BlogLayout frontmatter={post.data} headings={headings} readingMinutes={readingMinutes} relatedWiki={relatedWiki} prevNav={prevNav} nextNav={nextNav}>
   <Content />
 </BlogLayout>

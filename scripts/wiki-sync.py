@@ -31,6 +31,10 @@ WIKI = Path("/root/wiki")
 BLOG = Path("/root/ZacharyXue.github.io")
 DEST = BLOG / "src" / "content" / "wiki"
 INDEX_JSON = BLOG / "src" / "data" / "wiki-index.json"
+LINKS_JSON = BLOG / "src" / "data" / "wiki-links.json"
+BLOG_DIR = BLOG / "src" / "content" / "blog"
+BLOG_URL_RE = re.compile(r"https?://zacharyxue\.github\.io/blog/([\w\-]+)/?")
+BLOG_DATE_PREFIX_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-")
 
 # 域目录 → 展示名（顺序即站点索引页分区顺序）
 # 域配置：(站点 domain id, 源相对路径, 展示名)
@@ -53,7 +57,7 @@ PUBLIC_DIRS = {
     "concepts/cloud-native",
     "concepts/llm-eng",
     "concepts/algorithms",
-    # concepts/soft-skills 故意不在白名单：个人软技能/读书笔记属私领域，不出网
+    "concepts/soft-skills",  # 读书软技能：用户确认可以公开（2026-11-22）
     "entities/investing",   # 个股/指数/基金 → 公开
     # entities/systems 故意不在白名单：简历/看板/技能库/内网代理等个人系统默认私有
 }
@@ -139,6 +143,18 @@ def extract_essence(body: str, fm: dict) -> str | None:
 
 # ---------------------------------------------------------------- 收集 & 筛选
 
+def load_blog_titles() -> dict[str, str]:
+    """博客 slug → 标题。slug 规则与 blog/[slug].astro 一致（去掉日期前缀）。"""
+    titles: dict[str, str] = {}
+    if not BLOG_DIR.exists():
+        return titles
+    for f in BLOG_DIR.glob("*.md"):
+        fm, _body = split_fm(f.read_text(encoding="utf-8"))
+        slug = BLOG_DATE_PREFIX_RE.sub("", f.stem)
+        titles[slug] = str(fm.get("title", slug))
+    return titles
+
+
 def collect() -> list[dict]:
     pages = []
     for domain, relpath, _label in DOMAIN_SPECS:
@@ -170,18 +186,40 @@ def scan(text: str, patterns) -> list[str]:
 
 # ---------------------------------------------------------------- wikilink
 
+WIKILINK_RE = re.compile(r"\[\[([^\]|]+)(?:\|([^\]]+))?\]\]")
+# 围栏代码块：里面的 [[...]] 是 TOML 数组表语法（如 [[worker.oci.gcpolicy]]），
+# 不是 wikilink，转换和出链统计都必须跳过，否则会误判成死链
+FENCE_RE = re.compile(r"(```.*?```)", re.S)
+
+
+def iter_prose(body: str):
+    """按围栏代码块切分，产出 (is_code, chunk)。"""
+    for i, part in enumerate(FENCE_RE.split(body)):
+        if not part:
+            continue
+        yield (i % 2 == 1, part)
+
+
 def convert_wikilinks(body: str, linkmap: dict[str, tuple[str, str]], warn: list[str], slug: str) -> str:
-    """[[slug|中文]] → [中文](/wiki/domain/slug)；死链降级为纯文本。"""
-    def repl(m: re.Match) -> str:
-        target = m.group(1).strip()
-        label = (m.group(2) or "").strip() or target
-        key = target.replace(".md", "")
-        if key in linkmap:
-            domain, s = linkmap[key]
-            return f"[{label}](/wiki/{domain}/{s})"
-        warn.append(f"{slug}: 死链 [[{target}]] 已降级为纯文本")
-        return label
-    return re.sub(r"\[\[([^\]|]+)(?:\|([^\]]+))?\]\]", repl, body)
+    """[[slug|中文]] → [中文](/wiki/domain/slug)；死链降级为纯文本；代码块原样保留。"""
+    out: list[str] = []
+    for is_code, chunk in iter_prose(body):
+        if is_code:
+            out.append(chunk)
+            continue
+
+        def repl(m: re.Match) -> str:
+            target = m.group(1).strip()
+            label = (m.group(2) or "").strip() or target
+            key = target.replace(".md", "")
+            if key in linkmap:
+                domain, s = linkmap[key]
+                return f"[{label}](/wiki/{domain}/{s})"
+            warn.append(f"{slug}: 死链 [[{target}]] 已降级为纯文本")
+            return label
+
+        out.append(WIKILINK_RE.sub(repl, chunk))
+    return "".join(out)
 
 
 # ---------------------------------------------------------------- 主流程
@@ -195,9 +233,6 @@ def main() -> int:
     if not pages:
         print("❌ 未在 /root/wiki 找到任何页，检查源路径", file=sys.stderr)
         return 1
-
-    # slug → (domain, slug) 全局映射（文件名已验证全局唯一）
-    linkmap = {p["slug"]: (p["domain"], p["slug"]) for p in pages}
 
     published, skipped, denied, warns = [], [], [], []
 
@@ -261,8 +296,28 @@ def main() -> int:
     DEST.mkdir(parents=True)
     INDEX_JSON.parent.mkdir(parents=True, exist_ok=True)
 
+    # slug → (domain, slug) 映射，**只含已发布页**：
+    # 指向私有页的 wikilink 必须降级为纯文本，否则会生成站内死链。
+    linkmap = {p["slug"]: (p["domain"], p["slug"]) for p in published}
+
     index_data = []
+    outlinks: dict[str, list[str]] = {}   # wiki key -> [目标 wiki key]
+    wiki_meta: dict[str, dict] = {}       # wiki key -> 元信息
     for p in published:
+        key = f"{p['domain']}/{p['slug']}"
+        # 出链（基于转换前的原始 wikilink，用于算入链；跳过代码块里的 TOML 语法）
+        targets: list[str] = []
+        for is_code, chunk in iter_prose(p["body"]):
+            if is_code:
+                continue
+            for m in WIKILINK_RE.finditer(chunk):
+                t = m.group(1).strip().replace(".md", "")
+                if t in linkmap:
+                    tk = f"{linkmap[t][0]}/{linkmap[t][1]}"
+                    if tk != key and tk not in targets:
+                        targets.append(tk)
+        outlinks[key] = targets
+
         body = convert_wikilinks(p["body"], linkmap, warns, p["slug"])
         body = strip_leading_h1(body)
         essence = extract_essence(body, p["fm"])
@@ -305,13 +360,93 @@ def main() -> int:
             "tags": out_fm["tags"],
             "updated": out_fm["updated"],
         })
+        wiki_meta[key] = {
+            "title": out_fm["title"],
+            "domain": p["domain"],
+            "domainLabel": DOMAINS[p["domain"]],
+            "slug": p["slug"],
+        }
 
     INDEX_JSON.write_text(json.dumps(index_data, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    # ---- 关系计算：点↔线（sources 里的博客 URL）+ 反向链接（wikilink 入链）
+    blog_titles = load_blog_titles()
+    wiki_to_blog: dict[str, list[str]] = {}
+    blog_to_wiki: dict[str, list[str]] = {}
+
+    for p in published:
+        key = f"{p['domain']}/{p['slug']}"
+        srcs = p["fm"].get("sources", [])
+        if isinstance(srcs, str):
+            srcs = [srcs]
+        for s in srcs:
+            m = BLOG_URL_RE.search(str(s))
+            if not m:
+                continue
+            bs = m.group(1)
+            if bs not in blog_titles:      # 只认站上真实存在的博客
+                warns.append(f"{p['slug']}: sources 指向不存在的博客 /blog/{bs}/")
+                continue
+            lst = wiki_to_blog.setdefault(key, [])
+            if bs not in lst:
+                lst.append(bs)
+            rev = blog_to_wiki.setdefault(bs, [])
+            if key not in rev:
+                rev.append(key)
+
+    backlinks: dict[str, list[str]] = {}
+    for src, tgts in outlinks.items():
+        for t in tgts:
+            if t in wiki_meta:
+                rev = backlinks.setdefault(t, [])
+                if src not in rev:
+                    rev.append(src)
+
+    def wref(k: str) -> dict:
+        m = wiki_meta[k]
+        return {
+            "key": k,
+            "title": m["title"],
+            "domain": m["domain"],
+            "domainLabel": m["domainLabel"],
+            "slug": m["slug"],
+            "href": f"/wiki/{m['domain']}/{m['slug']}",
+        }
+
+    links_data = {
+        "blogToWiki": {
+            bs: [wref(k) for k in ks if k in wiki_meta]
+            for bs, ks in blog_to_wiki.items()
+        },
+        "wikiToBlog": {
+            k: [
+                {"slug": bs, "title": blog_titles[bs], "href": f"/blog/{bs}"}
+                for bs in bss
+            ]
+            for k, bss in wiki_to_blog.items()
+        },
+        "wikiBacklinks": {
+            k: [wref(s) for s in ss if s in wiki_meta]
+            for k, ss in backlinks.items()
+        },
+    }
+    LINKS_JSON.write_text(json.dumps(links_data, ensure_ascii=False, indent=2), encoding="utf-8")
+
     print(f"\n✅ 已写入 {len(published)} 页 → {DEST.relative_to(BLOG)}")
     print(f"✅ 索引 → {INDEX_JSON.relative_to(BLOG)}")
+    print(f"✅ 关系 → {LINKS_JSON.relative_to(BLOG)}")
+    print(f"   点↔线：{len(wiki_to_blog)} 个知识点挂了长文出处，{len(blog_to_wiki)} 篇博客挂了知识点")
+    print(f"   反链：{len(backlinks)} 个知识点被引用（共 {sum(len(v) for v in backlinks.values())} 条入链）")
     if warns:
-        print(f"⚠️  {len(warns)} 条警告见上，wikilink 死链已降级为纯文本")
+        # wikilink 死链在转换阶段才产生（指向私有页或被删页），单独列出来，别埋在内容警告里
+        deadlinks = [w for w in warns if "死链" in w or "指向不存在" in w]
+        if deadlinks:
+            print(f"\n🔗 链接降级 {len(deadlinks)} 条（目标页私有/不存在，已降为纯文本）：")
+            for w in deadlinks:
+                print(f"   - {w}")
+        others = len(warns) - len(deadlinks)
+        if others:
+            print(f"⚠️  另有 {others} 条内容警告（内网地址/云厂商等，见上）")
     return 0
 
 

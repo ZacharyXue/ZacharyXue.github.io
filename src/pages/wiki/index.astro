@@ -119,6 +119,13 @@ const allTags = [...new Set(wikiIndex.flatMap(p => p.tags || []))].sort();
     input.focus();
   });
 
+  // 详情页的 tag 链接指向 /wiki?tag=xxx —— 进页面时读出来预填搜索框
+  const initialTag = new URLSearchParams(location.search).get('tag');
+  if (initialTag) {
+    input.value = initialTag;
+    applyFilter();
+  }
+
   // 标签点击 → 填入搜索框过滤
   document.querySelectorAll('.card .tag').forEach(a => {
     a.addEventListener('click', e => {

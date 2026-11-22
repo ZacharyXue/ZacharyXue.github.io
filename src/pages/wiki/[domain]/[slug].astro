@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import WikiLayout from '../../../layouts/WikiLayout.astro';
+import linksData from '../../../data/wiki-links.json';
 
 export async function getStaticPaths() {
   const pages = await getCollection('wiki');
@@ -13,15 +14,35 @@ export async function getStaticPaths() {
 
 const { page, domain, slug } = Astro.props;
 const { Content } = await page.render();
+const key = `${domain}/${slug}`;
+
+// 点↔线：本站博客长文出处 / 引用本页的其他知识点（都由 scripts/wiki-sync.py 算好）
+type BlogRef = { slug: string; title: string; href: string };
+type WikiRef = { href: string; title: string; domainLabel: string };
+
+const links = linksData as {
+  blogToWiki: Record<string, WikiRef[]>;
+  wikiToBlog: Record<string, BlogRef[]>;
+  wikiBacklinks: Record<string, WikiRef[]>;
+};
+
+const longform: BlogRef[] = links.wikiToBlog[key] ?? [];
+const backlinks: WikiRef[] = links.wikiBacklinks[key] ?? [];
+
+// sources 里非本站的外部参考（RFC / 官方文档等）单独列外链，本站博客已由 longform 承担
+const externalSources: string[] = (page.data.sources || []).filter(
+  (s: string) => !s.includes('zacharyxue.github.io')
+);
 
 // 同域内按 title 排序做上一页/下一页（域内顺序稳定，便于顺序浏览）
 const siblings = (await getCollection('wiki'))
   .filter(p => p.data.domain === domain && p.id !== page.id)
   .sort((a, b) => a.data.title.localeCompare(b.data.title, 'zh-CN'));
 
-const idx = siblings.findIndex(p => p.data.title.localeCompare(page.data.title, 'zh-CN') > 0);
-const next = siblings.slice(idx).sort((a, b) => a.data.title.localeCompare(b.data.title, 'zh-CN'))[0];
-const prev = [...siblings]
+const next = siblings
+  .filter(p => p.data.title.localeCompare(page.data.title, 'zh-CN') > 0)
+  .sort((a, b) => a.data.title.localeCompare(b.data.title, 'zh-CN'))[0];
+const prev = siblings
   .filter(p => p.data.title.localeCompare(page.data.title, 'zh-CN') < 0)
   .sort((a, b) => b.data.title.localeCompare(a.data.title, 'zh-CN'))[0];
 
@@ -37,6 +58,9 @@ const toNav = (p?: (typeof siblings)[number]) =>
   updated={page.data.updated}
   tags={page.data.tags}
   confidence={page.data.confidence}
+  longform={longform}
+  backlinks={backlinks}
+  externalSources={externalSources}
   prevNav={toNav(prev)}
   nextNav={toNav(next)}
 >

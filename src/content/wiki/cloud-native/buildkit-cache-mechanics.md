@@ -87,11 +87,11 @@ summary: "构建缓存分三层（本地镜像层 / cache mount / 远程导出�
   gc = true
   gckeepstorage = "32GB"
   # 重建代价高的缓存（cache mount / git checkout）留久一点
-  worker.oci.gcpolicy
+  [[worker.oci.gcpolicy]]
     filters      = ["type==source.local","type==exec.cachemount","type==source.git.checkout"]
     keepBytes    = "16GB"
     keepDuration = 604800      # 7 天
-  worker.oci.gcpolicy
+  [[worker.oci.gcpolicy]]
     all       = true
     keepBytes = "32GB"         # 其他一律硬上限
 ```

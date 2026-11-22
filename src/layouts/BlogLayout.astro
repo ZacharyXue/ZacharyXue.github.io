@@ -11,11 +11,13 @@ export interface Props {
   };
   headings?: { depth: number; slug: string; text: string }[];
   readingMinutes?: number;
+  /** 本文拆出的知识点（由 scripts/wiki-sync.py 从 wiki 的 sources 反查） */
+  relatedWiki?: { href: string; title: string; domainLabel: string }[];
   prevNav?: { slug: string; title: string };
   nextNav?: { slug: string; title: string };
 }
 
-const { frontmatter, headings = [], readingMinutes = 0, prevNav, nextNav } = Astro.props;
+const { frontmatter, headings = [], readingMinutes = 0, relatedWiki = [], prevNav, nextNav } = Astro.props;
 
 // 目录只收集 h2/h3（h1 是文章标题，不算）
 const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
@@ -76,6 +78,25 @@ const mailtoHref = `mailto:${DISCUSS_EMAIL}?subject=${encodeURIComponent(discuss
     <div class="article-body">
       <slot />
     </div>
+
+    {relatedWiki.length > 0 && (
+      <section class="related-wiki" aria-label="本文涉及的知识点">
+        <h2 class="rw-title">
+          <span class="rw-icon" aria-hidden="true">🧩</span>
+          本文涉及的知识点
+          <span class="rw-count">{relatedWiki.length}</span>
+        </h2>
+        <p class="rw-hint">这篇长文拆出的判据卡：一句话本质 + 判据表，可单独查阅</p>
+        <div class="rw-chips">
+          {relatedWiki.map(w => (
+            <a class="rw-chip" href={w.href}>
+              <span class="rw-domain">{w.domainLabel}</span>
+              <span class="rw-name">{w.title}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
 
     <div class="discuss">
       <a
@@ -575,6 +596,46 @@ const mailtoHref = `mailto:${DISCUSS_EMAIL}?subject=${encodeURIComponent(discuss
   .toc-inline-lv-3 a { padding-left: 1.3rem; font-size: 0.85rem; }
 
   /* ===== 邮件讨论：轻描边小胶囊，静息可见、hover 点亮 ===== */
+  /* 本文涉及的知识点（博客 → wiki 反查） */
+  .related-wiki {
+    margin: 2.5rem 0 0;
+    padding: 1.2rem 1.3rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--accent-color) 4%, transparent);
+  }
+  .rw-title {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 1rem; color: var(--text-color); margin-bottom: 0.35rem;
+  }
+  .rw-icon { font-size: 0.95rem; }
+  .rw-count {
+    font-size: 0.72rem; font-weight: normal; color: var(--accent-color);
+    background: color-mix(in srgb, var(--accent-color) 14%, transparent);
+    padding: 0.05em 0.55em; border-radius: 999px;
+  }
+  .rw-hint { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.85rem; }
+  .rw-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .rw-chip {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--border-color); border-radius: 999px;
+    background: var(--card-bg); text-decoration: none;
+    font-size: 0.83rem; color: var(--text-color);
+    transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+  .rw-chip:hover {
+    border-color: var(--accent-color); color: var(--accent-color);
+    transform: translateY(-1px);
+  }
+  .rw-domain {
+    font-size: 0.7rem; color: var(--text-muted);
+    padding-right: 0.5rem;
+    border-right: 1px solid color-mix(in srgb, var(--text-muted) 45%, transparent);
+    white-space: nowrap;
+  }
+  .rw-name { font-weight: 500; }
+
   .discuss {
     margin-top: 2.5rem;
     text-align: center;

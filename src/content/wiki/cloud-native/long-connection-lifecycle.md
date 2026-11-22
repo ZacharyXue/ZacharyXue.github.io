@@ -110,7 +110,7 @@ ingress-nginx 把它默认设成 **`240s`**。
 
 第 3 步：抓包坐实
    看最后几个包：有 Close 帧 = 应用层主动；只有 FIN = 不是应用层；RST = 强制
-   （机制细节见 [WebSocket 协议机制](/wiki/cloud-native/websocket-protocol)）
+   （机制细节见 [[websocket-protocol|WebSocket 协议机制]]）
 
 第 4 步：对齐时间戳
    断连时刻 − 最近一次 reload/config 变更时刻 ≈ 240s ？ ⇒ 坐实是 reload 导致

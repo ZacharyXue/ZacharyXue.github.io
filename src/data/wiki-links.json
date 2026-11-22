@@ -1,0 +1,1944 @@
+{
+  "blogToWiki": {
+    "hailuo-cement-cycle-stock": [
+      {
+        "key": "investing/cycle-stock-framework",
+        "title": "周期股分析框架",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "cycle-stock-framework",
+        "href": "/wiki/investing/cycle-stock-framework"
+      },
+      {
+        "key": "investing/valuation-anchoring",
+        "title": "估值锚定体系",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "valuation-anchoring",
+        "href": "/wiki/investing/valuation-anchoring"
+      },
+      {
+        "key": "investing/value-trap-vs-reversal",
+        "title": "价值陷阱与困境反转判别",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "value-trap-vs-reversal",
+        "href": "/wiki/investing/value-trap-vs-reversal"
+      },
+      {
+        "key": "stocks/hailuo-cement",
+        "title": "海螺水泥（600585）",
+        "domain": "stocks",
+        "domainLabel": "个股与指数",
+        "slug": "hailuo-cement",
+        "href": "/wiki/stocks/hailuo-cement"
+      }
+    ],
+    "shenhuo-000933-cycle-stock": [
+      {
+        "key": "investing/cycle-stock-framework",
+        "title": "周期股分析框架",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "cycle-stock-framework",
+        "href": "/wiki/investing/cycle-stock-framework"
+      },
+      {
+        "key": "investing/valuation-anchoring",
+        "title": "估值锚定体系",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "valuation-anchoring",
+        "href": "/wiki/investing/valuation-anchoring"
+      },
+      {
+        "key": "stocks/shenhuo-000933",
+        "title": "神火股份（000933）",
+        "domain": "stocks",
+        "domainLabel": "个股与指数",
+        "slug": "shenhuo-000933",
+        "href": "/wiki/stocks/shenhuo-000933"
+      }
+    ],
+    "dividend-etf-comparison": [
+      {
+        "key": "investing/dividend-risk-layers",
+        "title": "红利资产风险分层",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "dividend-risk-layers",
+        "href": "/wiki/investing/dividend-risk-layers"
+      },
+      {
+        "key": "investing/financial-quality-verification",
+        "title": "财务质量验证法",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "financial-quality-verification",
+        "href": "/wiki/investing/financial-quality-verification"
+      },
+      {
+        "key": "investing/pseudo-quality-dividend",
+        "title": "伪质量红利识别",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "pseudo-quality-dividend",
+        "href": "/wiki/investing/pseudo-quality-dividend"
+      }
+    ],
+    "931722-hk-soe-dividend-index": [
+      {
+        "key": "investing/dividend-risk-layers",
+        "title": "红利资产风险分层",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "dividend-risk-layers",
+        "href": "/wiki/investing/dividend-risk-layers"
+      },
+      {
+        "key": "stocks/hk-soe-dividend-931722",
+        "title": "港股央企红利指数931722",
+        "domain": "stocks",
+        "domainLabel": "个股与指数",
+        "slug": "hk-soe-dividend-931722",
+        "href": "/wiki/stocks/hk-soe-dividend-931722"
+      }
+    ],
+    "midea-vs-haier": [
+      {
+        "key": "investing/financial-quality-verification",
+        "title": "财务质量验证法",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "financial-quality-verification",
+        "href": "/wiki/investing/financial-quality-verification"
+      },
+      {
+        "key": "investing/valuation-anchoring",
+        "title": "估值锚定体系",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "valuation-anchoring",
+        "href": "/wiki/investing/valuation-anchoring"
+      }
+    ],
+    "fund-q2-review": [
+      {
+        "key": "investing/fund-research-framework",
+        "title": "基金研究框架",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "fund-research-framework",
+        "href": "/wiki/investing/fund-research-framework"
+      }
+    ],
+    "renfu-st-ma-turning-point": [
+      {
+        "key": "investing/value-trap-vs-reversal",
+        "title": "价值陷阱与困境反转判别",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "value-trap-vs-reversal",
+        "href": "/wiki/investing/value-trap-vs-reversal"
+      },
+      {
+        "key": "stocks/renfu-pharma",
+        "title": "人福医药（ST人福 600079）",
+        "domain": "stocks",
+        "domainLabel": "个股与指数",
+        "slug": "renfu-pharma",
+        "href": "/wiki/stocks/renfu-pharma"
+      }
+    ],
+    "containerd原理剖析与实战笔记": [
+      {
+        "key": "cloud-native/container-runtime-chain",
+        "title": "容器运行时链路：从 Pod 到隔离的进程",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "container-runtime-chain",
+        "href": "/wiki/cloud-native/container-runtime-chain"
+      }
+    ],
+    "fastapi-deep-dive": [
+      {
+        "key": "cloud-native/fastapi-architecture",
+        "title": "FastAPI 架构：类型驱动、DI 管道与异步模型",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "fastapi-architecture",
+        "href": "/wiki/cloud-native/fastapi-architecture"
+      }
+    ],
+    "linux-ops-commands": [
+      {
+        "key": "cloud-native/linux-ops-heuristics",
+        "title": "Linux 运维判据与排障方法论",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "linux-ops-heuristics",
+        "href": "/wiki/cloud-native/linux-ops-heuristics"
+      }
+    ],
+    "volcano调度笔记": [
+      {
+        "key": "cloud-native/volcano-scheduling",
+        "title": "Volcano 调度器：gang 调度与多调度器机制",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "volcano-scheduling",
+        "href": "/wiki/cloud-native/volcano-scheduling"
+      }
+    ],
+    "llm-as-judge-rubric": [
+      {
+        "key": "llm-eng/agent-eval-framework",
+        "title": "Agent 评测体系：五层 / 四步 / 三阶段",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "agent-eval-framework",
+        "href": "/wiki/llm-eng/agent-eval-framework"
+      },
+      {
+        "key": "llm-eng/noise-robust-convergence",
+        "title": "噪声中的信号判断：高精度优于高覆盖",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "noise-robust-convergence",
+        "href": "/wiki/llm-eng/noise-robust-convergence"
+      },
+      {
+        "key": "llm-eng/rubric-based-judge",
+        "title": "Rubric 化评估器：把主观打分变成逐条判定",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "rubric-based-judge",
+        "href": "/wiki/llm-eng/rubric-based-judge"
+      }
+    ],
+    "opencodereview-hermes-context-compression": [
+      {
+        "key": "llm-eng/context-compression-strategies",
+        "title": "上下文压缩策略：续跑 vs 防僵尸——任务形态与成本模型双根因",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "context-compression-strategies",
+        "href": "/wiki/llm-eng/context-compression-strategies"
+      }
+    ],
+    "opencodereview-llm-half": [
+      {
+        "key": "llm-eng/deterministic-agent-hybrid",
+        "title": "确定性工程 × Agent 混合架构：LLM 只做判断题",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "deterministic-agent-hybrid",
+        "href": "/wiki/llm-eng/deterministic-agent-hybrid"
+      }
+    ],
+    "llm-as-judge-self-iteration": [
+      {
+        "key": "llm-eng/llm-judge-self-iteration",
+        "title": "LLM-as-a-Judge：三层打分架构与自我迭代",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "llm-judge-self-iteration",
+        "href": "/wiki/llm-eng/llm-judge-self-iteration"
+      }
+    ],
+    "loop-engineering": [
+      {
+        "key": "llm-eng/loop-engineering",
+        "title": "Loop Engineering：用负反馈闭环收敛概率错误",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "loop-engineering",
+        "href": "/wiki/llm-eng/loop-engineering"
+      }
+    ],
+    "codex-agent-team": [
+      {
+        "key": "llm-eng/multi-agent-team-protocols",
+        "title": "多 Agent 协作协议：角色矩阵、文件所有权与独立评审门禁",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "multi-agent-team-protocols",
+        "href": "/wiki/llm-eng/multi-agent-team-protocols"
+      }
+    ],
+    "min-stack": [
+      {
+        "key": "algorithms/auxiliary-structure-sync",
+        "title": "辅助结构同步追踪（O(1) 聚合查询）",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "auxiliary-structure-sync",
+        "href": "/wiki/algorithms/auxiliary-structure-sync"
+      }
+    ],
+    "德州扑克算法": [
+      {
+        "key": "algorithms/enumerate-and-encode-comparison",
+        "title": "组合枚举 + 等级编码比较",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "enumerate-and-encode-comparison",
+        "href": "/wiki/algorithms/enumerate-and-encode-comparison"
+      }
+    ],
+    "stone-game-ii-dp-pattern": [
+      {
+        "key": "algorithms/game-dp-difference-method",
+        "title": "博弈型动态规划：差值法 + 记忆化搜索",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "game-dp-difference-method",
+        "href": "/wiki/algorithms/game-dp-difference-method"
+      }
+    ],
+    "frequency-monitor-monotonic-queue": [
+      {
+        "key": "algorithms/monotonic-queue-sliding-maximum",
+        "title": "单调队列：滑动窗口最值与单调结构思维链",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "monotonic-queue-sliding-maximum",
+        "href": "/wiki/algorithms/monotonic-queue-sliding-maximum"
+      }
+    ],
+    "twin-prime-sieve": [
+      {
+        "key": "algorithms/prime-sieve-optimization-ladder",
+        "title": "质数筛选：从试除到埃氏筛的优化阶梯",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "prime-sieve-optimization-ladder",
+        "href": "/wiki/algorithms/prime-sieve-optimization-ladder"
+      }
+    ],
+    "玩具称重": [
+      {
+        "key": "algorithms/ternary-search-multiway-divide",
+        "title": "三分法与多路分治搜索",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "ternary-search-multiway-divide",
+        "href": "/wiki/algorithms/ternary-search-multiway-divide"
+      }
+    ],
+    "关键对话-读书笔记": [
+      {
+        "key": "soft-skills/critical-conversations",
+        "title": "关键对话：高难度沟通方法论",
+        "domain": "soft-skills",
+        "domainLabel": "读书软技能",
+        "slug": "critical-conversations",
+        "href": "/wiki/soft-skills/critical-conversations"
+      }
+    ]
+  },
+  "wikiToBlog": {
+    "investing/cycle-stock-framework": [
+      {
+        "slug": "hailuo-cement-cycle-stock",
+        "title": "海螺水泥（600585）：周期底部的价值陷阱还是逆向机会？",
+        "href": "/blog/hailuo-cement-cycle-stock"
+      },
+      {
+        "slug": "shenhuo-000933-cycle-stock",
+        "title": "神火股份（000933）—— 电解铝周期股的暴利之年",
+        "href": "/blog/shenhuo-000933-cycle-stock"
+      }
+    ],
+    "investing/dividend-risk-layers": [
+      {
+        "slug": "dividend-etf-comparison",
+        "title": "红利基金横向对比：恒生红利低波 vs 红利质量 vs 中证红利 vs 港股通央企红利",
+        "href": "/blog/dividend-etf-comparison"
+      },
+      {
+        "slug": "931722-hk-soe-dividend-index",
+        "title": "中证国新港股通央企红利指数（931722）深度复盘",
+        "href": "/blog/931722-hk-soe-dividend-index"
+      }
+    ],
+    "investing/financial-quality-verification": [
+      {
+        "slug": "dividend-etf-comparison",
+        "title": "红利基金横向对比：恒生红利低波 vs 红利质量 vs 中证红利 vs 港股通央企红利",
+        "href": "/blog/dividend-etf-comparison"
+      },
+      {
+        "slug": "midea-vs-haier",
+        "title": "美的 vs 海尔：谁才是当下的价值投资？",
+        "href": "/blog/midea-vs-haier"
+      }
+    ],
+    "investing/fund-research-framework": [
+      {
+        "slug": "fund-q2-review",
+        "title": "基金二季报持仓回顾与验证",
+        "href": "/blog/fund-q2-review"
+      }
+    ],
+    "investing/pseudo-quality-dividend": [
+      {
+        "slug": "dividend-etf-comparison",
+        "title": "红利基金横向对比：恒生红利低波 vs 红利质量 vs 中证红利 vs 港股通央企红利",
+        "href": "/blog/dividend-etf-comparison"
+      }
+    ],
+    "investing/valuation-anchoring": [
+      {
+        "slug": "midea-vs-haier",
+        "title": "美的 vs 海尔：谁才是当下的价值投资？",
+        "href": "/blog/midea-vs-haier"
+      },
+      {
+        "slug": "hailuo-cement-cycle-stock",
+        "title": "海螺水泥（600585）：周期底部的价值陷阱还是逆向机会？",
+        "href": "/blog/hailuo-cement-cycle-stock"
+      },
+      {
+        "slug": "shenhuo-000933-cycle-stock",
+        "title": "神火股份（000933）—— 电解铝周期股的暴利之年",
+        "href": "/blog/shenhuo-000933-cycle-stock"
+      }
+    ],
+    "investing/value-trap-vs-reversal": [
+      {
+        "slug": "hailuo-cement-cycle-stock",
+        "title": "海螺水泥（600585）：周期底部的价值陷阱还是逆向机会？",
+        "href": "/blog/hailuo-cement-cycle-stock"
+      },
+      {
+        "slug": "renfu-st-ma-turning-point",
+        "title": "人福医药（ST人福）：麻醉垄断里的困境反转",
+        "href": "/blog/renfu-st-ma-turning-point"
+      }
+    ],
+    "cloud-native/container-runtime-chain": [
+      {
+        "slug": "containerd原理剖析与实战笔记",
+        "title": "containerd原理剖析与实战 — 阅读笔记",
+        "href": "/blog/containerd原理剖析与实战笔记"
+      }
+    ],
+    "cloud-native/fastapi-architecture": [
+      {
+        "slug": "fastapi-deep-dive",
+        "title": "FastAPI 从入门到生产级——一篇 Python 后端工程师的深度指南",
+        "href": "/blog/fastapi-deep-dive"
+      }
+    ],
+    "cloud-native/linux-ops-heuristics": [
+      {
+        "slug": "linux-ops-commands",
+        "title": "Linux 运维常用命令速查手册",
+        "href": "/blog/linux-ops-commands"
+      }
+    ],
+    "cloud-native/volcano-scheduling": [
+      {
+        "slug": "volcano调度笔记",
+        "title": "Volcano调度笔记",
+        "href": "/blog/volcano调度笔记"
+      }
+    ],
+    "llm-eng/agent-eval-framework": [
+      {
+        "slug": "llm-as-judge-rubric",
+        "title": "LLM-as-Judge 与 Rubric：如何让 AI 评估器变得可信",
+        "href": "/blog/llm-as-judge-rubric"
+      }
+    ],
+    "llm-eng/context-compression-strategies": [
+      {
+        "slug": "opencodereview-hermes-context-compression",
+        "title": "上下文压缩策略：OpenCodeReview vs Hermes —— 从「续跑」到「防僵尸」",
+        "href": "/blog/opencodereview-hermes-context-compression"
+      }
+    ],
+    "llm-eng/deterministic-agent-hybrid": [
+      {
+        "slug": "opencodereview-llm-half",
+        "title": "OpenCodeReview 源码拆解：LLM 只负责一半 —— 确定性工程 × Agent 混合架构",
+        "href": "/blog/opencodereview-llm-half"
+      }
+    ],
+    "llm-eng/llm-judge-self-iteration": [
+      {
+        "slug": "llm-as-judge-self-iteration",
+        "title": "LLM-as-a-Judge 实战：自我迭代的打分器怎么做",
+        "href": "/blog/llm-as-judge-self-iteration"
+      }
+    ],
+    "llm-eng/loop-engineering": [
+      {
+        "slug": "loop-engineering",
+        "title": "Loop Engineering 深度拆解：从控制论到证据链，AI 编程的范式迁移",
+        "href": "/blog/loop-engineering"
+      }
+    ],
+    "llm-eng/multi-agent-team-protocols": [
+      {
+        "slug": "codex-agent-team",
+        "title": "AWS Codex Agent Team 深度拆解：多 Agent 如何真正像工程团队一样协作",
+        "href": "/blog/codex-agent-team"
+      }
+    ],
+    "llm-eng/noise-robust-convergence": [
+      {
+        "slug": "llm-as-judge-rubric",
+        "title": "LLM-as-Judge 与 Rubric：如何让 AI 评估器变得可信",
+        "href": "/blog/llm-as-judge-rubric"
+      }
+    ],
+    "llm-eng/rubric-based-judge": [
+      {
+        "slug": "llm-as-judge-rubric",
+        "title": "LLM-as-Judge 与 Rubric：如何让 AI 评估器变得可信",
+        "href": "/blog/llm-as-judge-rubric"
+      }
+    ],
+    "algorithms/auxiliary-structure-sync": [
+      {
+        "slug": "min-stack",
+        "title": "O(1) 最小栈 —— 双栈同步的经典设计",
+        "href": "/blog/min-stack"
+      }
+    ],
+    "algorithms/enumerate-and-encode-comparison": [
+      {
+        "slug": "德州扑克算法",
+        "title": "德州扑克牌型比较 —— 算法拆解",
+        "href": "/blog/德州扑克算法"
+      }
+    ],
+    "algorithms/game-dp-difference-method": [
+      {
+        "slug": "stone-game-ii-dp-pattern",
+        "title": "石子游戏 II — 从一道题学会博弈型动态规划",
+        "href": "/blog/stone-game-ii-dp-pattern"
+      }
+    ],
+    "algorithms/monotonic-queue-sliding-maximum": [
+      {
+        "slug": "frequency-monitor-monotonic-queue",
+        "title": "滑动窗口最大值 —— 单调队列入门与避坑",
+        "href": "/blog/frequency-monitor-monotonic-queue"
+      }
+    ],
+    "algorithms/prime-sieve-optimization-ladder": [
+      {
+        "slug": "twin-prime-sieve",
+        "title": "孪生质数题：质数筛选从最笨到最优的四级跳跃",
+        "href": "/blog/twin-prime-sieve"
+      }
+    ],
+    "algorithms/ternary-search-multiway-divide": [
+      {
+        "slug": "玩具称重",
+        "title": "玩具称重——三分法算法精讲",
+        "href": "/blog/玩具称重"
+      }
+    ],
+    "soft-skills/critical-conversations": [
+      {
+        "slug": "关键对话-读书笔记",
+        "title": "《关键对话》读书笔记",
+        "href": "/blog/关键对话-读书笔记"
+      }
+    ],
+    "stocks/hailuo-cement": [
+      {
+        "slug": "hailuo-cement-cycle-stock",
+        "title": "海螺水泥（600585）：周期底部的价值陷阱还是逆向机会？",
+        "href": "/blog/hailuo-cement-cycle-stock"
+      }
+    ],
+    "stocks/hk-soe-dividend-931722": [
+      {
+        "slug": "931722-hk-soe-dividend-index",
+        "title": "中证国新港股通央企红利指数（931722）深度复盘",
+        "href": "/blog/931722-hk-soe-dividend-index"
+      }
+    ],
+    "stocks/renfu-pharma": [
+      {
+        "slug": "renfu-st-ma-turning-point",
+        "title": "人福医药（ST人福）：麻醉垄断里的困境反转",
+        "href": "/blog/renfu-st-ma-turning-point"
+      }
+    ],
+    "stocks/shenhuo-000933": [
+      {
+        "slug": "shenhuo-000933-cycle-stock",
+        "title": "神火股份（000933）—— 电解铝周期股的暴利之年",
+        "href": "/blog/shenhuo-000933-cycle-stock"
+      }
+    ]
+  },
+  "wikiBacklinks": {
+    "investing/value-trap-vs-reversal": [
+      {
+        "key": "investing/cycle-stock-framework",
+        "title": "周期股分析框架",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "cycle-stock-framework",
+        "href": "/wiki/investing/cycle-stock-framework"
+      },
+      {
+        "key": "investing/pseudo-quality-dividend",
+        "title": "伪质量红利识别",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "pseudo-quality-dividend",
+        "href": "/wiki/investing/pseudo-quality-dividend"
+      },
+      {
+        "key": "stocks/hailuo-cement",
+        "title": "海螺水泥（600585）",
+        "domain": "stocks",
+        "domainLabel": "个股与指数",
+        "slug": "hailuo-cement",
+        "href": "/wiki/stocks/hailuo-cement"
+      },
+      {
+        "key": "stocks/renfu-pharma",
+        "title": "人福医药（ST人福 600079）",
+        "domain": "stocks",
+        "domainLabel": "个股与指数",
+        "slug": "renfu-pharma",
+        "href": "/wiki/stocks/renfu-pharma"
+      }
+    ],
+    "investing/valuation-anchoring": [
+      {
+        "key": "investing/cycle-stock-framework",
+        "title": "周期股分析框架",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "cycle-stock-framework",
+        "href": "/wiki/investing/cycle-stock-framework"
+      },
+      {
+        "key": "investing/dividend-risk-layers",
+        "title": "红利资产风险分层",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "dividend-risk-layers",
+        "href": "/wiki/investing/dividend-risk-layers"
+      },
+      {
+        "key": "investing/financial-quality-verification",
+        "title": "财务质量验证法",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "financial-quality-verification",
+        "href": "/wiki/investing/financial-quality-verification"
+      },
+      {
+        "key": "investing/pseudo-quality-dividend",
+        "title": "伪质量红利识别",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "pseudo-quality-dividend",
+        "href": "/wiki/investing/pseudo-quality-dividend"
+      },
+      {
+        "key": "investing/real-interest-rate-gold",
+        "title": "实际利率与黄金的定价锚",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "real-interest-rate-gold",
+        "href": "/wiki/investing/real-interest-rate-gold"
+      },
+      {
+        "key": "investing/value-trap-vs-reversal",
+        "title": "价值陷阱与困境反转判别",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "value-trap-vs-reversal",
+        "href": "/wiki/investing/value-trap-vs-reversal"
+      },
+      {
+        "key": "stocks/hailuo-cement",
+        "title": "海螺水泥（600585）",
+        "domain": "stocks",
+        "domainLabel": "个股与指数",
+        "slug": "hailuo-cement",
+        "href": "/wiki/stocks/hailuo-cement"
+      }
+    ],
+    "investing/dividend-risk-layers": [
+      {
+        "key": "investing/cycle-stock-framework",
+        "title": "周期股分析框架",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "cycle-stock-framework",
+        "href": "/wiki/investing/cycle-stock-framework"
+      },
+      {
+        "key": "investing/fund-research-framework",
+        "title": "基金研究框架",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "fund-research-framework",
+        "href": "/wiki/investing/fund-research-framework"
+      },
+      {
+        "key": "investing/pseudo-quality-dividend",
+        "title": "伪质量红利识别",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "pseudo-quality-dividend",
+        "href": "/wiki/investing/pseudo-quality-dividend"
+      },
+      {
+        "key": "investing/real-interest-rate-gold",
+        "title": "实际利率与黄金的定价锚",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "real-interest-rate-gold",
+        "href": "/wiki/investing/real-interest-rate-gold"
+      },
+      {
+        "key": "stocks/hk-soe-dividend-931722",
+        "title": "港股央企红利指数931722",
+        "domain": "stocks",
+        "domainLabel": "个股与指数",
+        "slug": "hk-soe-dividend-931722",
+        "href": "/wiki/stocks/hk-soe-dividend-931722"
+      }
+    ],
+    "stocks/shenhuo-000933": [
+      {
+        "key": "investing/cycle-stock-framework",
+        "title": "周期股分析框架",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "cycle-stock-framework",
+        "href": "/wiki/investing/cycle-stock-framework"
+      },
+      {
+        "key": "investing/valuation-anchoring",
+        "title": "估值锚定体系",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "valuation-anchoring",
+        "href": "/wiki/investing/valuation-anchoring"
+      },
+      {
+        "key": "stocks/hailuo-cement",
+        "title": "海螺水泥（600585）",
+        "domain": "stocks",
+        "domainLabel": "个股与指数",
+        "slug": "hailuo-cement",
+        "href": "/wiki/stocks/hailuo-cement"
+      }
+    ],
+    "stocks/hailuo-cement": [
+      {
+        "key": "investing/cycle-stock-framework",
+        "title": "周期股分析框架",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "cycle-stock-framework",
+        "href": "/wiki/investing/cycle-stock-framework"
+      },
+      {
+        "key": "investing/valuation-anchoring",
+        "title": "估值锚定体系",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "valuation-anchoring",
+        "href": "/wiki/investing/valuation-anchoring"
+      },
+      {
+        "key": "investing/value-trap-vs-reversal",
+        "title": "价值陷阱与困境反转判别",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "value-trap-vs-reversal",
+        "href": "/wiki/investing/value-trap-vs-reversal"
+      },
+      {
+        "key": "stocks/renfu-pharma",
+        "title": "人福医药（ST人福 600079）",
+        "domain": "stocks",
+        "domainLabel": "个股与指数",
+        "slug": "renfu-pharma",
+        "href": "/wiki/stocks/renfu-pharma"
+      },
+      {
+        "key": "stocks/shenhuo-000933",
+        "title": "神火股份（000933）",
+        "domain": "stocks",
+        "domainLabel": "个股与指数",
+        "slug": "shenhuo-000933",
+        "href": "/wiki/stocks/shenhuo-000933"
+      }
+    ],
+    "investing/cycle-stock-framework": [
+      {
+        "key": "investing/dividend-risk-layers",
+        "title": "红利资产风险分层",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "dividend-risk-layers",
+        "href": "/wiki/investing/dividend-risk-layers"
+      },
+      {
+        "key": "investing/financial-quality-verification",
+        "title": "财务质量验证法",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "financial-quality-verification",
+        "href": "/wiki/investing/financial-quality-verification"
+      },
+      {
+        "key": "investing/real-interest-rate-gold",
+        "title": "实际利率与黄金的定价锚",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "real-interest-rate-gold",
+        "href": "/wiki/investing/real-interest-rate-gold"
+      },
+      {
+        "key": "investing/valuation-anchoring",
+        "title": "估值锚定体系",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "valuation-anchoring",
+        "href": "/wiki/investing/valuation-anchoring"
+      },
+      {
+        "key": "investing/value-trap-vs-reversal",
+        "title": "价值陷阱与困境反转判别",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "value-trap-vs-reversal",
+        "href": "/wiki/investing/value-trap-vs-reversal"
+      },
+      {
+        "key": "llm-eng/noise-robust-convergence",
+        "title": "噪声中的信号判断：高精度优于高覆盖",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "noise-robust-convergence",
+        "href": "/wiki/llm-eng/noise-robust-convergence"
+      },
+      {
+        "key": "stocks/hailuo-cement",
+        "title": "海螺水泥（600585）",
+        "domain": "stocks",
+        "domainLabel": "个股与指数",
+        "slug": "hailuo-cement",
+        "href": "/wiki/stocks/hailuo-cement"
+      },
+      {
+        "key": "stocks/hk-soe-dividend-931722",
+        "title": "港股央企红利指数931722",
+        "domain": "stocks",
+        "domainLabel": "个股与指数",
+        "slug": "hk-soe-dividend-931722",
+        "href": "/wiki/stocks/hk-soe-dividend-931722"
+      },
+      {
+        "key": "stocks/shenhuo-000933",
+        "title": "神火股份（000933）",
+        "domain": "stocks",
+        "domainLabel": "个股与指数",
+        "slug": "shenhuo-000933",
+        "href": "/wiki/stocks/shenhuo-000933"
+      }
+    ],
+    "investing/financial-quality-verification": [
+      {
+        "key": "investing/dividend-risk-layers",
+        "title": "红利资产风险分层",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "dividend-risk-layers",
+        "href": "/wiki/investing/dividend-risk-layers"
+      },
+      {
+        "key": "investing/fund-research-framework",
+        "title": "基金研究框架",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "fund-research-framework",
+        "href": "/wiki/investing/fund-research-framework"
+      },
+      {
+        "key": "investing/pseudo-quality-dividend",
+        "title": "伪质量红利识别",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "pseudo-quality-dividend",
+        "href": "/wiki/investing/pseudo-quality-dividend"
+      },
+      {
+        "key": "investing/valuation-anchoring",
+        "title": "估值锚定体系",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "valuation-anchoring",
+        "href": "/wiki/investing/valuation-anchoring"
+      },
+      {
+        "key": "stocks/renfu-pharma",
+        "title": "人福医药（ST人福 600079）",
+        "domain": "stocks",
+        "domainLabel": "个股与指数",
+        "slug": "renfu-pharma",
+        "href": "/wiki/stocks/renfu-pharma"
+      },
+      {
+        "key": "stocks/shenhuo-000933",
+        "title": "神火股份（000933）",
+        "domain": "stocks",
+        "domainLabel": "个股与指数",
+        "slug": "shenhuo-000933",
+        "href": "/wiki/stocks/shenhuo-000933"
+      }
+    ],
+    "stocks/hk-soe-dividend-931722": [
+      {
+        "key": "investing/dividend-risk-layers",
+        "title": "红利资产风险分层",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "dividend-risk-layers",
+        "href": "/wiki/investing/dividend-risk-layers"
+      }
+    ],
+    "investing/pseudo-quality-dividend": [
+      {
+        "key": "investing/financial-quality-verification",
+        "title": "财务质量验证法",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "financial-quality-verification",
+        "href": "/wiki/investing/financial-quality-verification"
+      },
+      {
+        "key": "investing/fund-research-framework",
+        "title": "基金研究框架",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "fund-research-framework",
+        "href": "/wiki/investing/fund-research-framework"
+      },
+      {
+        "key": "investing/value-trap-vs-reversal",
+        "title": "价值陷阱与困境反转判别",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "value-trap-vs-reversal",
+        "href": "/wiki/investing/value-trap-vs-reversal"
+      }
+    ],
+    "stocks/renfu-pharma": [
+      {
+        "key": "investing/value-trap-vs-reversal",
+        "title": "价值陷阱与困境反转判别",
+        "domain": "investing",
+        "domainLabel": "投资认知",
+        "slug": "value-trap-vs-reversal",
+        "href": "/wiki/investing/value-trap-vs-reversal"
+      }
+    ],
+    "cloud-native/proxy-as-pipeline": [
+      {
+        "key": "cloud-native/alerting-on-degradation",
+        "title": "降级即告警：有兜底的系统怎么被观测",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "alerting-on-degradation",
+        "href": "/wiki/cloud-native/alerting-on-degradation"
+      },
+      {
+        "key": "cloud-native/long-connection-lifecycle",
+        "title": "长连接在中间层的生命周期",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "long-connection-lifecycle",
+        "href": "/wiki/cloud-native/long-connection-lifecycle"
+      },
+      {
+        "key": "cloud-native/websocket-protocol",
+        "title": "WebSocket 协议机制",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "websocket-protocol",
+        "href": "/wiki/cloud-native/websocket-protocol"
+      }
+    ],
+    "cloud-native/linux-ops-heuristics": [
+      {
+        "key": "cloud-native/alerting-on-degradation",
+        "title": "降级即告警：有兜底的系统怎么被观测",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "alerting-on-degradation",
+        "href": "/wiki/cloud-native/alerting-on-degradation"
+      },
+      {
+        "key": "cloud-native/container-runtime-chain",
+        "title": "容器运行时链路：从 Pod 到隔离的进程",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "container-runtime-chain",
+        "href": "/wiki/cloud-native/container-runtime-chain"
+      },
+      {
+        "key": "cloud-native/fastapi-architecture",
+        "title": "FastAPI 架构：类型驱动、DI 管道与异步模型",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "fastapi-architecture",
+        "href": "/wiki/cloud-native/fastapi-architecture"
+      },
+      {
+        "key": "cloud-native/go-context-subprocess",
+        "title": "Go context 与子进程：cancel 到不了的地方",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "go-context-subprocess",
+        "href": "/wiki/cloud-native/go-context-subprocess"
+      },
+      {
+        "key": "cloud-native/volcano-scheduling",
+        "title": "Volcano 调度器：gang 调度与多调度器机制",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "volcano-scheduling",
+        "href": "/wiki/cloud-native/volcano-scheduling"
+      }
+    ],
+    "cloud-native/layer2-switching": [
+      {
+        "key": "cloud-native/arp-mechanism",
+        "title": "ARP 机制与广播风暴",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "arp-mechanism",
+        "href": "/wiki/cloud-native/arp-mechanism"
+      },
+      {
+        "key": "cloud-native/crc-and-integrity-check",
+        "title": "CRC 与数据完整性校验",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "crc-and-integrity-check",
+        "href": "/wiki/cloud-native/crc-and-integrity-check"
+      },
+      {
+        "key": "cloud-native/dhcp-address-assignment",
+        "title": "DHCP 地址分配",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "dhcp-address-assignment",
+        "href": "/wiki/cloud-native/dhcp-address-assignment"
+      },
+      {
+        "key": "cloud-native/loopback-address",
+        "title": "环回地址",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "loopback-address",
+        "href": "/wiki/cloud-native/loopback-address"
+      },
+      {
+        "key": "cloud-native/network-config-four-pieces",
+        "title": "网络配置四件套与子网约束",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "network-config-four-pieces",
+        "href": "/wiki/cloud-native/network-config-four-pieces"
+      },
+      {
+        "key": "cloud-native/network-layer-stack",
+        "title": "网络分层与出网链路",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "network-layer-stack",
+        "href": "/wiki/cloud-native/network-layer-stack"
+      }
+    ],
+    "cloud-native/network-layer-stack": [
+      {
+        "key": "cloud-native/arp-mechanism",
+        "title": "ARP 机制与广播风暴",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "arp-mechanism",
+        "href": "/wiki/cloud-native/arp-mechanism"
+      },
+      {
+        "key": "cloud-native/cidr-addressing",
+        "title": "CIDR 编址",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "cidr-addressing",
+        "href": "/wiki/cloud-native/cidr-addressing"
+      },
+      {
+        "key": "cloud-native/crc-and-integrity-check",
+        "title": "CRC 与数据完整性校验",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "crc-and-integrity-check",
+        "href": "/wiki/cloud-native/crc-and-integrity-check"
+      },
+      {
+        "key": "cloud-native/dind-gitlab-ci",
+        "title": "Docker in Docker：GitLab CI 的 service 模式原理",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "dind-gitlab-ci",
+        "href": "/wiki/cloud-native/dind-gitlab-ci"
+      },
+      {
+        "key": "cloud-native/dns-resolution",
+        "title": "DNS 解析流程",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "dns-resolution",
+        "href": "/wiki/cloud-native/dns-resolution"
+      },
+      {
+        "key": "cloud-native/layer2-switching",
+        "title": "二层转发与交换机",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "layer2-switching",
+        "href": "/wiki/cloud-native/layer2-switching"
+      },
+      {
+        "key": "cloud-native/loopback-address",
+        "title": "环回地址",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "loopback-address",
+        "href": "/wiki/cloud-native/loopback-address"
+      },
+      {
+        "key": "cloud-native/network-config-four-pieces",
+        "title": "网络配置四件套与子网约束",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "network-config-four-pieces",
+        "href": "/wiki/cloud-native/network-config-four-pieces"
+      },
+      {
+        "key": "cloud-native/user-kernel-network-path",
+        "title": "用户态与内核态的网络路径",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "user-kernel-network-path",
+        "href": "/wiki/cloud-native/user-kernel-network-path"
+      }
+    ],
+    "cloud-native/dns-resolution": [
+      {
+        "key": "cloud-native/arp-mechanism",
+        "title": "ARP 机制与广播风暴",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "arp-mechanism",
+        "href": "/wiki/cloud-native/arp-mechanism"
+      },
+      {
+        "key": "cloud-native/dind-gitlab-ci",
+        "title": "Docker in Docker：GitLab CI 的 service 模式原理",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "dind-gitlab-ci",
+        "href": "/wiki/cloud-native/dind-gitlab-ci"
+      },
+      {
+        "key": "cloud-native/user-kernel-network-path",
+        "title": "用户态与内核态的网络路径",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "user-kernel-network-path",
+        "href": "/wiki/cloud-native/user-kernel-network-path"
+      }
+    ],
+    "cloud-native/dhcp-address-assignment": [
+      {
+        "key": "cloud-native/arp-mechanism",
+        "title": "ARP 机制与广播风暴",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "arp-mechanism",
+        "href": "/wiki/cloud-native/arp-mechanism"
+      },
+      {
+        "key": "cloud-native/cidr-addressing",
+        "title": "CIDR 编址",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "cidr-addressing",
+        "href": "/wiki/cloud-native/cidr-addressing"
+      },
+      {
+        "key": "cloud-native/crc-and-integrity-check",
+        "title": "CRC 与数据完整性校验",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "crc-and-integrity-check",
+        "href": "/wiki/cloud-native/crc-and-integrity-check"
+      },
+      {
+        "key": "cloud-native/dns-resolution",
+        "title": "DNS 解析流程",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "dns-resolution",
+        "href": "/wiki/cloud-native/dns-resolution"
+      },
+      {
+        "key": "cloud-native/network-config-four-pieces",
+        "title": "网络配置四件套与子网约束",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "network-config-four-pieces",
+        "href": "/wiki/cloud-native/network-config-four-pieces"
+      }
+    ],
+    "cloud-native/container-build-evolution": [
+      {
+        "key": "cloud-native/buildkit-cache-mechanics",
+        "title": "BuildKit 缓存机制：三层结构与并发冲突",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "buildkit-cache-mechanics",
+        "href": "/wiki/cloud-native/buildkit-cache-mechanics"
+      },
+      {
+        "key": "cloud-native/dind-gitlab-ci",
+        "title": "Docker in Docker：GitLab CI 的 service 模式原理",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "dind-gitlab-ci",
+        "href": "/wiki/cloud-native/dind-gitlab-ci"
+      },
+      {
+        "key": "cloud-native/image-attestation",
+        "title": "镜像供应链证明：SBOM 与 provenance",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "image-attestation",
+        "href": "/wiki/cloud-native/image-attestation"
+      }
+    ],
+    "cloud-native/dind-gitlab-ci": [
+      {
+        "key": "cloud-native/buildkit-cache-mechanics",
+        "title": "BuildKit 缓存机制：三层结构与并发冲突",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "buildkit-cache-mechanics",
+        "href": "/wiki/cloud-native/buildkit-cache-mechanics"
+      },
+      {
+        "key": "cloud-native/container-build-evolution",
+        "title": "容器镜像构建的四代演进与主流形态",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "container-build-evolution",
+        "href": "/wiki/cloud-native/container-build-evolution"
+      },
+      {
+        "key": "cloud-native/image-attestation",
+        "title": "镜像供应链证明：SBOM 与 provenance",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "image-attestation",
+        "href": "/wiki/cloud-native/image-attestation"
+      }
+    ],
+    "cloud-native/image-attestation": [
+      {
+        "key": "cloud-native/buildkit-cache-mechanics",
+        "title": "BuildKit 缓存机制：三层结构与并发冲突",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "buildkit-cache-mechanics",
+        "href": "/wiki/cloud-native/buildkit-cache-mechanics"
+      },
+      {
+        "key": "cloud-native/container-build-evolution",
+        "title": "容器镜像构建的四代演进与主流形态",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "container-build-evolution",
+        "href": "/wiki/cloud-native/container-build-evolution"
+      }
+    ],
+    "cloud-native/network-config-four-pieces": [
+      {
+        "key": "cloud-native/cidr-addressing",
+        "title": "CIDR 编址",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "cidr-addressing",
+        "href": "/wiki/cloud-native/cidr-addressing"
+      },
+      {
+        "key": "cloud-native/crc-and-integrity-check",
+        "title": "CRC 与数据完整性校验",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "crc-and-integrity-check",
+        "href": "/wiki/cloud-native/crc-and-integrity-check"
+      },
+      {
+        "key": "cloud-native/dhcp-address-assignment",
+        "title": "DHCP 地址分配",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "dhcp-address-assignment",
+        "href": "/wiki/cloud-native/dhcp-address-assignment"
+      }
+    ],
+    "cloud-native/loopback-address": [
+      {
+        "key": "cloud-native/cidr-addressing",
+        "title": "CIDR 编址",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "cidr-addressing",
+        "href": "/wiki/cloud-native/cidr-addressing"
+      },
+      {
+        "key": "cloud-native/dhcp-address-assignment",
+        "title": "DHCP 地址分配",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "dhcp-address-assignment",
+        "href": "/wiki/cloud-native/dhcp-address-assignment"
+      },
+      {
+        "key": "cloud-native/layer2-switching",
+        "title": "二层转发与交换机",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "layer2-switching",
+        "href": "/wiki/cloud-native/layer2-switching"
+      },
+      {
+        "key": "cloud-native/network-layer-stack",
+        "title": "网络分层与出网链路",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "network-layer-stack",
+        "href": "/wiki/cloud-native/network-layer-stack"
+      },
+      {
+        "key": "cloud-native/user-kernel-network-path",
+        "title": "用户态与内核态的网络路径",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "user-kernel-network-path",
+        "href": "/wiki/cloud-native/user-kernel-network-path"
+      }
+    ],
+    "cloud-native/buildkit-cache-mechanics": [
+      {
+        "key": "cloud-native/container-build-evolution",
+        "title": "容器镜像构建的四代演进与主流形态",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "container-build-evolution",
+        "href": "/wiki/cloud-native/container-build-evolution"
+      },
+      {
+        "key": "cloud-native/dind-gitlab-ci",
+        "title": "Docker in Docker：GitLab CI 的 service 模式原理",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "dind-gitlab-ci",
+        "href": "/wiki/cloud-native/dind-gitlab-ci"
+      },
+      {
+        "key": "cloud-native/image-attestation",
+        "title": "镜像供应链证明：SBOM 与 provenance",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "image-attestation",
+        "href": "/wiki/cloud-native/image-attestation"
+      }
+    ],
+    "cloud-native/volcano-scheduling": [
+      {
+        "key": "cloud-native/container-runtime-chain",
+        "title": "容器运行时链路：从 Pod 到隔离的进程",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "container-runtime-chain",
+        "href": "/wiki/cloud-native/container-runtime-chain"
+      },
+      {
+        "key": "cloud-native/fleeting-plugin-architecture",
+        "title": "Fleeting 插件架构（GitLab Runner 云厂商适配）",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "fleeting-plugin-architecture",
+        "href": "/wiki/cloud-native/fleeting-plugin-architecture"
+      },
+      {
+        "key": "cloud-native/k8s-label-vs-annotation",
+        "title": "K8s Label 与 Annotation 之分",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "k8s-label-vs-annotation",
+        "href": "/wiki/cloud-native/k8s-label-vs-annotation"
+      },
+      {
+        "key": "cloud-native/linux-ops-heuristics",
+        "title": "Linux 运维判据与排障方法论",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "linux-ops-heuristics",
+        "href": "/wiki/cloud-native/linux-ops-heuristics"
+      }
+    ],
+    "cloud-native/cidr-addressing": [
+      {
+        "key": "cloud-native/dhcp-address-assignment",
+        "title": "DHCP 地址分配",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "dhcp-address-assignment",
+        "href": "/wiki/cloud-native/dhcp-address-assignment"
+      },
+      {
+        "key": "cloud-native/layer2-switching",
+        "title": "二层转发与交换机",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "layer2-switching",
+        "href": "/wiki/cloud-native/layer2-switching"
+      },
+      {
+        "key": "cloud-native/loopback-address",
+        "title": "环回地址",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "loopback-address",
+        "href": "/wiki/cloud-native/loopback-address"
+      },
+      {
+        "key": "cloud-native/network-config-four-pieces",
+        "title": "网络配置四件套与子网约束",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "network-config-four-pieces",
+        "href": "/wiki/cloud-native/network-config-four-pieces"
+      },
+      {
+        "key": "cloud-native/network-layer-stack",
+        "title": "网络分层与出网链路",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "network-layer-stack",
+        "href": "/wiki/cloud-native/network-layer-stack"
+      }
+    ],
+    "cloud-native/arp-mechanism": [
+      {
+        "key": "cloud-native/dns-resolution",
+        "title": "DNS 解析流程",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "dns-resolution",
+        "href": "/wiki/cloud-native/dns-resolution"
+      },
+      {
+        "key": "cloud-native/layer2-switching",
+        "title": "二层转发与交换机",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "layer2-switching",
+        "href": "/wiki/cloud-native/layer2-switching"
+      }
+    ],
+    "cloud-native/container-runtime-chain": [
+      {
+        "key": "cloud-native/fastapi-architecture",
+        "title": "FastAPI 架构：类型驱动、DI 管道与异步模型",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "fastapi-architecture",
+        "href": "/wiki/cloud-native/fastapi-architecture"
+      },
+      {
+        "key": "cloud-native/fleeting-plugin-architecture",
+        "title": "Fleeting 插件架构（GitLab Runner 云厂商适配）",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "fleeting-plugin-architecture",
+        "href": "/wiki/cloud-native/fleeting-plugin-architecture"
+      },
+      {
+        "key": "cloud-native/go-context-subprocess",
+        "title": "Go context 与子进程：cancel 到不了的地方",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "go-context-subprocess",
+        "href": "/wiki/cloud-native/go-context-subprocess"
+      },
+      {
+        "key": "cloud-native/k8s-label-vs-annotation",
+        "title": "K8s Label 与 Annotation 之分",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "k8s-label-vs-annotation",
+        "href": "/wiki/cloud-native/k8s-label-vs-annotation"
+      },
+      {
+        "key": "cloud-native/linux-ops-heuristics",
+        "title": "Linux 运维判据与排障方法论",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "linux-ops-heuristics",
+        "href": "/wiki/cloud-native/linux-ops-heuristics"
+      },
+      {
+        "key": "cloud-native/volcano-scheduling",
+        "title": "Volcano 调度器：gang 调度与多调度器机制",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "volcano-scheduling",
+        "href": "/wiki/cloud-native/volcano-scheduling"
+      }
+    ],
+    "cloud-native/k8s-label-vs-annotation": [
+      {
+        "key": "cloud-native/fleeting-plugin-architecture",
+        "title": "Fleeting 插件架构（GitLab Runner 云厂商适配）",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "fleeting-plugin-architecture",
+        "href": "/wiki/cloud-native/fleeting-plugin-architecture"
+      }
+    ],
+    "cloud-native/fastapi-architecture": [
+      {
+        "key": "cloud-native/k8s-label-vs-annotation",
+        "title": "K8s Label 与 Annotation 之分",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "k8s-label-vs-annotation",
+        "href": "/wiki/cloud-native/k8s-label-vs-annotation"
+      },
+      {
+        "key": "cloud-native/proxy-as-pipeline",
+        "title": "代理是管道不是解析器",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "proxy-as-pipeline",
+        "href": "/wiki/cloud-native/proxy-as-pipeline"
+      }
+    ],
+    "cloud-native/websocket-protocol": [
+      {
+        "key": "cloud-native/long-connection-lifecycle",
+        "title": "长连接在中间层的生命周期",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "long-connection-lifecycle",
+        "href": "/wiki/cloud-native/long-connection-lifecycle"
+      }
+    ],
+    "cloud-native/fleeting-plugin-architecture": [
+      {
+        "key": "cloud-native/long-connection-lifecycle",
+        "title": "长连接在中间层的生命周期",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "long-connection-lifecycle",
+        "href": "/wiki/cloud-native/long-connection-lifecycle"
+      }
+    ],
+    "cloud-native/alerting-on-degradation": [
+      {
+        "key": "cloud-native/long-connection-lifecycle",
+        "title": "长连接在中间层的生命周期",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "long-connection-lifecycle",
+        "href": "/wiki/cloud-native/long-connection-lifecycle"
+      },
+      {
+        "key": "cloud-native/proxy-as-pipeline",
+        "title": "代理是管道不是解析器",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "proxy-as-pipeline",
+        "href": "/wiki/cloud-native/proxy-as-pipeline"
+      }
+    ],
+    "cloud-native/crc-and-integrity-check": [
+      {
+        "key": "cloud-native/user-kernel-network-path",
+        "title": "用户态与内核态的网络路径",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "user-kernel-network-path",
+        "href": "/wiki/cloud-native/user-kernel-network-path"
+      }
+    ],
+    "cloud-native/long-connection-lifecycle": [
+      {
+        "key": "cloud-native/websocket-protocol",
+        "title": "WebSocket 协议机制",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "websocket-protocol",
+        "href": "/wiki/cloud-native/websocket-protocol"
+      }
+    ],
+    "cloud-native/user-kernel-network-path": [
+      {
+        "key": "cloud-native/websocket-protocol",
+        "title": "WebSocket 协议机制",
+        "domain": "cloud-native",
+        "domainLabel": "云原生",
+        "slug": "websocket-protocol",
+        "href": "/wiki/cloud-native/websocket-protocol"
+      }
+    ],
+    "llm-eng/rubric-based-judge": [
+      {
+        "key": "llm-eng/agent-eval-framework",
+        "title": "Agent 评测体系：五层 / 四步 / 三阶段",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "agent-eval-framework",
+        "href": "/wiki/llm-eng/agent-eval-framework"
+      },
+      {
+        "key": "llm-eng/deterministic-agent-hybrid",
+        "title": "确定性工程 × Agent 混合架构：LLM 只做判断题",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "deterministic-agent-hybrid",
+        "href": "/wiki/llm-eng/deterministic-agent-hybrid"
+      },
+      {
+        "key": "llm-eng/llm-judge-self-iteration",
+        "title": "LLM-as-a-Judge：三层打分架构与自我迭代",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "llm-judge-self-iteration",
+        "href": "/wiki/llm-eng/llm-judge-self-iteration"
+      },
+      {
+        "key": "llm-eng/noise-robust-convergence",
+        "title": "噪声中的信号判断：高精度优于高覆盖",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "noise-robust-convergence",
+        "href": "/wiki/llm-eng/noise-robust-convergence"
+      }
+    ],
+    "llm-eng/llm-judge-self-iteration": [
+      {
+        "key": "llm-eng/agent-eval-framework",
+        "title": "Agent 评测体系：五层 / 四步 / 三阶段",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "agent-eval-framework",
+        "href": "/wiki/llm-eng/agent-eval-framework"
+      },
+      {
+        "key": "llm-eng/rubric-based-judge",
+        "title": "Rubric 化评估器：把主观打分变成逐条判定",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "rubric-based-judge",
+        "href": "/wiki/llm-eng/rubric-based-judge"
+      }
+    ],
+    "llm-eng/loop-engineering": [
+      {
+        "key": "llm-eng/agent-eval-framework",
+        "title": "Agent 评测体系：五层 / 四步 / 三阶段",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "agent-eval-framework",
+        "href": "/wiki/llm-eng/agent-eval-framework"
+      },
+      {
+        "key": "llm-eng/context-compression-strategies",
+        "title": "上下文压缩策略：续跑 vs 防僵尸——任务形态与成本模型双根因",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "context-compression-strategies",
+        "href": "/wiki/llm-eng/context-compression-strategies"
+      },
+      {
+        "key": "llm-eng/deterministic-agent-hybrid",
+        "title": "确定性工程 × Agent 混合架构：LLM 只做判断题",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "deterministic-agent-hybrid",
+        "href": "/wiki/llm-eng/deterministic-agent-hybrid"
+      },
+      {
+        "key": "llm-eng/llm-judge-self-iteration",
+        "title": "LLM-as-a-Judge：三层打分架构与自我迭代",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "llm-judge-self-iteration",
+        "href": "/wiki/llm-eng/llm-judge-self-iteration"
+      },
+      {
+        "key": "llm-eng/multi-agent-team-protocols",
+        "title": "多 Agent 协作协议：角色矩阵、文件所有权与独立评审门禁",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "multi-agent-team-protocols",
+        "href": "/wiki/llm-eng/multi-agent-team-protocols"
+      },
+      {
+        "key": "soft-skills/critical-conversations",
+        "title": "关键对话：高难度沟通方法论",
+        "domain": "soft-skills",
+        "domainLabel": "读书软技能",
+        "slug": "critical-conversations",
+        "href": "/wiki/soft-skills/critical-conversations"
+      }
+    ],
+    "llm-eng/deterministic-agent-hybrid": [
+      {
+        "key": "llm-eng/context-compression-strategies",
+        "title": "上下文压缩策略：续跑 vs 防僵尸——任务形态与成本模型双根因",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "context-compression-strategies",
+        "href": "/wiki/llm-eng/context-compression-strategies"
+      },
+      {
+        "key": "llm-eng/llm-judge-self-iteration",
+        "title": "LLM-as-a-Judge：三层打分架构与自我迭代",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "llm-judge-self-iteration",
+        "href": "/wiki/llm-eng/llm-judge-self-iteration"
+      },
+      {
+        "key": "llm-eng/multi-agent-team-protocols",
+        "title": "多 Agent 协作协议：角色矩阵、文件所有权与独立评审门禁",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "multi-agent-team-protocols",
+        "href": "/wiki/llm-eng/multi-agent-team-protocols"
+      },
+      {
+        "key": "llm-eng/rubric-based-judge",
+        "title": "Rubric 化评估器：把主观打分变成逐条判定",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "rubric-based-judge",
+        "href": "/wiki/llm-eng/rubric-based-judge"
+      }
+    ],
+    "llm-eng/context-compression-strategies": [
+      {
+        "key": "llm-eng/deterministic-agent-hybrid",
+        "title": "确定性工程 × Agent 混合架构：LLM 只做判断题",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "deterministic-agent-hybrid",
+        "href": "/wiki/llm-eng/deterministic-agent-hybrid"
+      },
+      {
+        "key": "llm-eng/loop-engineering",
+        "title": "Loop Engineering：用负反馈闭环收敛概率错误",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "loop-engineering",
+        "href": "/wiki/llm-eng/loop-engineering"
+      }
+    ],
+    "llm-eng/agent-eval-framework": [
+      {
+        "key": "llm-eng/deterministic-agent-hybrid",
+        "title": "确定性工程 × Agent 混合架构：LLM 只做判断题",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "deterministic-agent-hybrid",
+        "href": "/wiki/llm-eng/deterministic-agent-hybrid"
+      },
+      {
+        "key": "llm-eng/llm-judge-self-iteration",
+        "title": "LLM-as-a-Judge：三层打分架构与自我迭代",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "llm-judge-self-iteration",
+        "href": "/wiki/llm-eng/llm-judge-self-iteration"
+      },
+      {
+        "key": "llm-eng/noise-robust-convergence",
+        "title": "噪声中的信号判断：高精度优于高覆盖",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "noise-robust-convergence",
+        "href": "/wiki/llm-eng/noise-robust-convergence"
+      },
+      {
+        "key": "llm-eng/rubric-based-judge",
+        "title": "Rubric 化评估器：把主观打分变成逐条判定",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "rubric-based-judge",
+        "href": "/wiki/llm-eng/rubric-based-judge"
+      }
+    ],
+    "llm-eng/multi-agent-team-protocols": [
+      {
+        "key": "llm-eng/loop-engineering",
+        "title": "Loop Engineering：用负反馈闭环收敛概率错误",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "loop-engineering",
+        "href": "/wiki/llm-eng/loop-engineering"
+      },
+      {
+        "key": "soft-skills/critical-conversations",
+        "title": "关键对话：高难度沟通方法论",
+        "domain": "soft-skills",
+        "domainLabel": "读书软技能",
+        "slug": "critical-conversations",
+        "href": "/wiki/soft-skills/critical-conversations"
+      }
+    ],
+    "llm-eng/noise-robust-convergence": [
+      {
+        "key": "llm-eng/rubric-based-judge",
+        "title": "Rubric 化评估器：把主观打分变成逐条判定",
+        "domain": "llm-eng",
+        "domainLabel": "LLM 工程",
+        "slug": "rubric-based-judge",
+        "href": "/wiki/llm-eng/rubric-based-judge"
+      }
+    ],
+    "algorithms/monotonic-queue-sliding-maximum": [
+      {
+        "key": "algorithms/auxiliary-structure-sync",
+        "title": "辅助结构同步追踪（O(1) 聚合查询）",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "auxiliary-structure-sync",
+        "href": "/wiki/algorithms/auxiliary-structure-sync"
+      },
+      {
+        "key": "algorithms/ternary-search-multiway-divide",
+        "title": "三分法与多路分治搜索",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "ternary-search-multiway-divide",
+        "href": "/wiki/algorithms/ternary-search-multiway-divide"
+      }
+    ],
+    "algorithms/ternary-search-multiway-divide": [
+      {
+        "key": "algorithms/auxiliary-structure-sync",
+        "title": "辅助结构同步追踪（O(1) 聚合查询）",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "auxiliary-structure-sync",
+        "href": "/wiki/algorithms/auxiliary-structure-sync"
+      },
+      {
+        "key": "algorithms/game-dp-difference-method",
+        "title": "博弈型动态规划：差值法 + 记忆化搜索",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "game-dp-difference-method",
+        "href": "/wiki/algorithms/game-dp-difference-method"
+      }
+    ],
+    "algorithms/game-dp-difference-method": [
+      {
+        "key": "algorithms/enumerate-and-encode-comparison",
+        "title": "组合枚举 + 等级编码比较",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "enumerate-and-encode-comparison",
+        "href": "/wiki/algorithms/enumerate-and-encode-comparison"
+      },
+      {
+        "key": "algorithms/monotonic-queue-sliding-maximum",
+        "title": "单调队列：滑动窗口最值与单调结构思维链",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "monotonic-queue-sliding-maximum",
+        "href": "/wiki/algorithms/monotonic-queue-sliding-maximum"
+      },
+      {
+        "key": "algorithms/ternary-search-multiway-divide",
+        "title": "三分法与多路分治搜索",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "ternary-search-multiway-divide",
+        "href": "/wiki/algorithms/ternary-search-multiway-divide"
+      }
+    ],
+    "algorithms/prime-sieve-optimization-ladder": [
+      {
+        "key": "algorithms/enumerate-and-encode-comparison",
+        "title": "组合枚举 + 等级编码比较",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "enumerate-and-encode-comparison",
+        "href": "/wiki/algorithms/enumerate-and-encode-comparison"
+      }
+    ],
+    "algorithms/enumerate-and-encode-comparison": [
+      {
+        "key": "algorithms/game-dp-difference-method",
+        "title": "博弈型动态规划：差值法 + 记忆化搜索",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "game-dp-difference-method",
+        "href": "/wiki/algorithms/game-dp-difference-method"
+      },
+      {
+        "key": "algorithms/prime-sieve-optimization-ladder",
+        "title": "质数筛选：从试除到埃氏筛的优化阶梯",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "prime-sieve-optimization-ladder",
+        "href": "/wiki/algorithms/prime-sieve-optimization-ladder"
+      }
+    ],
+    "algorithms/auxiliary-structure-sync": [
+      {
+        "key": "algorithms/monotonic-queue-sliding-maximum",
+        "title": "单调队列：滑动窗口最值与单调结构思维链",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "monotonic-queue-sliding-maximum",
+        "href": "/wiki/algorithms/monotonic-queue-sliding-maximum"
+      },
+      {
+        "key": "algorithms/prime-sieve-optimization-ladder",
+        "title": "质数筛选：从试除到埃氏筛的优化阶梯",
+        "domain": "algorithms",
+        "domainLabel": "算法范式",
+        "slug": "prime-sieve-optimization-ladder",
+        "href": "/wiki/algorithms/prime-sieve-optimization-ladder"
+      }
+    ]
+  }
+}

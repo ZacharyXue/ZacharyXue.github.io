@@ -593,6 +593,18 @@
     "updated": "2026-09-07"
   },
   {
+    "domain": "soft-skills",
+    "domainLabel": "读书软技能",
+    "slug": "critical-conversations",
+    "title": "关键对话：高难度沟通方法论",
+    "summary": "关键对话（观点分歧 + 高风险 + 情绪强烈）的成败不取决于技巧本身，而取决于能否建立「共享观点库」——让双方自由交流信息；全书提供一条从自我出发、先建安全感再谈内容的九步操作路径，核心心理学基础是「情绪是自己制造的：事实→想法→情绪」的行为路径模型。",
+    "tags": [
+      "沟通",
+      "读书"
+    ],
+    "updated": "2026-09-07"
+  },
+  {
     "domain": "stocks",
     "domainLabel": "个股与指数",
     "slug": "hailuo-cement",

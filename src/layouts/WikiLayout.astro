@@ -18,13 +18,20 @@ export interface Props {
   updated?: string;
   tags?: string[];
   confidence?: string;
+  /** 本站博客长文出处（来自 sources 反查） */
+  longform?: { slug: string; title: string; href: string }[];
+  /** 引用了本页的其他知识点（wikilink 入链） */
+  backlinks?: { href: string; title: string; domainLabel: string }[];
+  /** sources 里非本站的外部参考（RFC/官方文档等） */
+  externalSources?: string[];
   prevNav?: { href: string; title: string };
   nextNav?: { href: string; title: string };
 }
 
 const {
   title, domain, domainLabel, created = '', updated = '',
-  tags = [], confidence = '', prevNav, nextNav,
+  tags = [], confidence = '', longform = [], backlinks = [],
+  externalSources = [], prevNav, nextNav,
 } = Astro.props;
 
 const CONFIDENCE_LABEL: Record<string, string> = {
@@ -62,6 +69,46 @@ const confLabel = CONFIDENCE_LABEL[confidence] || '';
     <div class="article-body">
       <slot />
     </div>
+
+    {(longform.length > 0 || externalSources.length > 0) && (
+      <section class="wiki-aside">
+        <h2 class="aside-title">出处</h2>
+        {longform.length > 0 && (
+          <ul class="longform">
+            {longform.map(b => (
+              <li>
+                <a href={b.href}>
+                  <span class="lf-icon">📄</span>
+                  <span class="lf-title">{b.title}</span>
+                  <span class="lf-badge">博客长文</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+        {externalSources.length > 0 && (
+          <ul class="ext-sources">
+            {externalSources.map(url => (
+              <li><a href={url} target="_blank" rel="noopener">{url.replace(/^https?:\/\//, '').slice(0, 80)}</a></li>
+            ))}
+          </ul>
+        )}
+      </section>
+    )}
+
+    {backlinks.length > 0 && (
+      <section class="wiki-aside">
+        <h2 class="aside-title">被这些知识点引用 <span class="aside-count">{backlinks.length}</span></h2>
+        <div class="backlink-chips">
+          {backlinks.map(b => (
+            <a class="chip" href={b.href}>
+              <span class="chip-domain">{b.domainLabel}</span>
+              {b.title}
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
 
     {(prevNav || nextNav) && (
       <nav class="wiki-pager" aria-label="同域知识点导航">
@@ -121,6 +168,60 @@ const confLabel = CONFIDENCE_LABEL[confidence] || '';
     border-radius: 0 8px 8px 0;
     font-size: 1.02rem;
     line-height: 1.7;
+  }
+
+  /* 出处 / 被引用 区块 */
+  .wiki-aside { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+  .aside-title {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.95rem; color: var(--text-color); margin-bottom: 0.85rem;
+  }
+  .aside-count {
+    font-size: 0.72rem; font-weight: normal; color: var(--accent-color);
+    background: color-mix(in srgb, var(--accent-color) 12%, transparent);
+    padding: 0.05em 0.55em; border-radius: 999px;
+  }
+
+  .longform { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .longform li a {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.7rem 0.95rem;
+    border: 1px solid var(--border-color); border-radius: 10px;
+    background: var(--card-bg); text-decoration: none;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .longform li a:hover { border-color: var(--accent-color); transform: translateX(3px); }
+  .lf-icon { font-size: 0.9rem; opacity: 0.85; }
+  .lf-title { flex: 1; font-size: 0.92rem; color: var(--text-color); }
+  .lf-badge {
+    font-size: 0.68rem; white-space: nowrap;
+    color: var(--accent-color);
+    background: color-mix(in srgb, var(--accent-color) 12%, transparent);
+    padding: 0.1em 0.55em; border-radius: 999px;
+  }
+
+  .ext-sources { list-style: none; padding: 0; margin: 0.4rem 0 0; display: flex; flex-direction: column; gap: 0.3rem; }
+  .ext-sources a {
+    font-size: 0.82rem; color: var(--text-muted); text-decoration: none;
+    word-break: break-all;
+  }
+  .ext-sources a:hover { color: var(--accent-color); }
+
+  .backlink-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.32rem 0.78rem;
+    border: 1px solid var(--border-color); border-radius: 999px;
+    background: var(--card-bg); font-size: 0.82rem;
+    color: var(--text-color); text-decoration: none;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .chip:hover { border-color: var(--accent-color); color: var(--accent-color); }
+  .chip-domain {
+    font-size: 0.7rem; color: var(--text-muted);
+    padding-right: 0.5rem;
+    border-right: 1px solid color-mix(in srgb, var(--text-muted) 45%, transparent);
+    white-space: nowrap;
   }
 
   .wiki-pager { display: flex; gap: 1rem; margin-top: 3rem; }
