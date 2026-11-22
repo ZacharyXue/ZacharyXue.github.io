@@ -629,9 +629,10 @@ const mailtoHref = `mailto:${DISCUSS_EMAIL}?subject=${encodeURIComponent(discuss
     transform: translateY(-1px);
   }
   .rw-domain {
-    font-size: 0.7rem; color: var(--text-muted);
+    font-size: 0.7rem;
+    color: color-mix(in srgb, var(--text-color) 72%, transparent);
     padding-right: 0.5rem;
-    border-right: 1px solid color-mix(in srgb, var(--text-muted) 45%, transparent);
+    border-right: 1px solid color-mix(in srgb, var(--text-color) 30%, transparent);
     white-space: nowrap;
   }
   .rw-name { font-weight: 500; }

@@ -211,16 +211,18 @@ const confLabel = CONFIDENCE_LABEL[confidence] || '';
   .chip {
     display: inline-flex; align-items: center; gap: 0.4rem;
     padding: 0.32rem 0.78rem;
-    border: 1px solid var(--border-color); border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--text-color) 16%, transparent);
+    border-radius: 999px;
     background: var(--card-bg); font-size: 0.82rem;
     color: var(--text-color); text-decoration: none;
     transition: border-color 0.15s ease, color 0.15s ease;
   }
   .chip:hover { border-color: var(--accent-color); color: var(--accent-color); }
   .chip-domain {
-    font-size: 0.7rem; color: var(--text-muted);
+    font-size: 0.7rem;
+    color: color-mix(in srgb, var(--text-color) 72%, transparent);
     padding-right: 0.5rem;
-    border-right: 1px solid color-mix(in srgb, var(--text-muted) 45%, transparent);
+    border-right: 1px solid color-mix(in srgb, var(--text-color) 30%, transparent);
     white-space: nowrap;
   }
 
