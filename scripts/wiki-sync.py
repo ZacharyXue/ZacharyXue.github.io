@@ -4,10 +4,15 @@ wiki-sync — /root/wiki（加密源）→ 博客站 src/content/wiki/（公开�
 
 设计约束：
   1. 单向：源永远只有 /root/wiki，本站目录是生成物，手改会被覆盖
-  2. 默认拒绝：frontmatter 的 visibility 不是 'public' 的页一律不发（缺省视为 private 之外还要求显式……）
-     实际规则：visibility: private → 跳过；其余（含缺省）→ 走敏感词兜底
+  2. **默认私有**：wiki 是加密私有仓，默认不出网。只有下面两种显式放行才发布：
+       - 目录白名单 PUBLIC_DIRS（整个目录默认公开）
+       - 页级 frontmatter `visibility: public`（白名单外单页放行）
+     页级 `visibility: private` 优先级最高，可阻断白名单内的例外页
   3. 敏感词兜底：命中 DENY 规则的页拒发并列报告，不静默通过
   4. wikilink：[[basename|中文]] → [中文](/wiki/<domain>/<slug>)，死链降级成纯文本并警告
+
+⚠️ 安全默认是「不发布」。新增 wiki 页默认躺平在私有侧，要公开必须主动放行——
+   这正是「私有仓不该默认漏内容」的正确方向，别改回去。
 
 用法：
   python3 scripts/wiki-sync.py --dry-run   # 只出报告，不写盘（首次必跑）
@@ -35,6 +40,16 @@ DOMAINS = {
     "algorithms": "算法范式",
     "soft-skills": "读书软技能",
     "entities": "实体档案",
+}
+
+# 目录级公开白名单：只有这些目录下的页默认公开。
+# 不在白名单 = 默认私有（新目录/新实体页不会自动出网）。
+PUBLIC_DIRS = {
+    "concepts/investing",
+    "concepts/cloud-native",
+    "concepts/llm-eng",
+    "concepts/algorithms",
+    "concepts/soft-skills",
 }
 
 # 拒绝级：命中即不进公开站（个人路径 / 薪酬 / 持仓成本）
@@ -127,9 +142,11 @@ def collect() -> list[dict]:
         for f in sorted(d.glob("*.md")):
             text = f.read_text(encoding="utf-8")
             fm, body = split_fm(text)
+            dirpath = "entities" if domain == "entities" else f"concepts/{domain}"
             pages.append({
                 "domain": domain,
                 "slug": f.stem,
+                "dirpath": dirpath,
                 "path": f,
                 "fm": fm,
                 "body": body,
@@ -180,9 +197,17 @@ def main() -> int:
     published, skipped, denied, warns = [], [], [], []
 
     for p in pages:
-        vis = str(p["fm"].get("visibility", "public")).lower()
+        # 判定顺序：页级 private > 页级 public > 目录白名单 > 默认私有
+        vis = str(p["fm"].get("visibility", "")).lower()
         if vis == "private":
-            skipped.append((p, "visibility: private"))
+            skipped.append((p, "页级 visibility: private"))
+            continue
+        if vis == "public":
+            p["publish_reason"] = "页级 visibility: public"
+        elif p["dirpath"] in PUBLIC_DIRS:
+            p["publish_reason"] = f"目录白名单 {p['dirpath']}/"
+        else:
+            skipped.append((p, "默认私有（目录不在白名单，且无页级 visibility: public）"))
             continue
         deny_hits = scan(p["text"], DENY)
         if deny_hits:
@@ -193,10 +218,10 @@ def main() -> int:
 
     # ---- 报告
     print("=" * 62)
-    print(f"源页共 {len(pages)}  |  发布 {len(published)}  |  private 跳过 {len(skipped)}  |  敏感词拦下 {len(denied)}")
+    print(f"源页共 {len(pages)}  |  发布 {len(published)}  |  默认私有跳过 {len(skipped)}  |  敏感词拦下 {len(denied)}")
     print("=" * 62)
     if skipped:
-        print("\n🔒 private 跳过：")
+        print("\n🔒 不发布（私有侧）：")
         for p, why in skipped:
             print(f"   - {p['domain']}/{p['slug']}  ({why})")
     if denied:
@@ -217,7 +242,9 @@ def main() -> int:
     for d, label in DOMAINS.items():
         items = by_domain.get(d, [])
         if items:
-            print(f"   {label:12s} {len(items):2d} 页")
+            reasons = {p.get("publish_reason", "?") for p in items}
+            why = reasons.pop() if len(reasons) == 1 else "混合放行"
+            print(f"   {label:12s} {len(items):2d} 页  ← {why}")
 
     if args.dry_run:
         print("\n[dry-run] 未写盘。确认无误后去掉 --dry-run 重跑。")
