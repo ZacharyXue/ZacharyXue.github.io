@@ -145,9 +145,15 @@ const ogDesc = description || title;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0.3rem;
+    padding: 0;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 4px;
+    /* 移动端触摸目标：图标本体只有 ~14px 高，热区补到 44px 才好按 */
+    min-width: 44px;
+    min-height: 44px;
+    margin-left: auto;
   }
   .menu-toggle span {
     display: block;

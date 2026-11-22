@@ -187,8 +187,8 @@ article pre.astro-code::before { right: 3.2rem; }
   position: absolute;
   left: 0.2rem;
   bottom: 0;
-  font-size: 0.7rem;
-  color: var(--text-muted);
+  font-size: 0.75rem;
+  color: color-mix(in srgb, var(--text-color) 60%, transparent);
   user-select: none;
   pointer-events: none;
 }
@@ -218,11 +218,24 @@ article img:hover { box-shadow: var(--card-shadow-hover); }
    表格本体恢复 display:table，避免 display:block 时外框按 100% 宽绘制
    而在窄表右侧留下一段空白 + 竖线（看起来像多出一列）。 */
 .table-scroll {
+  position: relative;
   overflow-x: auto;
   margin-bottom: 1.2rem;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   -webkit-overflow-scrolling: touch;
+}
+/* 手机上看不出表格右边还有内容——溢出时给一行提示（与 .code-scroll 一致） */
+.table-scroll.is-scrollable { padding-bottom: 1.3rem; }
+.table-scroll.is-scrollable::after {
+  content: '↔ 左右滑动看完整表格';
+  position: absolute;
+  left: 0.5rem;
+  bottom: 0.1rem;
+  font-size: 0.75rem;
+  color: color-mix(in srgb, var(--text-color) 60%, transparent);
+  user-select: none;
+  pointer-events: none;
 }
 article table {
   border-collapse: collapse;

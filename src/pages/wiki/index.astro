@@ -138,7 +138,7 @@ const allTags = [...new Set(wikiIndex.flatMap(p => p.tags || []))].sort();
 </script>
 
 <style>
-  .wiki-index { max-width: var(--max-width); margin: 0 auto; padding: 3rem 1rem; }
+  .wiki-index { max-width: var(--max-width); margin: 0 auto; padding: 3rem 1rem calc(3rem + env(safe-area-inset-bottom)); }
   .wiki-intro h1 { font-size: 2rem; color: var(--text-color); margin-bottom: 0.8rem; }
   .count { font-size: 1rem; color: var(--text-muted); font-weight: normal; }
   .lede { color: var(--text-muted); font-size: 0.95rem; line-height: 1.75; margin-bottom: 1.5rem; }
@@ -190,11 +190,16 @@ const allTags = [...new Set(wikiIndex.flatMap(p => p.tags || []))].sort();
 
   .cards { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.9rem; }
   .card {
+    position: relative;
     padding: 1rem 1.2rem;
     border: 1px solid var(--border-color); border-radius: 12px;
     background: var(--card-bg); box-shadow: var(--card-shadow);
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
+  /* 整卡可点：只有标题/摘要被 <a> 包着，空白区点不进去。
+     用拉伸的伪元素把 title 链接铺满卡片，tag 再抬高层级保持可点。 */
+  .card > a::after { content: ''; position: absolute; inset: 0; border-radius: 12px; }
+  .card-foot { position: relative; z-index: 1; }
   .card:hover {
     transform: translateY(-2px); box-shadow: var(--card-shadow-hover);
     border-color: var(--accent-color);
@@ -225,6 +230,25 @@ const allTags = [...new Set(wikiIndex.flatMap(p => p.tags || []))].sort();
   @media (max-width: 768px) {
     .wiki-index { padding: 2rem 1rem; }
     .wiki-intro h1 { font-size: 1.6rem; }
-    .stat { min-width: 4.5rem; padding: 0.5rem 0.7rem; }
+    /* 6 个统计卡在 390px 下 flex 会排成 4+2（第二行留一大块空），改 3×2 网格 */
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+    .stat { min-width: 0; padding: 0.55rem 0.4rem; }
+    .stat-num { font-size: 1.05rem; }
+    .stat-label { font-size: 0.72rem; }
+
+    /* 手机上 tag 是可点的筛选项，太小按不准；桌面保持紧凑胶囊 */
+    .card-foot .tag {
+      display: inline-flex; align-items: center;
+      min-height: 32px; padding: 0.35em 0.85em; font-size: 0.78rem;
+    }
+    /* 手机上 15.2px 偏小，摘要提到 16px；两行截断信息太少，放宽到 3 行 */
+    .summary {
+      font-size: 1rem; line-height: 1.7;
+      -webkit-line-clamp: 3;
+    }
+    .card { padding: 0.95rem 1rem; }
+    /* 日期不要跟 tag 挤同一行（窄屏会挤成一团）→ 独占一行右对齐 */
+    .card-foot { row-gap: 0.45rem; }
+    .updated { margin-left: 0; flex-basis: 100%; text-align: right; font-size: 0.75rem; }
   }
 </style>

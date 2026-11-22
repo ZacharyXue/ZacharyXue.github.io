@@ -131,8 +131,17 @@ const confLabel = CONFIDENCE_LABEL[confidence] || '';
   </article>
 </BaseLayout>
 
+<script>
+  import { enhanceArticle } from '../scripts/article-enhance';
+
+  // 知识点页同样需要表格/代码块的横向滚动包装：
+  // 实测缺这段时手机视口下整页横向溢出 197px（表格 5 个、代码块 4 个都没包），
+  // 且 Astro 内联的 pre-wrap 会把代码软折行。与 BlogLayout 共用同一份实现。
+  enhanceArticle();
+</script>
+
 <style>
-  .wiki-article { max-width: var(--max-width); margin: 0 auto; padding: 2rem 1rem 3rem; }
+  .wiki-article { max-width: var(--max-width); margin: 0 auto; padding: 2rem 1rem calc(3rem + env(safe-area-inset-bottom)); }
 
   .crumbs { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.2rem; }
   .crumbs a { color: var(--text-muted); text-decoration: none; }
@@ -246,5 +255,12 @@ const confLabel = CONFIDENCE_LABEL[confidence] || '';
     .wiki-article { padding: 1.5rem 1rem 2rem; }
     .wiki-header h1 { font-size: 1.5rem; }
     .wiki-pager { flex-direction: column; }
+    /* 触摸目标：tag 和胶囊在手机上要按得准 */
+    .wiki-tags .tag {
+      display: inline-flex; align-items: center;
+      min-height: 32px; padding: 0.35em 0.85em; font-size: 0.8rem;
+    }
+    .chip { padding: 0.42rem 0.85rem; }
+    .longform li a { padding: 0.8rem 0.95rem; }
   }
 </style>
